@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -194,6 +194,30 @@
   }
 
   /* page hero */
+  /* page hero video bg */
+  .page-hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 600ms ease;
+    pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-video { opacity: 0.28; }
+  .page-hero-scrim {
+    display: none;
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-scrim {
+    display: block;
+    background:
+      linear-gradient(180deg, rgba(10,9,8,0.55) 0%, rgba(10,9,8,0.35) 40%, rgba(10,9,8,0.7) 85%, rgba(10,9,8,1) 100%),
+      linear-gradient(90deg, rgba(10,9,8,0.6), rgba(10,9,8,0.3));
+  }
+
   .page-hero {
     position: relative;
     padding: 180px 0 100px;
@@ -727,7 +751,11 @@
 </nav>
 
 <!-- HERO -->
-<section class="page-hero">
+<section class="page-hero" id="pageHero">
+  <video class="page-hero-video" id="productsBgVideo"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260417_061226_74f0749c-a22d-42b3-895e-5d6203bc741c.mp4"
+    autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="page-hero-scrim" aria-hidden="true"></div>
   <div class="hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
       <defs>
@@ -1233,6 +1261,16 @@
       document.body.style.overflow = '';
     });
   });
+
+  // hero background video — reveal on play
+  const $pHero = document.getElementById('pageHero');
+  const $pVid  = document.getElementById('productsBgVideo');
+  if ($pVid) {
+    const revealVideo = () => { $pHero.setAttribute('data-bgvideo', 'true'); };
+    $pVid.addEventListener('playing', revealVideo, { once: true });
+    $pVid.addEventListener('canplay', () => { if (!$pVid.paused) revealVideo(); }, { once: true });
+    if ($pVid.readyState >= 3) revealVideo();
+  }
 </script>
 
 <!-- WhatsApp Bee Widget -->
