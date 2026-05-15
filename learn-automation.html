@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -154,7 +154,34 @@
     position: relative;
     padding: 180px 0 100px;
     overflow: hidden;
-    border-bottom: 1px solid var(--line);
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 220px;
+    background: linear-gradient(to bottom, transparent, var(--obsidian));
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0;
+    transition: opacity 600ms ease;
+    pointer-events: none;
+  }
+  .hero[data-bgvideo="true"] .hero-video { opacity: 0.28; }
+  .hero-scrim {
+    display: none;
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .hero[data-bgvideo="true"] .hero-scrim {
+    display: block;
+    background:
+      linear-gradient(180deg, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.25) 35%, rgba(10,9,8,0.65) 72%, rgba(10,9,8,1) 90%),
+      linear-gradient(90deg, rgba(10,9,8,0.55), rgba(10,9,8,0.25));
   }
   @media (max-width: 880px) { .hero { padding: 120px 0 64px; } }
   @media (max-width: 480px) { .hero { padding: 96px 0 48px; } }
@@ -661,7 +688,10 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="learnHero">
+  <video class="hero-video" id="learnBgVideo"
+    muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
       <defs>
@@ -1215,6 +1245,33 @@
       document.body.style.overflow = '';
     });
   });
+
+  // hero background video — HLS + reveal on play
+  const HLS_SRC_LA = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
+  const $laHero = document.getElementById('learnHero');
+  const $laVid  = document.getElementById('learnBgVideo');
+  if ($laVid) {
+    const reveal = () => { $laHero.setAttribute('data-bgvideo', 'true'); };
+    $laVid.addEventListener('playing', reveal, { once: true });
+    $laVid.addEventListener('canplay', () => { if (!$laVid.paused) reveal(); }, { once: true });
+    if ($laVid.canPlayType('application/vnd.apple.mpegurl')) {
+      $laVid.src = HLS_SRC_LA;
+      $laVid.play().catch(() => {});
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+      s.onload = () => {
+        if (Hls.isSupported()) {
+          const hls = new Hls({ autoStartLoad: true, startLevel: -1 });
+          hls.loadSource(HLS_SRC_LA);
+          hls.attachMedia($laVid);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => $laVid.play().catch(() => {}));
+        }
+      };
+      document.head.appendChild(s);
+    }
+    if ($laVid.readyState >= 3) reveal();
+  }
 </script>
 
 <!-- WhatsApp Bee Widget -->

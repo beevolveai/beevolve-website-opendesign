@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -218,7 +218,22 @@
     padding-bottom: clamp(56px, 8vw, 100px);
     position: relative;
     overflow: hidden;
-    border-bottom: 1px solid var(--line);
+  }
+  .page-hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0; transition: opacity 600ms ease; pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-video { opacity: 0.28; }
+  .page-hero-scrim {
+    display: none; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-scrim {
+    display: block;
+    background:
+      linear-gradient(180deg, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.25) 35%, rgba(10,9,8,0.65) 72%, rgba(10,9,8,1) 90%),
+      linear-gradient(90deg, rgba(10,9,8,0.55), rgba(10,9,8,0.25));
   }
   .page-hero::after {
     content: "";
@@ -679,12 +694,12 @@
 <!-- =================== NAV =================== -->
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="index.html" class="brand" aria-label="Beevolve">
+    <a href="mp4tk3w7-index.html" class="brand" aria-label="Beevolve">
       <svg class="brand-svg" width="36" height="36" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="100,8 185,53 185,147 100,192 15,147 15,53" fill="none" stroke="#F5A623" stroke-width="5"/><polygon points="100,24 170,63 170,137 100,176 30,137 30,63" fill="none" stroke="#F5A623" stroke-width="1.2" opacity="0.28"/><ellipse cx="100" cy="108" rx="22" ry="30" fill="none" stroke="#F5A623" stroke-width="3.5"/><line x1="79" y1="96" x2="121" y2="96" stroke="#F5A623" stroke-width="2.8"/><line x1="79" y1="104" x2="121" y2="104" stroke="#F5A623" stroke-width="2.8"/><line x1="79" y1="112" x2="121" y2="112" stroke="#F5A623" stroke-width="2.8"/><line x1="80" y1="120" x2="120" y2="120" stroke="#F5A623" stroke-width="2.8"/><polygon points="100,138 94,128 106,128" fill="#F5A623"/><ellipse cx="100" cy="82" rx="16" ry="12" fill="none" stroke="#F5A623" stroke-width="3.5"/><ellipse cx="100" cy="63" rx="13" ry="10" fill="none" stroke="#F5A623" stroke-width="3.5"/><path d="M95,54 Q88,44 84,38" fill="none" stroke="#F5A623" stroke-width="2.8" stroke-linecap="round"/><path d="M105,54 Q112,44 116,38" fill="none" stroke="#F5A623" stroke-width="2.8" stroke-linecap="round"/><circle cx="84" cy="37" r="3" fill="#F5A623"/><circle cx="116" cy="37" r="3" fill="#F5A623"/><path d="M84,82 Q64,68 60,55 Q70,62 84,72" fill="none" stroke="#F5A623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M116,82 Q136,68 140,55 Q130,62 116,72" fill="none" stroke="#F5A623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M85,125 L72,136 L60,136" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M82,132 L68,148 L56,148" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,138 L64,158 L52,158" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M115,125 L128,136 L140,136" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M118,132 L132,148 L144,148" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M120,138 L136,158 L148,158" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="136" r="3.5" fill="#F5C84A"/><circle cx="56" cy="148" r="3.5" fill="#F5C84A"/><circle cx="52" cy="158" r="3.5" fill="#F5C84A"/><circle cx="140" cy="136" r="3.5" fill="#F5C84A"/><circle cx="144" cy="148" r="3.5" fill="#F5C84A"/><circle cx="148" cy="158" r="3.5" fill="#F5C84A"/></svg>
       <span class="brand-name"><b>Bee</b><i>volve</i></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="index.html">Home</a>
+      <a href="mp4tk3w7-index.html">Home</a>
       <a href="products.html">Products</a>
       <a href="learn-automation.html">Learn Automation</a>
       <a href="case-studies.html">Case Studies</a>
@@ -701,7 +716,7 @@
 </header>
 
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-  <a href="index.html">Home</a>
+  <a href="mp4tk3w7-index.html">Home</a>
   <a href="products.html">Products</a>
   <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
@@ -713,7 +728,10 @@
 </nav>
 
 <!-- =================== PAGE HERO =================== -->
-<section class="page-hero">
+<section class="page-hero" id="aboutHero">
+  <video class="page-hero-video" id="aboutBgVideo"
+    muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="page-hero-scrim" aria-hidden="true"></div>
   <div class="hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice">
       <defs>
@@ -822,7 +840,7 @@
     <div class="founder-inner" style="margin-top:64px;">
       <div class="founder-photo-wrap reveal">
         <img
-          src="assets/amar-panchal-photo.jpg"
+          src="mp4tnx0y-amar-panchal-photo.jpg"
           alt="Dr. Amar Panchal — Founder & CEO, Beevolve"
           class="founder-photo"
         />
@@ -936,7 +954,7 @@
   <div class="wrap">
     <div class="foot">
       <div class="foot-brand">
-        <a href="index.html" class="brand">
+        <a href="mp4tk3w7-index.html" class="brand">
           <svg class="brand-svg" width="36" height="36" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="100,8 185,53 185,147 100,192 15,147 15,53" fill="none" stroke="#F5A623" stroke-width="5"/><polygon points="100,24 170,63 170,137 100,176 30,137 30,63" fill="none" stroke="#F5A623" stroke-width="1.2" opacity="0.28"/><ellipse cx="100" cy="108" rx="22" ry="30" fill="none" stroke="#F5A623" stroke-width="3.5"/><line x1="79" y1="96" x2="121" y2="96" stroke="#F5A623" stroke-width="2.8"/><line x1="79" y1="104" x2="121" y2="104" stroke="#F5A623" stroke-width="2.8"/><line x1="79" y1="112" x2="121" y2="112" stroke="#F5A623" stroke-width="2.8"/><line x1="80" y1="120" x2="120" y2="120" stroke="#F5A623" stroke-width="2.8"/><polygon points="100,138 94,128 106,128" fill="#F5A623"/><ellipse cx="100" cy="82" rx="16" ry="12" fill="none" stroke="#F5A623" stroke-width="3.5"/><ellipse cx="100" cy="63" rx="13" ry="10" fill="none" stroke="#F5A623" stroke-width="3.5"/><path d="M95,54 Q88,44 84,38" fill="none" stroke="#F5A623" stroke-width="2.8" stroke-linecap="round"/><path d="M105,54 Q112,44 116,38" fill="none" stroke="#F5A623" stroke-width="2.8" stroke-linecap="round"/><circle cx="84" cy="37" r="3" fill="#F5A623"/><circle cx="116" cy="37" r="3" fill="#F5A623"/><path d="M84,82 Q64,68 60,55 Q70,62 84,72" fill="none" stroke="#F5A623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M116,82 Q136,68 140,55 Q130,62 116,72" fill="none" stroke="#F5A623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M85,125 L72,136 L60,136" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M82,132 L68,148 L56,148" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M80,138 L64,158 L52,158" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M115,125 L128,136 L140,136" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M118,132 L132,148 L144,148" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M120,138 L136,158 L148,158" fill="none" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="136" r="3.5" fill="#F5C84A"/><circle cx="56" cy="148" r="3.5" fill="#F5C84A"/><circle cx="52" cy="158" r="3.5" fill="#F5C84A"/><circle cx="140" cy="136" r="3.5" fill="#F5C84A"/><circle cx="144" cy="148" r="3.5" fill="#F5C84A"/><circle cx="148" cy="158" r="3.5" fill="#F5C84A"/></svg>
           <span class="brand-name"><b>Bee</b><i>volve</i></span>
         </a>
@@ -1024,6 +1042,33 @@
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // hero background video — HLS + reveal on play
+  const HLS_SRC_AB = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
+  const $abHero = document.getElementById('aboutHero');
+  const $abVid  = document.getElementById('aboutBgVideo');
+  if ($abVid) {
+    const reveal = () => { $abHero.setAttribute('data-bgvideo', 'true'); };
+    $abVid.addEventListener('playing', reveal, { once: true });
+    $abVid.addEventListener('canplay', () => { if (!$abVid.paused) reveal(); }, { once: true });
+    if ($abVid.canPlayType('application/vnd.apple.mpegurl')) {
+      $abVid.src = HLS_SRC_AB;
+      $abVid.play().catch(() => {});
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+      s.onload = () => {
+        if (Hls.isSupported()) {
+          const hls = new Hls({ autoStartLoad: true, startLevel: -1 });
+          hls.loadSource(HLS_SRC_AB);
+          hls.attachMedia($abVid);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => $abVid.play().catch(() => {}));
+        }
+      };
+      document.head.appendChild(s);
+    }
+    if ($abVid.readyState >= 3) reveal();
+  }
 </script>
 
 <!-- WhatsApp Bee Widget -->
