@@ -395,24 +395,32 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   }
   #wa-bee-widget:hover .wa-tooltip, #wa-bee-widget.peeking .wa-tooltip { opacity: 1; transform: translateY(0); }
-  #wa-bee-widget .wa-bee-vid {
-    width: 90px; height: 90px; object-fit: contain;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
-    animation: bee-float 3s ease-in-out infinite; transition: transform 0.2s;
+  #wa-bee-widget .wa-bubble {
+    width: 90px; height: 90px; border-radius: 50%;
+    background: #0a0908; border: 2px solid rgba(245,166,35,0.35);
+    box-shadow: 0 0 0 0 rgba(245,166,35,0.25), 0 8px 28px rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    animation: bubble-pulse 2.4s ease-in-out infinite; transition: transform 0.2s;
   }
-  #wa-bee-widget:hover .wa-bee-vid { animation: bee-excited 0.4s ease-in-out infinite alternate; }
-  @keyframes bee-float { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-10px) rotate(2deg)} }
-  @keyframes bee-excited { 0%{transform:translateY(-12px) rotate(-5deg) scale(1.05)} 100%{transform:translateY(-16px) rotate(5deg) scale(1.08)} }
-  @media(max-width:480px){#wa-bee-widget{bottom:20px;right:16px}#wa-bee-widget .wa-bee-vid{width:72px;height:72px}}
+  #wa-bee-widget:hover .wa-bubble { transform: scale(1.06); animation: none; }
+  #wa-bee-widget .wa-bee-img {
+    width: 80px; height: 80px; object-fit: contain;
+    animation: bee-jump 1.6s cubic-bezier(0.36,0.07,0.19,0.97) infinite;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+  }
+  #wa-bee-widget:hover .wa-bee-img { animation: bee-excited 0.35s ease-in-out infinite alternate; }
+  @keyframes bee-jump { 0%,100%{transform:translateY(0) rotate(-2deg)} 35%{transform:translateY(-14px) rotate(2deg)} 65%{transform:translateY(-6px) rotate(-1deg)} }
+  @keyframes bee-excited { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(-12px) scale(1.06) rotate(4deg)} }
+  @keyframes bubble-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0.25),0 8px 28px rgba(0,0,0,0.6)} 50%{box-shadow:0 0 0 10px rgba(245,166,35,0),0 8px 28px rgba(0,0,0,0.6)} }
+  @media(max-width:480px){#wa-bee-widget{bottom:20px;right:16px}#wa-bee-widget .wa-bubble{width:72px;height:72px}#wa-bee-widget .wa-bee-img{width:64px;height:64px}}
 </style>
 <a id="wa-bee-widget" href="https://wa.me/919004861408?text=Hi%20Beevolve!%20I%27d%20like%20to%20know%20more%20about%20your%20automation%20services." target="_blank" rel="noopener" aria-label="Chat with Beevolve on WhatsApp">
   <span class="wa-tooltip">Chat with us on WhatsApp</span>
-  <video class="wa-bee-vid" autoplay loop muted playsinline>
-    <source src="assets/BuzzyBee-mascot.mp4" type="video/mp4">
-  </video>
+  <div class="wa-bubble">
+    <img class="wa-bee-img" src="assets/buzzy-bee-mascot.png" alt="BuzzyBee">
+  </div>
 </a>
 <script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);})();</script>
 
 </body>
 </html>
-
