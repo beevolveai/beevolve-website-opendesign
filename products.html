@@ -1,0 +1,1121 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Products — Beevolve</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --obsidian:    #0a0908;
+    --obsidian-2:  #121010;
+    --obsidian-3:  #1b1815;
+    --line:        rgba(241, 234, 217, 0.08);
+    --line-strong: rgba(241, 234, 217, 0.16);
+    --cream:       #f1ead9;
+    --cream-dim:   #cdc3ac;
+    --cream-mute:  #8a8170;
+    --amber:       #F5A623;
+    --amber-soft:  #f2bb5d;
+    --amber-deep:  #c6841a;
+
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --sans:  "DM Sans", "Inter", system-ui, sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, monospace;
+
+    --maxw: 1280px;
+    --pad:  clamp(20px, 4vw, 56px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--obsidian);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--amber); color: var(--obsidian); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    display: inline-block;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .ital { font-style: italic; color: var(--amber-soft); }
+
+  /* nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(10, 9, 8, 0.55);
+    border-bottom: 1px solid transparent;
+    transition: border-color 240ms ease, background 240ms ease;
+  }
+  .nav.scrolled { background: rgba(10, 9, 8, 0.82); border-bottom-color: var(--line); }
+  .nav-inner {
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-size: 22px; letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 22px; height: 22px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    position: relative; flex: none;
+  }
+  .brand-mark::after {
+    content: ""; position: absolute; inset: 4px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .brand-name b { font-weight: 400; }
+  .brand-name i { font-style: italic; color: var(--amber); margin-left: 1px; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 14px; color: var(--cream-dim);
+  }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a.current { color: var(--cream); }
+  .nav-links a.current::after,
+  .nav-links a:hover::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1px; background: var(--amber);
+  }
+
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+  .nav-cta:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  @media (max-width: 880px) { .nav-links { display: none; } }
+
+  /* page hero */
+  .page-hero {
+    position: relative;
+    padding: 180px 0 100px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-hero .hex-bg {
+    position: absolute; inset: 0;
+    pointer-events: none; opacity: 0.5;
+    mask-image: radial-gradient(ellipse 70% 80% at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 30%, #000 30%, transparent 80%);
+  }
+  .glow {
+    position: absolute; border-radius: 50%; filter: blur(80px);
+    pointer-events: none; opacity: 0.4;
+  }
+  .glow-1 { width: 520px; height: 520px; background: #F5A62333; left: -120px; top: 60px; }
+  .glow-2 { width: 420px; height: 420px; background: #c2570022; right: -100px; top: 120px; }
+
+  .page-hero h1 {
+    font-size: clamp(48px, 7vw, 100px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-top: 24px;
+    max-width: 14ch;
+  }
+  .page-hero p.lede {
+    margin-top: 32px;
+    max-width: 640px;
+    font-size: 19px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .page-hero p.lede + p.lede { margin-top: 18px; }
+  .page-hero .inner { position: relative; z-index: 1; }
+
+  /* generic section */
+  .section {
+    padding: 110px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .section h2 {
+    font-size: clamp(36px, 4.6vw, 60px);
+    line-height: 1.05;
+    max-width: 800px;
+    margin-top: 18px;
+  }
+  .section .lede {
+    margin-top: 18px;
+    max-width: 640px;
+    font-size: 17px;
+    color: var(--cream-dim);
+  }
+
+  /* suite header */
+  .suite-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-bottom: 16px;
+  }
+  .suite-tag .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* product cards */
+  .products-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .products-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .pcard {
+    position: relative;
+    padding: 28px 24px 28px;
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    display: flex; flex-direction: column;
+    transition: transform 280ms ease, border-color 280ms ease, background 280ms ease;
+    overflow: hidden;
+  }
+  .pcard::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 320ms ease;
+  }
+  .pcard:hover { transform: translateY(-6px); border-color: rgba(245,166,35,0.3); }
+  .pcard:hover::before { transform: scaleX(1); }
+  .pcard .icon {
+    width: 44px; height: 44px;
+    position: relative;
+    display: grid; place-items: center;
+    margin-bottom: 22px;
+  }
+  .pcard .icon::before {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(245,166,35,0.12);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .pcard .icon svg {
+    width: 22px; height: 22px;
+    color: var(--amber);
+    position: relative;
+    z-index: 1;
+  }
+  .pcard h3 {
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .pcard p {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .pcard .more {
+    margin-top: 22px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    transition: color 200ms ease;
+  }
+  .pcard .more::after {
+    content: "→";
+    transition: transform 200ms ease;
+  }
+  .pcard:hover .more { color: var(--amber); }
+  .pcard:hover .more::after { transform: translateX(4px); }
+
+  @media (max-width: 1080px) { .products-grid, .products-grid.three { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .products-grid, .products-grid.three { grid-template-columns: 1fr; } }
+
+  /* capability blocks */
+  .cap {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 56px;
+    padding: 72px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .cap:first-of-type { border-top: 0; padding-top: 0; }
+  .cap .cap-meta {
+    position: sticky; top: 100px;
+  }
+  .cap .cap-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  .cap h3 {
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.1;
+    margin-top: 12px;
+    letter-spacing: -0.01em;
+  }
+  .cap h3 .ital { display: block; }
+  .cap-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .cap-body h4 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+  .cap-body ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cap-body li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .cap-body li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .cap-link {
+    margin-top: 28px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--cream);
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+  .cap-link:hover { border-color: var(--amber); color: var(--amber); }
+  @media (max-width: 980px) {
+    .cap { grid-template-columns: 1fr; gap: 32px; }
+    .cap .cap-meta { position: static; }
+    .cap-body { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* framework steps */
+  .framework {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    counter-reset: step;
+  }
+  .fstep {
+    padding: 28px 22px 26px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--obsidian-2);
+    position: relative;
+  }
+  .fstep::before {
+    counter-increment: step;
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 36px;
+    color: var(--amber);
+    display: block;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .fstep h4 {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.25;
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .fstep p {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  @media (max-width: 880px) { .framework { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .framework { grid-template-columns: 1fr; } }
+
+  /* industrial pills */
+  .ind-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .ind {
+    padding: 28px 24px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    text-align: left;
+    background: var(--obsidian);
+    transition: border-color 240ms ease;
+  }
+  .ind:hover { border-color: rgba(245,166,35,0.3); }
+  .ind .icon {
+    width: 38px; height: 38px;
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .ind .icon::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--amber), var(--amber-deep));
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .ind .icon::after {
+    content: ""; position: absolute; inset: 2px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .ind h4 {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: var(--cream);
+  }
+  @media (max-width: 980px) { .ind-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .ind-grid { grid-template-columns: 1fr; } }
+
+  /* ownership block */
+  .own {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-top: 56px;
+    align-items: center;
+  }
+  .own-panel {
+    aspect-ratio: 4 / 3;
+    border-radius: 24px;
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse 70% 70% at 30% 30%, rgba(245,166,35,0.18), transparent 60%),
+      linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    position: relative;
+    overflow: hidden;
+  }
+  .own-panel svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .own ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+  .own li {
+    padding-left: 26px;
+    position: relative;
+    font-size: 17px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+  .own li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 10px;
+    width: 10px; height: 10px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .own li small {
+    display: block;
+    font-size: 13px;
+    color: var(--cream-mute);
+    margin-top: 4px;
+  }
+  @media (max-width: 880px) { .own { grid-template-columns: 1fr; } .own-panel { aspect-ratio: 16/10; } }
+
+  /* faq */
+  .faq {
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+  }
+  .faq details {
+    border-bottom: 1px solid var(--line);
+    padding: 0;
+  }
+  .faq summary {
+    padding: 28px 0;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.3;
+    color: var(--cream);
+    transition: color 200ms ease;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { color: var(--amber); }
+  .faq summary::after {
+    content: "+";
+    color: var(--amber);
+    font-size: 28px;
+    font-family: var(--sans);
+    transition: transform 240ms ease;
+    flex: none;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .ans {
+    padding: 0 0 28px;
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.6;
+    max-width: 760px;
+  }
+
+  /* cta strip */
+  .cta-strip {
+    padding: 80px 0;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+  }
+  .cta-strip h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.05;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .cta-strip .lede {
+    margin: 18px auto 0;
+    max-width: 540px;
+    color: var(--cream-dim);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn-primary { background: var(--amber); color: var(--obsidian); }
+  .btn-primary:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+  .cta-strip .btn { margin-top: 32px; }
+
+  /* footer */
+  footer { padding: 80px 0 40px; background: var(--obsidian); }
+  .foot {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .foot h4 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    margin-bottom: 16px;
+  }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot a { color: var(--cream-dim); font-size: 14px; }
+  .foot a:hover { color: var(--amber); }
+  .foot-brand .blurb {
+    margin-top: 20px;
+    color: var(--cream-mute);
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 280px;
+  }
+  .foot-bottom {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--cream-mute);
+  }
+  @media (max-width: 880px) {
+    .foot { grid-template-columns: 1fr 1fr; }
+    .foot-brand { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Beevolve">
+      <span class="brand-mark"></span>
+      <span class="brand-name"><b>Bee</b><i>volve</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="products.html" class="current">Products</a>
+      <a href="learn-automation.html">Learn Automation</a>
+      <a href="index.html#proof">Case studies</a>
+      <a href="index.html#more">Company</a>
+    </nav>
+    <a href="#contact" class="nav-cta">
+      Book a call
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hex-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <defs>
+        <pattern id="hex-p" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="rgba(245,166,35,0.18)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex-p)"/>
+    </svg>
+  </div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap inner">
+    <span class="eyebrow">Our solutions</span>
+    <h1>Intelligent automation, <span class="ital">designed for real operations.</span></h1>
+    <p class="lede">
+      Structured to help organizations move from fragmented, manual execution toward cohesive, autonomous operational systems.
+    </p>
+    <p class="lede">
+      Rather than deploying isolated tools, the focus is on architecting automation layers that connect data, systems, and decision-making into reliable workflows capable of operating at scale.
+    </p>
+  </div>
+</section>
+
+<!-- FUTURE TALENT SUITE -->
+<section class="section">
+  <div class="wrap">
+    <span class="suite-tag"><span class="dot"></span>For students &amp; career switchers</span>
+    <h2>Future Talent <span class="ital">Suite.</span></h2>
+    <p class="lede">
+      Products built for individuals stepping into the automation economy — designed to compress the path from learner to operator.
+    </p>
+
+    <div class="products-grid">
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 4h10l4 4v12H5z" stroke="currentColor" stroke-width="1.5"/><path d="M15 4v4h4M8 12h8M8 16h6M8 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>AI Job <span class="ital">Application</span> Engine</h3>
+        <p>Analyzes job descriptions, identifies your skill gaps, and generates perfectly tailored applications in seconds. Apply smarter, close gaps faster, get more interview calls.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M6 21v-1a6 6 0 0112 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M19 5l2 2M5 5L3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>AI Interview <span class="ital">Pressure</span> Lab</h3>
+        <p>Turns any JD into a real-time interview simulation with curveball questions and voice evaluation. Walk in battle-tested, not nervous.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Smart Lecture-to-<span class="ital">Exam</span> System</h3>
+        <p>Converts recorded lectures into structured study guides with key concepts, examples, and predicted exam questions. Stop watching — start preparing.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.5"/><path d="M8 10v6M8 10l4 4 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>LinkedIn <span class="ital">Branding</span> Engine</h3>
+        <p>Finds trending topics in your niche and writes high-impact posts using proven viral psychology. Build authority while others are still scrolling.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIAL EFFICIENCY SUITE -->
+<section class="section">
+  <div class="wrap">
+    <span class="suite-tag"><span class="dot"></span>For SMEs &amp; operations teams</span>
+    <h2>Industrial Efficiency <span class="ital">Suite.</span></h2>
+    <p class="lede">
+      Production-grade automations that eliminate bottlenecks across sales, content, support, reputation, and cash flow.
+    </p>
+
+    <div class="products-grid" style="grid-template-columns: repeat(5, 1fr);">
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 12l9-9 9 9-9 9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+        </div>
+        <h3>Lead Routing <span class="ital">System</span></h3>
+        <p>Captures, enriches, and routes incoming leads instantly based on revenue potential. Never lose a high-value client again.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M17 10l4-2v8l-4-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>AI <span class="ital">Viral Clip</span> Creator</h3>
+        <p>Transforms long meetings or demo videos into multiple high-impact, subtitle-ready reels automatically. 10 pieces of content from one video.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 11-3.5-7.1L21 6v6h-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+        </div>
+        <h3>Smart Chat <span class="ital">Receptionist</span></h3>
+        <p>Handles WhatsApp and website conversations using your company's real data, pricing, and availability. Books meetings, closes faster.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Reputation <span class="ital">Protection</span></h3>
+        <p>Monitors Google reviews, auto-replies to positives, escalates negatives with ready-to-send empathetic drafts. Protect your brand.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 10h10M7 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="16" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Invoice <span class="ital">Recovery</span></h3>
+        <p>Tracks unpaid invoices and sends tiered reminder emails automatically — from polite to firm. Recover cash without awkward follow-ups.</p>
+        <a href="#" class="more">Learn more</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Solution framework</span>
+    <h2>From strategy to <span class="ital">autonomous execution.</span></h2>
+    <p class="lede">
+      Every solution is delivered through a disciplined framework — clarity, repeatability, and long-term value at every step.
+    </p>
+
+    <div class="framework">
+      <div class="fstep">
+        <h4>Identify automation-ready processes</h4>
+        <p>Shadow the work. Map manual execution to time and dollars. Rank by leverage and feasibility.</p>
+      </div>
+      <div class="fstep">
+        <h4>Architect workflows &amp; system logic</h4>
+        <p>Tools, integrations, hand-off points, failure modes — all on paper, all approved by you, before code.</p>
+      </div>
+      <div class="fstep">
+        <h4>Controlled implementation &amp; testing</h4>
+        <p>Build in stages. Test with real data. Daily updates. Three weeks median to a working production system.</p>
+      </div>
+      <div class="fstep">
+        <h4>Deployment &amp; ownership transfer</h4>
+        <p>Source code, credentials, docs, training. We monitor for 30 days. Then the system is yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Core capabilities</span>
+    <h2>Five lanes of work, <span class="ital">one operating system.</span></h2>
+    <p class="lede">
+      Pick the lane that's bleeding the most hours this quarter. Most clients start with two and expand from there.
+    </p>
+
+    <div style="margin-top: 64px;">
+      <!-- 1. Consulting -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Automation architecture &amp; strategy</div>
+          <h3>AI Automation <span class="ital">Consulting.</span></h3>
+          <a href="#" class="cap-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>Automation opportunity identification</li>
+              <li>Workflow and system architecture design</li>
+              <li>Tool and platform selection</li>
+              <li>Risk, dependency, and scalability planning</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Typical outcomes</h4>
+            <ul>
+              <li>Clear automation roadmap, ranked by ROI</li>
+              <li>Reduced implementation risk</li>
+              <li>Faster transition from concept to deployment</li>
+              <li>Architectural alignment with business goals</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Workflow Automation -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">End-to-end process orchestration</div>
+          <h3>Workflow <span class="ital">Automation.</span></h3>
+          <a href="#" class="cap-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>Cross-tool and cross-system automation</li>
+              <li>Event-driven and scheduled workflows</li>
+              <li>Error handling and recovery logic</li>
+              <li>Monitoring and execution visibility</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>Operations and internal processes</li>
+              <li>Finance and reconciliation workflows</li>
+              <li>Reporting and data synchronization</li>
+              <li>Sales, support, and service operations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Custom AI -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Agentic and autonomous systems</div>
+          <h3>Custom <span class="ital">AI Solutions.</span></h3>
+          <a href="#" class="cap-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>AI agents for decision-making workflows</li>
+              <li>Conversational systems and chat interfaces</li>
+              <li>Robotic Process Automation (RPA)</li>
+              <li>Multi-agent architectures</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>Intelligent support and triage systems</li>
+              <li>Lead qualification and routing</li>
+              <li>Internal knowledge and policy systems</li>
+              <li>Operational decision support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Data Strategy -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Unifying fragmented systems</div>
+          <h3>Data Strategy &amp; <span class="ital">Integration.</span></h3>
+          <a href="#" class="cap-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>API and system integration</li>
+              <li>Data normalization and transformation</li>
+              <li>Event-based data pipelines</li>
+              <li>Secure data access and ownership design</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>ERP, CRM, and internal tools</li>
+              <li>Operational dashboards</li>
+              <li>AI and ML workflows</li>
+              <li>Reporting and analytics systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Machine Learning -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Predictive &amp; decision support</div>
+          <h3>Machine <span class="ital">Learning.</span></h3>
+          <a href="#" class="cap-link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>Model development and tuning</li>
+              <li>Integration into live workflows</li>
+              <li>Performance monitoring and iteration</li>
+              <li>Deployment within automation systems</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>Demand and anomaly prediction</li>
+              <li>Classification and prioritization tasks</li>
+              <li>Optimization of operational decisions</li>
+              <li>Risk scoring and fraud detection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIAL -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Industrial &amp; operational</span>
+    <h2>Beyond surface-level <span class="ital">automation.</span></h2>
+    <p class="lede">
+      The solutions extend into operational and industrial environments — where automation intersects with real-world execution.
+    </p>
+
+    <div class="ind-grid">
+      <div class="ind"><div class="icon"></div><h4>Manufacturing &amp; production systems</h4></div>
+      <div class="ind"><div class="icon"></div><h4>Logistics &amp; supply chain operations</h4></div>
+      <div class="ind"><div class="icon"></div><h4>IT–OT convergence</h4></div>
+      <div class="ind"><div class="icon"></div><h4>Predictive maintenance &amp; alerts</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- OWNERSHIP -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Ownership &amp; transparency</span>
+    <h2>Built for <span class="ital">long-term control.</span></h2>
+
+    <div class="own">
+      <div class="own-panel">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="own-hex" width="40" height="35" patternUnits="userSpaceOnUse">
+              <path d="M20 0 L40 10 L40 25 L20 35 L0 25 L0 10 Z" fill="none" stroke="rgba(245,166,35,0.3)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="300" fill="url(#own-hex)"/>
+          <!-- Highlighted cluster -->
+          <g transform="translate(140,90)">
+            <path d="M20 0 L40 10 L40 25 L20 35 L0 25 L0 10 Z" fill="rgba(245,166,35,0.18)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M60 0 L80 10 L80 25 L60 35 L40 25 L40 10 Z" fill="rgba(245,166,35,0.32)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M100 0 L120 10 L120 25 L100 35 L80 25 L80 10 Z" fill="rgba(245,166,35,0.18)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M40 35 L60 45 L60 60 L40 70 L20 60 L20 45 Z" fill="rgba(245,166,35,0.55)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M80 35 L100 45 L100 60 L80 70 L60 60 L60 45 Z" fill="#F5A623" stroke="#F5A623" stroke-width="1.5"/>
+          </g>
+        </svg>
+      </div>
+      <ul>
+        <li>Open, extensible automation platforms
+          <small>No proprietary lock-in. Your stack outlasts our engagement.</small>
+        </li>
+        <li>No proprietary black-box dependencies
+          <small>Every system is inspectable end to end — you see how every decision is made.</small>
+        </li>
+        <li>Full documentation &amp; system visibility
+          <small>Architecture diagrams, runbooks, video walk-throughs, monitoring dashboards.</small>
+        </li>
+        <li>Client-owned workflows &amp; infrastructure
+          <small>Source code, credentials, and infra accounts are transferred at hand-off.</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">FAQ</span>
+    <h2>Frequently asked <span class="ital">questions.</span></h2>
+
+    <div class="faq">
+      <details>
+        <summary>What problems are your automation solutions designed to solve?</summary>
+        <div class="ans">They solve fragmentation, manual execution, system latency, and decision delays across operations — the four failure modes that quietly tax every growing company.</div>
+      </details>
+      <details>
+        <summary>How long does it typically take to implement automation?</summary>
+        <div class="ans">Median time to ship is three weeks from audit to deployment for a focused workflow. Timelines depend on scope, but structured architecture up front significantly reduces rework and long-term delays.</div>
+      </details>
+      <details>
+        <summary>Do you replace existing systems or integrate with them?</summary>
+        <div class="ans">Most projects focus on integrating and orchestrating the systems you already pay for, not replacing them. Replacement is a last resort, not a default.</div>
+      </details>
+      <details>
+        <summary>What happens after automation is deployed?</summary>
+        <div class="ans">Clients receive full documentation, ownership transfer, and visibility — enabling long-term autonomy. We monitor the system for 30 days post-launch as a warranty, then step away.</div>
+      </details>
+      <details>
+        <summary>Is automation suitable for regulated or sensitive environments?</summary>
+        <div class="ans">Yes. Governance, access control, and auditability are built into the architecture from day one. We work with healthcare, finance, and regulated industrial clients on a regular basis.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip" id="contact">
+  <div class="wrap">
+    <h2>Search for the <span class="ital">right solution.</span></h2>
+    <p class="lede">Begin with a structured assessment to determine feasibility, scope, and architectural direction.</p>
+    <a href="#" class="btn btn-primary">Book a call
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name"><b>Bee</b><i>volve</i></span>
+        </a>
+        <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="products.html">All products</a></li>
+          <li><a href="products.html#talent">Future Talent Suite</a></li>
+          <li><a href="products.html#industry">Industrial Suite</a></li>
+          <li><a href="products.html#consulting">Consulting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Case studies</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press kit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="learn-automation.html">Learn Automation</a></li>
+          <li><a href="#">Playbooks</a></li>
+          <li><a href="#">Tools we use</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="/cdn-cgi/l/email-protection#7e16173e1c1b1b081112081b501d11"><span class="__cf_email__" data-cfemail="7a12133a181f1f0c15160c1f541915">[email&#160;protected]</span></a></li>
+          <li><a href="#">Book a call</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Beevolve, Inc. — The hive keeps running.</span>
+      <span>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1097 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Learn Automation — Beevolve</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --obsidian:    #0a0908;
+    --obsidian-2:  #121010;
+    --obsidian-3:  #1b1815;
+    --line:        rgba(241, 234, 217, 0.08);
+    --line-strong: rgba(241, 234, 217, 0.16);
+    --cream:       #f1ead9;
+    --cream-dim:   #cdc3ac;
+    --cream-mute:  #8a8170;
+    --amber:       #F5A623;
+    --amber-soft:  #f2bb5d;
+    --amber-deep:  #c6841a;
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --sans:  "DM Sans", "Inter", system-ui, sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, monospace;
+    --maxw: 1280px;
+    --pad:  clamp(20px, 4vw, 56px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--obsidian);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--amber); color: var(--obsidian); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--amber);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ""; width: 10px; height: 10px; background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    display: inline-block;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--serif); font-weight: 400; color: var(--cream);
+    letter-spacing: -0.01em; margin: 0;
+  }
+  .ital { font-style: italic; color: var(--amber-soft); }
+
+  /* NAV */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(10, 9, 8, 0.55);
+    border-bottom: 1px solid transparent;
+    transition: border-color 240ms ease, background 240ms ease;
+  }
+  .nav.scrolled { background: rgba(10, 9, 8, 0.82); border-bottom-color: var(--line); }
+  .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 22px; letter-spacing: -0.01em; }
+  .brand-mark {
+    width: 22px; height: 22px; background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    position: relative; flex: none;
+  }
+  .brand-mark::after { content: ""; position: absolute; inset: 4px; background: var(--obsidian); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+  .brand-name b { font-weight: 400; }
+  .brand-name i { font-style: italic; color: var(--amber); margin-left: 1px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; font-size: 14px; color: var(--cream-dim); }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a:hover, .nav-links a.current { color: var(--cream); }
+  .nav-links a.current::after, .nav-links a:hover::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--amber); }
+  .nav-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--amber); color: var(--obsidian); padding: 10px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; transition: transform 180ms ease, background 180ms ease; }
+  .nav-cta:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  @media (max-width: 880px) { .nav-links { display: none; } }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 180px 0 100px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hex-bg {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.45;
+    mask-image: radial-gradient(ellipse 70% 70% at 30% 40%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 30% 40%, #000 30%, transparent 80%);
+  }
+  .glow { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: 0.45; }
+  .glow-1 { width: 520px; height: 520px; background: #F5A62333; left: -120px; top: 60px; }
+  .glow-2 { width: 420px; height: 420px; background: #c2570022; right: -100px; bottom: -100px; }
+
+  .hero-inner {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(48px, 6.5vw, 92px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-top: 24px;
+  }
+  .hero p.lede {
+    margin-top: 28px;
+    max-width: 540px;
+    font-size: 18px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .hero p.lede b { color: var(--cream); font-weight: 500; }
+  .hero-ctas {
+    margin-top: 36px;
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn-primary { background: var(--amber); color: var(--obsidian); }
+  .btn-primary:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* curriculum cover card on right */
+  .hero-card {
+    position: relative;
+    padding: 32px 28px 28px;
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    border: 1px solid var(--line-strong);
+    border-radius: 22px;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 80% 0%, rgba(245,166,35,0.15), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-card .label {
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--amber);
+  }
+  .hero-card h2 {
+    font-size: clamp(28px, 3vw, 38px);
+    line-height: 1.1;
+    margin-top: 16px;
+  }
+  .hero-card .meta {
+    margin-top: 22px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .hero-card .meta .cell {
+    padding: 14px 14px;
+    background: rgba(241,234,217,0.03);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+  .hero-card .meta .k {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  .hero-card .meta .v {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1;
+    margin-top: 8px;
+    color: var(--cream);
+  }
+  .hero-card .meta .v i { color: var(--amber); }
+  .hero-card .feats {
+    margin-top: 22px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .hero-card .feats span {
+    position: relative;
+    padding-left: 22px;
+    font-size: 14px;
+    color: var(--cream-dim);
+  }
+  .hero-card .feats span::before {
+    content: ""; position: absolute; left: 0; top: 6px;
+    width: 8px; height: 8px; background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  @media (max-width: 980px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 56px; }
+  }
+
+  /* section */
+  .section { padding: 110px 0; border-bottom: 1px solid var(--line); position: relative; }
+  .section h2 { font-size: clamp(36px, 4.6vw, 60px); line-height: 1.05; max-width: 800px; margin-top: 18px; }
+  .section .lede { margin-top: 18px; max-width: 640px; font-size: 17px; color: var(--cream-dim); }
+
+  /* personas */
+  .personas {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .persona {
+    position: relative;
+    padding: 32px 28px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: var(--obsidian-2);
+    transition: border-color 240ms ease, transform 240ms ease;
+    overflow: hidden;
+  }
+  .persona:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-4px); }
+  .persona .pnum {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+    color: var(--cream-mute); text-transform: uppercase;
+  }
+  .persona h3 {
+    margin-top: 14px;
+    font-size: 26px;
+    line-height: 1.15;
+  }
+  .persona p {
+    margin-top: 14px;
+    color: var(--cream-dim);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .persona-tags {
+    margin-top: 20px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .persona-tags span {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 9px;
+    background: rgba(245,166,35,0.08);
+    color: var(--amber);
+    border-radius: 999px;
+  }
+  @media (max-width: 880px) { .personas { grid-template-columns: 1fr; } }
+
+  /* CURRICULUM TIMELINE */
+  .curriculum {
+    margin-top: 64px;
+    display: flex; flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .curriculum::before {
+    content: ""; position: absolute;
+    top: 0; bottom: 0; left: 96px;
+    width: 1px; background: linear-gradient(180deg, transparent, var(--line-strong) 5%, var(--line-strong) 95%, transparent);
+  }
+  .mod {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    padding: 36px 0;
+    position: relative;
+    border-bottom: 1px dashed var(--line);
+  }
+  .mod:last-child { border-bottom: 0; }
+  .mod .mod-rail {
+    position: relative;
+  }
+  .mod .mod-rail .num {
+    position: absolute;
+    top: 0; left: 80px;
+    transform: translateX(-50%);
+    width: 36px; height: 36px;
+    display: grid; place-items: center;
+    background: var(--obsidian);
+    border: 1px solid var(--amber);
+    border-radius: 50%;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--amber);
+    font-size: 18px;
+    z-index: 1;
+  }
+  .mod .mod-rail .weeks {
+    margin-top: 50px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  .mod-body { padding-left: 32px; max-width: 920px; }
+  .mod-body .obj {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--amber);
+  }
+  .mod-body h3 {
+    margin-top: 10px;
+    font-size: clamp(28px, 3vw, 38px);
+    line-height: 1.1;
+  }
+  .mod-body .obj-line {
+    margin-top: 12px;
+    color: var(--cream-dim);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .mod-body .obj-line b { color: var(--cream); font-weight: 500; }
+  .mod-grid {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .mod-grid h4 {
+    font-family: var(--mono); font-weight: 400;
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--cream-mute);
+    margin-bottom: 14px;
+  }
+  .mod-grid ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .mod-grid li {
+    padding-left: 22px;
+    position: relative;
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .mod-grid li::before {
+    content: ""; position: absolute; left: 0; top: 7px;
+    width: 8px; height: 8px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .mod-grid li b { color: var(--cream); font-weight: 500; }
+  .mod-project {
+    margin-top: 24px;
+    padding: 18px 20px;
+    background: rgba(245,166,35,0.05);
+    border: 1px solid rgba(245,166,35,0.15);
+    border-radius: 14px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .mod-project .ptag {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--amber);
+    padding: 5px 9px;
+    background: rgba(245,166,35,0.1);
+    border-radius: 999px;
+    flex: none;
+    margin-top: 2px;
+  }
+  .mod-project p {
+    margin: 0;
+    color: var(--cream);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .mod-project p b { color: var(--cream); }
+  .mod-project p i { font-style: italic; color: var(--amber-soft); }
+  @media (max-width: 880px) {
+    .curriculum::before { left: 18px; }
+    .mod { grid-template-columns: 1fr; gap: 24px; }
+    .mod-body { padding-left: 0; }
+    .mod .mod-rail { display: flex; align-items: center; gap: 16px; }
+    .mod .mod-rail .num { position: static; transform: none; }
+    .mod .mod-rail .weeks { margin-top: 0; }
+    .mod-grid { grid-template-columns: 1fr; }
+  }
+
+  /* DELIVERY FORMATS */
+  .formats {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .fmt {
+    padding: 32px 28px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    transition: border-color 240ms ease, transform 240ms ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .fmt:hover { border-color: rgba(245,166,35,0.3); transform: translateY(-4px); }
+  .fmt .icon {
+    width: 48px; height: 48px;
+    position: relative;
+    margin-bottom: 24px;
+    display: grid; place-items: center;
+  }
+  .fmt .icon::before {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(245,166,35,0.12);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .fmt .icon svg { width: 24px; height: 24px; color: var(--amber); position: relative; z-index: 1; }
+  .fmt h3 { font-size: 24px; line-height: 1.15; }
+  .fmt p {
+    margin-top: 12px;
+    color: var(--cream-dim);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .fmt .tagline {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  @media (max-width: 880px) { .formats { grid-template-columns: 1fr; } }
+
+  /* PHILOSOPHY block */
+  .philosophy {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .phil-panel {
+    aspect-ratio: 5 / 4;
+    border-radius: 24px;
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 20%, rgba(245,166,35,0.18), transparent 60%),
+      linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    position: relative; overflow: hidden;
+  }
+  .phil-panel .stack {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+  .phil-panel .stack svg { width: 70%; height: 70%; }
+  .phil-points {
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .phil-point {
+    display: grid; grid-template-columns: 44px 1fr; gap: 18px; align-items: start;
+  }
+  .phil-point .h {
+    width: 44px; height: 44px;
+    background: rgba(245,166,35,0.12);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    display: grid; place-items: center;
+    color: var(--amber); font-family: var(--serif); font-style: italic; font-size: 18px;
+  }
+  .phil-point h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .phil-point p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  @media (max-width: 880px) { .philosophy { grid-template-columns: 1fr; } }
+
+  /* FAQ */
+  .faq { margin-top: 56px; border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary {
+    padding: 28px 0;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.3;
+    color: var(--cream);
+    transition: color 200ms ease;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { color: var(--amber); }
+  .faq summary::after {
+    content: "+"; color: var(--amber); font-size: 28px;
+    font-family: var(--sans); transition: transform 240ms ease; flex: none;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .ans { padding: 0 0 28px; font-size: 16px; color: var(--cream-dim); line-height: 1.6; max-width: 760px; }
+
+  /* CTA */
+  .cta-strip {
+    padding: 80px 0; text-align: center;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+  }
+  .cta-strip h2 { font-size: clamp(32px, 4vw, 52px); line-height: 1.05; max-width: 760px; margin: 0 auto; }
+  .cta-strip .lede { margin: 18px auto 0; max-width: 540px; color: var(--cream-dim); }
+  .cta-strip .btn { margin-top: 32px; }
+
+  /* footer */
+  footer { padding: 80px 0 40px; background: var(--obsidian); }
+  .foot { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 40px; }
+  .foot h4 { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-mute); margin-bottom: 16px; }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot a { color: var(--cream-dim); font-size: 14px; }
+  .foot a:hover { color: var(--amber); }
+  .foot-brand .blurb { margin-top: 20px; color: var(--cream-mute); font-size: 13px; line-height: 1.55; max-width: 280px; }
+  .foot-bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--cream-mute); }
+  @media (max-width: 880px) { .foot { grid-template-columns: 1fr 1fr; } .foot-brand { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Beevolve">
+      <span class="brand-mark"></span>
+      <span class="brand-name"><b>Bee</b><i>volve</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="learn-automation.html" class="current">Learn Automation</a>
+      <a href="index.html#proof">Case studies</a>
+      <a href="index.html#more">Company</a>
+    </nav>
+    <a href="#contact" class="nav-cta">
+      Apply now
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hex-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <defs>
+        <pattern id="hex-p" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="rgba(245,166,35,0.18)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex-p)"/>
+    </svg>
+  </div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow">The Beevolve Academy</span>
+      <h1>Teaching automation as <span class="ital">engineering, not prompts.</span></h1>
+      <p class="lede">
+        Most courses teach you to <b>type prompts</b>. We teach you to <b>architect systems</b> — data structures, APIs, logic flow, AI agents, and the discipline to ship them in production.
+      </p>
+      <p class="lede">
+        Twelve weeks. Five modules. A real industry capstone. You leave as an Automation Architect, not a prompt operator.
+      </p>
+      <div class="hero-ctas">
+        <a href="#curriculum" class="btn btn-ghost">See the curriculum
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#contact" class="btn btn-primary">Apply now
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <aside class="hero-card">
+      <div class="label">The Program</div>
+      <h2>The n8n &amp; AI Automation <span class="ital">Masterclass.</span></h2>
+      <div class="meta">
+        <div class="cell">
+          <div class="k">Duration</div>
+          <div class="v">12 <i>weeks</i></div>
+        </div>
+        <div class="cell">
+          <div class="k">Modules</div>
+          <div class="v">5</div>
+        </div>
+        <div class="cell">
+          <div class="k">Live projects</div>
+          <div class="v">5 + <i>capstone</i></div>
+        </div>
+        <div class="cell">
+          <div class="k">Outcome</div>
+          <div class="v">Job <i>ready</i></div>
+        </div>
+      </div>
+      <div class="feats">
+        <span>Engineering fundamentals taught through low-code</span>
+        <span>AI agents, RAG, multi-agent systems included</span>
+        <span>Self-hosting, version control, deployment</span>
+        <span>Real industry capstone + portfolio review</span>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Pedagogical philosophy</span>
+    <h2>The <span class="ital">Fair-Code</span> Architect.</h2>
+    <p class="lede">
+      The education market is flooded with generic "Prompt Engineering" courses that age in months. We teach Engineering Fundamentals through the lens of Low-Code tools — skills that compound for a decade.
+    </p>
+
+    <div class="philosophy">
+      <div class="phil-panel">
+        <div class="stack">
+          <svg viewBox="0 0 200 200" fill="none">
+            <!-- layered hex stack -->
+            <g opacity="0.4"><path d="M100 30 L150 55 L150 105 L100 130 L50 105 L50 55 Z" stroke="#F5A623" stroke-width="1.5"/></g>
+            <g opacity="0.65"><path d="M100 50 L150 75 L150 125 L100 150 L50 125 L50 75 Z" stroke="#F5A623" stroke-width="1.5"/></g>
+            <g><path d="M100 70 L150 95 L150 145 L100 170 L50 145 L50 95 Z" fill="rgba(245,166,35,0.15)" stroke="#F5A623" stroke-width="2"/></g>
+            <text x="100" y="125" text-anchor="middle" font-family="Instrument Serif, serif" font-style="italic" font-size="22" fill="#f1ead9">architect</text>
+          </svg>
+        </div>
+      </div>
+      <div class="phil-points">
+        <div class="phil-point">
+          <div class="h">i</div>
+          <div>
+            <h4>Data structures over prompts</h4>
+            <p>JSON, schema design, data shape. Without these, every "AI" automation collapses the moment data drifts.</p>
+          </div>
+        </div>
+        <div class="phil-point">
+          <div class="h">ii</div>
+          <div>
+            <h4>API architecture as a first language</h4>
+            <p>REST, authentication, webhooks, error handling. The internet's wiring diagram — taught as primary, not optional.</p>
+          </div>
+        </div>
+        <div class="phil-point">
+          <div class="h">iii</div>
+          <div>
+            <h4>Logic flow, then AI</h4>
+            <p>Conditionals, loops, retries, dead-letter queues. Then we introduce LLMs as one node in a system, not the whole system.</p>
+          </div>
+        </div>
+        <div class="phil-point">
+          <div class="h">iv</div>
+          <div>
+            <h4>Ownership over dependency</h4>
+            <p>Self-hosting, version control, deployment. You graduate able to run, scale, and own your systems — no vendor lock.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGNED FOR -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Designed for</span>
+    <h2>Three kinds of <span class="ital">builder.</span></h2>
+    <p class="lede">
+      The curriculum is paced to take anyone from "I don't know what JSON is" to architecting agentic systems — but it's especially calibrated for three career inflection points.
+    </p>
+
+    <div class="personas">
+      <article class="persona">
+        <div class="pnum">Persona / 01</div>
+        <h3>The <span class="ital">Upskiller.</span></h3>
+        <p>IT professionals or operations managers wanting to add "Automation Engineer" to their resume — and bring serious leverage back to their current org.</p>
+        <div class="persona-tags"><span>IT</span><span>Ops</span><span>Mid-career</span></div>
+      </article>
+
+      <article class="persona">
+        <div class="pnum">Persona / 02</div>
+        <h3>The <span class="ital">Career Switcher.</span></h3>
+        <p>Non-technical individuals seeking a high-paying entry into the tech sector without spending four years on a CS degree. We compress the path.</p>
+        <div class="persona-tags"><span>Non-CS</span><span>Career change</span><span>Job-ready in 12wk</span></div>
+      </article>
+
+      <article class="persona">
+        <div class="pnum">Persona / 03</div>
+        <h3>The <span class="ital">Agency Founder.</span></h3>
+        <p>Entrepreneurs starting their own automation agencies. Pricing, scoping, SOW templates and client systems are baked into the final module.</p>
+        <div class="persona-tags"><span>Founder</span><span>Freelance</span><span>Pricing + SOW</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section class="section" id="curriculum">
+  <div class="wrap">
+    <span class="eyebrow">Comprehensive syllabus</span>
+    <h2>The 12-week <span class="ital">Automation Masterclass.</span></h2>
+    <p class="lede">
+      Five modules, each with topics, a hands-on project, and feedback from a working automation architect. Designed to take a novice to job-ready.
+    </p>
+
+    <div class="curriculum">
+
+      <!-- MODULE 1 -->
+      <div class="mod">
+        <div class="mod-rail">
+          <div class="num">i</div>
+          <div class="weeks">Weeks 1–2</div>
+        </div>
+        <div class="mod-body">
+          <div class="obj">Objective — The physics of automation</div>
+          <h3>Foundations of <span class="ital">workflow logic.</span></h3>
+          <p class="obj-line">Start at zero. <b>Understand the canvas, the causality of triggers and actions, and the language data speaks.</b> Build muscle memory before complexity.</p>
+          <div class="mod-grid">
+            <div>
+              <h4>Topics</h4>
+              <ul>
+                <li><b>The n8n interface</b> — Canvas, Nodes, Execution History.</li>
+                <li><b>Trigger vs. Action</b> — the fundamental causality of automation.</li>
+                <li><b>Data structures</b> — a deep dive into JSON. Why, how to read it, how to structure it.</li>
+                <li><b>The 'Set' node</b> — manipulating fields and preparing data downstream.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>You'll be able to</h4>
+              <ul>
+                <li>Read and write JSON fluently</li>
+                <li>Trace data through any workflow</li>
+                <li>Trigger workflows on a schedule, webhook, or event</li>
+                <li>Debug a broken execution from the History tab</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mod-project">
+            <span class="ptag">Project</span>
+            <p><i>"The Morning Briefing"</i> — Build a workflow that triggers at 8:00 AM, fetches weather (OpenWeatherMap), pulls news headlines (News API), and sends a summarized message to Telegram every morning.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 2 -->
+      <div class="mod">
+        <div class="mod-rail">
+          <div class="num">ii</div>
+          <div class="weeks">Weeks 3–5</div>
+        </div>
+        <div class="mod-body">
+          <div class="obj">Objective — Connect anything to anything</div>
+          <h3>The API &amp; <span class="ital">integration layer.</span></h3>
+          <p class="obj-line">The universal connector. <b>Once you speak HTTP fluently, the entire internet becomes a node in your workflow.</b></p>
+          <div class="mod-grid">
+            <div>
+              <h4>Topics</h4>
+              <ul>
+                <li><b>HTTP requests</b> — GET, POST, PUT, DELETE.</li>
+                <li><b>Authentication</b> — API keys, bearer tokens, OAuth2. Secure credential handling.</li>
+                <li><b>Webhooks</b> — listeners that react to real-time events.</li>
+                <li><b>Data transformation</b> — merge sources, match IDs across systems.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>You'll be able to</h4>
+              <ul>
+                <li>Integrate any documented API into n8n in under an hour</li>
+                <li>Set up OAuth2 from scratch without panic</li>
+                <li>Build a Webhook listener with replay and error logging</li>
+                <li>Merge two data sources by a foreign key</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mod-project">
+            <span class="ptag">Project</span>
+            <p><i>"The Lead Enricher"</i> — A workflow that receives a new lead via webhook, looks up the email in Clearbit / Apollo for company data, and writes the enriched profile to HubSpot or Pipedrive.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 3 -->
+      <div class="mod">
+        <div class="mod-rail">
+          <div class="num">iii</div>
+          <div class="weeks">Weeks 6–7</div>
+        </div>
+        <div class="mod-body">
+          <div class="obj">Objective — Breaking the low-code ceiling</div>
+          <h3>Advanced logic &amp; <span class="ital">JavaScript.</span></h3>
+          <p class="obj-line">Where low-code ends, code begins. <b>Just enough JavaScript to handle the 10% of problems that pure no-code can't.</b></p>
+          <div class="mod-grid">
+            <div>
+              <h4>Topics</h4>
+              <ul>
+                <li><b>Complex logic</b> — Switch nodes, If/Else nesting, Wait nodes.</li>
+                <li><b>Looping</b> — Split In Batches. Process 1,000 rows without crashing.</li>
+                <li><b>The 'Code' node</b> — JavaScript .map(), .filter(), .reduce(). Regex.</li>
+                <li><b>Error handling</b> — Dead Letter Queues. Retry logic. Failure paths.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>You'll be able to</h4>
+              <ul>
+                <li>Write JS to transform any data shape into any other</li>
+                <li>Process arbitrarily large datasets with batching</li>
+                <li>Build self-healing workflows with retries and DLQs</li>
+                <li>Parse messy text with regex without losing your mind</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mod-project">
+            <span class="ptag">Project</span>
+            <p><i>"The Invoice Parser"</i> — A workflow that reads a CSV of 500 orders, calculates tax per country code in JS, generates PDF invoices, and emails them — with full failure recovery.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 4 -->
+      <div class="mod">
+        <div class="mod-rail">
+          <div class="num">iv</div>
+          <div class="weeks">Weeks 8–10</div>
+        </div>
+        <div class="mod-body">
+          <div class="obj">Objective — Build intelligent, autonomous workers</div>
+          <h3>AI &amp; <span class="ital">agentic systems.</span></h3>
+          <p class="obj-line">Now the LLM enters. <b>Treated as one (powerful) node — wired into agents with memory, tools, and the discipline to call them correctly.</b></p>
+          <div class="mod-grid">
+            <div>
+              <h4>Topics</h4>
+              <ul>
+                <li><b>LLM integration</b> — OpenAI (GPT-4), Anthropic (Claude). Prompting for JSON.</li>
+                <li><b>The AI Agent node</b> — Memory (WindowBuffer), Tools, Chains.</li>
+                <li><b>RAG</b> — Vector databases (Pinecone / Supabase). Embeddings.</li>
+                <li><b>Multi-agent</b> — Manager → Researcher → Writer architectures.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>You'll be able to</h4>
+              <ul>
+                <li>Get strict JSON out of an LLM, reliably</li>
+                <li>Give an agent tools and supervise its calls</li>
+                <li>Build a working RAG system end-to-end</li>
+                <li>Architect a multi-agent system with clean delegation</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mod-project">
+            <span class="ptag">Project</span>
+            <p><i>"The HR Policy Bot"</i> — An AI agent connected to a Slack channel that answers employee questions by retrieving from a PDF Employee Handbook stored in a vector database.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 5 -->
+      <div class="mod">
+        <div class="mod-rail">
+          <div class="num">v</div>
+          <div class="weeks">Weeks 11–12</div>
+        </div>
+        <div class="mod-body">
+          <div class="obj">Objective — Going pro</div>
+          <h3>Enterprise deployment &amp; <span class="ital">career strategy.</span></h3>
+          <p class="obj-line">Ship to production, get paid for it. <b>Self-hosting, versioning, pricing, and the portfolio that gets you hired or hired-by.</b></p>
+          <div class="mod-grid">
+            <div>
+              <h4>Topics</h4>
+              <ul>
+                <li><b>Self-hosting</b> — Docker, DigitalOcean, AWS EC2. SSL, VPN, env vars.</li>
+                <li><b>Version control</b> — Git for workflow backup and team collaboration.</li>
+                <li><b>Freelancing &amp; pricing</b> — Scoping, SOWs, pricing models.</li>
+                <li><b>Resume workshop</b> — A portfolio that appeals to CTOs.</li>
+              </ul>
+            </div>
+            <div>
+              <h4>You'll be able to</h4>
+              <ul>
+                <li>Run a production n8n instance on your own infra</li>
+                <li>Manage workflow versions in Git like real code</li>
+                <li>Write a tight SOW and price a project without flinching</li>
+                <li>Ship a portfolio that opens doors</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mod-project">
+            <span class="ptag">Capstone</span>
+            <p><i>"The Industry Capstone"</i> — Find a real business problem (yours or a client's), architect a solution, build it end-to-end, document it, present it. Graded by working automation architects.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY FORMATS -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">How you'll learn</span>
+    <h2>Three delivery <span class="ital">formats.</span></h2>
+    <p class="lede">
+      Same curriculum, three ways to consume it. The format choice is about your pace and accountability, not the material.
+    </p>
+
+    <div class="formats">
+      <article class="fmt">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+        </div>
+        <h3>On-Demand <span class="ital">LMS</span></h3>
+        <p>Full video library with quizzes, downloadable templates, and the n8n workflow files for every project. Go at your own pace; rewatch when you need to.</p>
+        <div class="tagline">Self-paced · Lifetime access · Templates</div>
+      </article>
+
+      <article class="fmt">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14.5 20c0-2.3 1.7-4 4-4s2.5 1.4 2.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Live <span class="ital">Cohorts</span></h3>
+        <p>12-week intensive with live Zoom labs, weekly office hours, mentorship from working architects, and a peer cohort building alongside you.</p>
+        <div class="tagline">Live + mentored · Cohort-based · Capstone review</div>
+      </article>
+
+      <article class="fmt">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V8l7-5 7 5v13" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 21v-6h4v6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Corporate <span class="ital">Workshops</span></h3>
+        <p>On-site Automation Bootcamps for companies upskilling their workforce. Customized to your stack, your data, your real internal workflows.</p>
+        <div class="tagline">On-site · Custom curriculum · Team-wide</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES STRIP -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">After 12 weeks</span>
+    <h2>Architect, not <span class="ital">operator.</span></h2>
+    <p class="lede">What graduates can do that the average "prompt engineering" graduate cannot.</p>
+
+    <div style="margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden;">
+      <div style="padding: 32px 28px; border-right: 1px solid var(--line);">
+        <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-mute); margin-bottom: 18px;">A typical course graduate</div>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px;">
+          <li style="color: var(--cream-mute); font-size: 15px;">— Can write a clever prompt</li>
+          <li style="color: var(--cream-mute); font-size: 15px;">— Uses pre-built templates without understanding them</li>
+          <li style="color: var(--cream-mute); font-size: 15px;">— Stops at the first API error</li>
+          <li style="color: var(--cream-mute); font-size: 15px;">— Cannot self-host or deploy</li>
+          <li style="color: var(--cream-mute); font-size: 15px;">— Skills depreciate the moment models change</li>
+        </ul>
+      </div>
+      <div style="padding: 32px 28px; background: linear-gradient(180deg, rgba(245,166,35,0.05), transparent);">
+        <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); margin-bottom: 18px;">A Beevolve graduate</div>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px;">
+          <li style="color: var(--cream); font-size: 15px; padding-left: 22px; position: relative;"><span style="position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"></span> Architects systems from a blank canvas</li>
+          <li style="color: var(--cream); font-size: 15px; padding-left: 22px; position: relative;"><span style="position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"></span> Reads any API docs, integrates in under an hour</li>
+          <li style="color: var(--cream); font-size: 15px; padding-left: 22px; position: relative;"><span style="position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"></span> Builds self-healing pipelines with retry &amp; DLQ logic</li>
+          <li style="color: var(--cream); font-size: 15px; padding-left: 22px; position: relative;"><span style="position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"></span> Self-hosts production infra with versioning</li>
+          <li style="color: var(--cream); font-size: 15px; padding-left: 22px; position: relative;"><span style="position:absolute;left:0;top:7px;width:8px;height:8px;background:var(--amber);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"></span> Skills compound across model generations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">FAQ</span>
+    <h2>Frequently asked <span class="ital">questions.</span></h2>
+
+    <div class="faq">
+      <details>
+        <summary>Is this course suitable for non-technical backgrounds?</summary>
+        <div class="ans">Yes. The curriculum is designed to teach engineering fundamentals through low-code systems. We start at "what is JSON" and end at multi-agent architectures — nobody gets left behind, and the visual canvas does most of the heavy lifting in the early weeks.</div>
+      </details>
+      <details>
+        <summary>Will I be job-ready after completing the program?</summary>
+        <div class="ans">Graduates are trained to design and own automation systems, not just use tools. The capstone is a real production-grade build — graded by working architects, suitable as a portfolio piece on day one.</div>
+      </details>
+      <details>
+        <summary>How is this different from a prompt engineering course?</summary>
+        <div class="ans">Prompt engineering is a small component of one module. Most of the time is spent on system architecture, workflows, APIs, data, and AI integration — the durable skills that don't depreciate when the next model drops.</div>
+      </details>
+      <details>
+        <summary>Do students work on real projects?</summary>
+        <div class="ans">Every module includes a production-style project, and the program ends with a real industry capstone. By the end you'll have six portfolio-ready builds, not slides.</div>
+      </details>
+      <details>
+        <summary>Can this help me start an automation agency or freelance?</summary>
+        <div class="ans">Yes. The final module covers pricing, scoping, SOW creation, and freelancing fundamentals — and we share the actual contract templates we use in our own client engagements.</div>
+      </details>
+      <details>
+        <summary>Are corporate teams trained as well?</summary>
+        <div class="ans">Yes. Customized corporate automation bootcamps are offered on-site, with the curriculum tailored to your stack and your real internal workflows. Cohorts of 8–20 work best.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip" id="contact">
+  <div class="wrap">
+    <h2>Architects ship. <span class="ital">Operators wait.</span></h2>
+    <p class="lede">Apply for the next cohort. Twelve weeks, five modules, one real capstone. Limited seats — we cap each cohort at 30 to keep mentorship dense.</p>
+    <a href="#" class="btn btn-primary">Apply for next cohort
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name"><b>Bee</b><i>volve</i></span>
+        </a>
+        <p class="blurb">AI automation, done for you — and taught to you. Build, ship, and own the systems that scale your operations.</p>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="learn-automation.html#curriculum">Curriculum</a></li>
+          <li><a href="learn-automation.html">Cohorts</a></li>
+          <li><a href="#">Corporate workshops</a></li>
+          <li><a href="#">Playbooks</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="products.html">All products</a></li>
+          <li><a href="products.html">Future Talent Suite</a></li>
+          <li><a href="products.html">Industrial Suite</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Case studies</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="/cdn-cgi/l/email-protection#2c44456c4e49495a43405a49024f43"><span class="__cf_email__" data-cfemail="8ce4e5cceee9e9fae3e0fae9a2efe3">[email&#160;protected]</span></a></li>
+          <li><a href="#">Apply now</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Beevolve, Inc. — The hive keeps running.</span>
+      <span>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+</body>
+</html>

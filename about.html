@@ -1,0 +1,1025 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>About Us — Beevolve</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --obsidian:    #0a0908;
+    --obsidian-2:  #121010;
+    --obsidian-3:  #1b1815;
+    --ink:         #2a2620;
+    --line:        rgba(241, 234, 217, 0.08);
+    --line-strong: rgba(241, 234, 217, 0.16);
+    --cream:       #f1ead9;
+    --cream-dim:   #cdc3ac;
+    --cream-mute:  #8a8170;
+    --amber:       #F5A623;
+    --amber-soft:  #f2bb5d;
+    --amber-deep:  #c6841a;
+
+    --serif:   "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --sans:    "DM Sans", "Inter", system-ui, sans-serif;
+    --mono:    "JetBrains Mono", ui-monospace, monospace;
+    --display: "Orbitron", "DM Sans", system-ui, sans-serif;
+
+    --maxw: 1280px;
+    --pad:  clamp(20px, 4vw, 56px);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--obsidian);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--amber); color: var(--obsidian); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    display: inline-block;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .ital { font-style: italic; color: var(--amber-soft); }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(10, 9, 8, 0.82);
+    border-bottom: 1px solid var(--line);
+    transition: border-color 240ms ease, background 240ms ease;
+  }
+  .nav-inner {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 22px; height: 22px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    position: relative;
+    flex: none;
+  }
+  .brand-mark::after {
+    content: ""; position: absolute; inset: 4px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .brand-name b { font-weight: 400; }
+  .brand-name i { font-style: italic; color: var(--amber); margin-left: 1px; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 14px; color: var(--cream-dim);
+  }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a.active { color: var(--amber); }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1px; background: var(--amber);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 220ms ease;
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { transform: scaleX(1); }
+
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+  .nav-cta:hover { background: var(--amber-soft); transform: translateY(-1px); }
+
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: none;
+  }
+  .nav-burger span {
+    display: block;
+    height: 1.5px;
+    background: var(--cream);
+    border-radius: 999px;
+    transition: transform 240ms ease, opacity 180ms ease, width 240ms ease;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    z-index: 49;
+    background: rgba(10,9,8,0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 20px var(--pad) 28px;
+    flex-direction: column;
+    gap: 4px;
+    transform: translateY(-8px);
+    opacity: 0;
+    transition: transform 240ms ease, opacity 240ms ease;
+  }
+  .mobile-menu.open {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .mobile-menu a {
+    padding: 14px 0;
+    font-size: 18px;
+    color: var(--cream-dim);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-menu a:last-of-type { border-bottom: 0; }
+  .mobile-menu a:hover { color: var(--amber); }
+  .mobile-menu .mobile-cta {
+    margin-top: 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 14px 22px; border-radius: 999px;
+    font-size: 15px; font-weight: 500;
+    text-align: center; justify-content: center;
+  }
+
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+  }
+
+  /* ---------- page hero ---------- */
+  .page-hero {
+    padding-top: clamp(96px, 14vw, 160px);
+    padding-bottom: clamp(56px, 8vw, 100px);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 160px;
+    background: linear-gradient(180deg, transparent 0%, var(--obsidian) 100%);
+    pointer-events: none;
+  }
+
+  /* hex grid decoration */
+  .hex-bg {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.45;
+    mask-image: radial-gradient(ellipse 70% 80% at 70% 40%, #000 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 70% 40%, #000 20%, transparent 70%);
+    z-index: 0;
+  }
+  .hex-bg svg { width: 100%; height: 100%; display: block; }
+
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    opacity: 0.45;
+  }
+  .glow-1 { width: 480px; height: 480px; background: #F5A62322; left: -120px; top: 80px; }
+  .glow-2 { width: 380px; height: 380px; background: #c2570018; right: -80px; top: 100px; }
+
+  .page-hero-inner {
+    position: relative; z-index: 2;
+    max-width: 760px;
+  }
+  .page-hero h1 {
+    font-size: clamp(52px, 6.5vw, 96px);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    margin-top: 22px;
+  }
+  .page-hero p.lede {
+    margin-top: 24px;
+    max-width: 540px;
+    font-size: 18px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+
+  /* ---------- sections ---------- */
+  .section {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  @media (max-width: 1024px) { .section { padding: 88px 0; } }
+  @media (max-width: 760px) { .section { padding: 64px 0; } }
+  @media (max-width: 480px) { .section { padding: 52px 0; } }
+
+  .section h2 {
+    font-size: clamp(36px, 4.6vw, 64px);
+    line-height: 1.05;
+    max-width: 760px;
+    margin-top: 18px;
+  }
+  .section .lede {
+    margin-top: 18px;
+    max-width: 580px;
+    font-size: 17px;
+    color: var(--cream-dim);
+  }
+
+  /* ---------- mission ---------- */
+  .mission-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .mission-grid .copy h3 {
+    font-size: clamp(28px, 3.5vw, 48px);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .mission-grid .copy p {
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.7;
+    margin: 0 0 16px;
+  }
+  .mission-grid .copy p:last-child { margin-bottom: 0; }
+
+  .mission-stat-col {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .mstat {
+    padding: 28px 28px 28px 36px;
+    background: var(--obsidian-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mstat::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--amber), transparent);
+  }
+  .mstat .n {
+    font-family: var(--serif);
+    font-size: clamp(44px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .mstat .n .unit { color: var(--amber); font-style: italic; }
+  .mstat .label {
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+
+  @media (max-width: 860px) {
+    .mission-grid { grid-template-columns: 1fr; gap: 48px; }
+    .mission-stat-col { flex-direction: row; flex-wrap: wrap; }
+    .mstat { flex: 1 1 calc(50% - 18px); }
+  }
+  @media (max-width: 520px) {
+    .mstat { flex: 1 1 100%; }
+  }
+
+  /* ---------- product cards ---------- */
+  .products-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .prod {
+    padding: 36px 30px 30px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 220ms ease;
+  }
+  .prod:hover { background: rgba(245,166,35,0.035); }
+
+  .prod-icon {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .prod h3 {
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .prod p {
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .products-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- founder / leadership ---------- */
+  .founder-section {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 1024px) { .founder-section { padding: 88px 0; } }
+  @media (max-width: 760px) { .founder-section { padding: 64px 0; } }
+  @media (max-width: 480px) { .founder-section { padding: 52px 0; } }
+
+  .founder-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 60% at 80% 50%, rgba(245,166,35,0.05), transparent 70%);
+    pointer-events: none;
+  }
+
+  .founder-inner {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+  }
+
+  .founder-photo-wrap {
+    position: relative;
+  }
+  .founder-photo {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 24px;
+    display: block;
+    border: 1px solid var(--line-strong);
+    filter: grayscale(15%) contrast(1.05);
+  }
+  .founder-photo-badge {
+    position: absolute;
+    bottom: -1px; left: -1px; right: -1px;
+    padding: 28px 28px 22px;
+    border-radius: 0 0 24px 24px;
+    background: linear-gradient(180deg, transparent 0%, rgba(10,9,8,0.97) 50%);
+  }
+  .founder-photo-badge .name {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.1;
+  }
+  .founder-photo-badge .title {
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .founder-content {}
+  .founder-content .bio {
+    margin-top: 22px;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--cream-dim);
+  }
+  .founder-content .bio p { margin: 0 0 18px; }
+  .founder-content .bio p:last-child { margin-bottom: 0; }
+
+  .founder-content .bio-quote {
+    margin: 36px 0 32px;
+    padding: 28px 32px;
+    border-left: 3px solid var(--amber);
+    background: var(--obsidian-2);
+    border-radius: 0 12px 12px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--cream);
+  }
+
+  .beliefs {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .belief {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--cream-dim);
+    transition: background 200ms ease;
+  }
+  .belief:last-child { border-bottom: 0; }
+  .belief:hover { background: rgba(245,166,35,0.04); color: var(--cream); }
+  .belief .b-icon {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    background: rgba(245,166,35,0.12);
+    border-radius: 6px;
+    flex: none;
+    color: var(--amber);
+    font-size: 13px;
+  }
+  .belief strong { color: var(--cream); font-weight: 500; }
+
+  @media (max-width: 1000px) {
+    .founder-inner { grid-template-columns: 1fr; gap: 48px; }
+    .founder-photo-wrap { max-width: 380px; }
+  }
+  @media (max-width: 520px) {
+    .founder-photo-wrap { max-width: 100%; }
+  }
+
+  /* ---------- values ---------- */
+  .values-grid {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .value {
+    padding: 36px 32px;
+    background: var(--obsidian-2);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 280ms ease, border-color 280ms ease;
+  }
+  .value:hover {
+    transform: translateY(-4px);
+    border-color: rgba(245,166,35,0.3);
+  }
+  .value-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--amber);
+    margin-bottom: 18px;
+  }
+  .value h3 {
+    font-size: 30px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .value p {
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) { .values-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    position: relative;
+    padding: clamp(72px, 10vw, 140px) 0 clamp(64px, 9vw, 130px);
+    overflow: hidden;
+    text-align: center;
+  }
+  .cta h2 {
+    font-size: clamp(44px, 6vw, 80px);
+    line-height: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .cta .lede {
+    margin: 24px auto 0;
+    max-width: 520px;
+    color: var(--cream-dim);
+    font-size: 17px;
+  }
+  .cta .ctas { margin-top: 40px; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 480px) {
+    .cta h2 { font-size: clamp(36px, 9vw, 56px); }
+    .cta .ctas { flex-direction: column; align-items: stretch; }
+    .cta .ctas .btn { justify-content: center; }
+  }
+
+  .cta-hex {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 75%);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn .arrow { transition: transform 200ms ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary { background: var(--amber); color: var(--obsidian); }
+  .btn-primary:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* ---------- footer ---------- */
+  footer { padding: 80px 0 40px; background: var(--obsidian); border-top: 1px solid var(--line); }
+  .foot {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .foot h4 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    margin-bottom: 16px;
+  }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot a { color: var(--cream-dim); font-size: 14px; }
+  .foot a:hover { color: var(--amber); }
+  .foot-brand .blurb {
+    margin-top: 20px;
+    color: var(--cream-mute);
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 280px;
+  }
+  .foot-bottom {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--cream-mute);
+  }
+  .foot-bottom .status { display: inline-flex; align-items: center; gap: 8px; }
+  .foot-bottom .status .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #6dca78;
+    box-shadow: 0 0 10px #6dca78;
+  }
+  @media (max-width: 880px) {
+    .foot { grid-template-columns: 1fr 1fr; }
+    .foot-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 480px) {
+    .foot { grid-template-columns: 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    footer { padding: 56px 0 32px; }
+  }
+
+  /* ---------- scroll reveal ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 600ms ease, transform 600ms ease;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- =================== NAV =================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Beevolve">
+      <span class="brand-mark"></span>
+      <span class="brand-name"><b>Bee</b><i>volve</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="learn-automation.html">Learn Automation</a>
+      <a href="case-studies.html">Case Studies</a>
+      <a href="about.html" class="active">About us</a>
+    </nav>
+    <a href="index.html#cta" class="nav-cta">
+      Book a free audit
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
+  <a href="case-studies.html">Case Studies</a>
+  <a href="about.html" class="active">About us</a>
+  <a href="index.html#cta" class="mobile-cta">
+    Book a free audit
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</nav>
+
+<!-- =================== PAGE HERO =================== -->
+<section class="page-hero">
+  <div class="hex-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="hex" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="rgba(245,166,35,0.18)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex)"/>
+    </svg>
+  </div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap page-hero-inner reveal">
+    <span class="eyebrow">Who we are</span>
+    <h1>
+      Built in India,<br/>
+      built for <span class="ital">the world.</span>
+    </h1>
+    <p class="lede">
+      Beevolve is an automation-first company building intelligent workflow products that remove friction, accelerate decisions, and let humans focus on what only humans can do.
+    </p>
+  </div>
+</section>
+
+<!-- =================== MISSION =================== -->
+<section class="section" id="mission">
+  <div class="wrap">
+    <span class="eyebrow reveal">Our mission</span>
+    <h2 class="reveal">Turning <span class="ital">complexity</span> into clarity.</h2>
+
+    <div class="mission-grid">
+      <div class="copy reveal">
+        <h3>We automate<br/>the future of work.</h3>
+        <p>Intelligent automation is not a luxury — it's a necessity. Businesses today are drowning in repetitive processes, siloed data, and manual handoffs that slow everything down. We exist to change that.</p>
+        <p>Like a beehive — precisely orchestrated, every role purposeful, every process in sync — we help organisations operate with that same elegant efficiency.</p>
+        <p>Our products are 100% proprietary, built entirely in-house, and designed with a single purpose: to make your business faster, smarter, and ready for tomorrow.</p>
+      </div>
+
+      <div class="mission-stat-col reveal">
+        <div class="mstat">
+          <div class="n">1<span class="unit">M+</span></div>
+          <div class="label">Automation across live systems</div>
+        </div>
+        <div class="mstat">
+          <div class="n">10<span class="unit">K+</span></div>
+          <div class="label">Operational hours eliminated annually</div>
+        </div>
+        <div class="mstat">
+          <div class="n">90<span class="unit">%</span></div>
+          <div class="label">Reduction in process latency</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== WHAT WE BUILD =================== -->
+<section class="section" id="products">
+  <div class="wrap">
+    <span class="eyebrow reveal">What we build</span>
+    <h2 class="reveal">Our own products.<br/><span class="ital">Our own vision.</span></h2>
+    <p class="lede reveal">Every product is built in-house — no white-labelling, no reselling. We own the technology so we can own the outcomes.</p>
+
+    <div class="products-grid">
+      <div class="prod reveal">
+        <span class="prod-icon">⚙️</span>
+        <h3>Workflow <span class="ital">Automation</span></h3>
+        <p>End-to-end automation of business processes — from lead management to operations. Reduce manual intervention and errors at every step.</p>
+      </div>
+      <div class="prod reveal">
+        <span class="prod-icon">🤖</span>
+        <h3>AI-Powered <span class="ital">Agents</span></h3>
+        <p>Smart digital agents that work alongside your team — routing tasks, extracting insights, and triggering the right actions at the right time.</p>
+      </div>
+      <div class="prod reveal">
+        <span class="prod-icon">🔗</span>
+        <h3>Integrations <span class="ital">Platform</span></h3>
+        <p>Connect your existing tools seamlessly. Our products sit at the centre of your stack — orchestrating data flow without disrupting what's working.</p>
+      </div>
+      <div class="prod reveal">
+        <span class="prod-icon">📊</span>
+        <h3>Process <span class="ital">Intelligence</span></h3>
+        <p>Real-time visibility into how your workflows perform. Identify bottlenecks, measure automation ROI, and continuously improve.</p>
+      </div>
+      <div class="prod reveal">
+        <span class="prod-icon">🛡️</span>
+        <h3>Enterprise <span class="ital">Ready</span></h3>
+        <p>Built with security, scalability, and compliance in mind. Our products grow with your organisation — from startup to enterprise.</p>
+      </div>
+      <div class="prod reveal">
+        <span class="prod-icon">🌱</span>
+        <h3>Custom <span class="ital">Solutions</span></h3>
+        <p>Every business is unique. We go beyond off-the-shelf with tailored automation solutions that match your industry and operational needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FOUNDER / LEADERSHIP =================== -->
+<section class="founder-section" id="leadership">
+  <div class="wrap">
+    <span class="eyebrow reveal">Leadership</span>
+    <h2 class="reveal" style="margin-top:18px; font-size:clamp(32px,4vw,56px);">The person<br/><span class="ital">behind the hive.</span></h2>
+
+    <div class="founder-inner" style="margin-top:64px;">
+      <div class="founder-photo-wrap reveal">
+        <img
+          src="assets/amar-panchal-photo.jpg"
+          alt="Dr. Amar Panchal — Founder & CEO, Beevolve"
+          class="founder-photo"
+        />
+        <div class="founder-photo-badge">
+          <div class="name">Dr. Amar Panchal</div>
+          <div class="title">Founder &amp; Chief Executive Officer</div>
+        </div>
+      </div>
+
+      <div class="founder-content reveal">
+        <div class="bio">
+          <p>Dr. Amar Panchal is the driving force behind Beevolve's vision of making intelligent automation accessible to every business. With a rare combination of academic depth and entrepreneurial drive, he founded Beevolve to bridge the gap between complex technology and real-world business problems.</p>
+
+          <div class="bio-quote">
+            "The future belongs to organisations that can think, adapt, and act faster — and automation is the lever that makes this possible."
+          </div>
+
+          <p>His leadership philosophy is rooted in building products with purpose: tools that don't just work, but genuinely transform the way teams operate. Under his guidance, Beevolve has developed a portfolio of proprietary products — each designed in-house, each solving a real problem, and each reflecting a commitment to quality and innovation that is entirely homegrown.</p>
+        </div>
+
+        <div class="beliefs">
+          <div class="belief">
+            <span class="b-icon">→</span>
+            <span><strong>Innovation First</strong> — challenge the status quo at every step</span>
+          </div>
+          <div class="belief">
+            <span class="b-icon">🇮🇳</span>
+            <span><strong>India-Built</strong> — proudly engineering world-class products from India</span>
+          </div>
+          <div class="belief">
+            <span class="b-icon">⬡</span>
+            <span><strong>Product-Led</strong> — own the technology, own the outcomes</span>
+          </div>
+          <div class="belief">
+            <span class="b-icon">◎</span>
+            <span><strong>Human-Centric AI</strong> — automate work, amplify people</span>
+          </div>
+          <div class="belief">
+            <span class="b-icon">∞</span>
+            <span><strong>Long-Term Vision</strong> — building for decades, not quarters</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== VALUES =================== -->
+<section class="section" id="values">
+  <div class="wrap">
+    <span class="eyebrow reveal">Our values</span>
+    <h2 class="reveal">How <span class="ital">we work.</span></h2>
+
+    <div class="values-grid">
+      <div class="value reveal">
+        <div class="value-num">01</div>
+        <h3>Automate <span class="ital">First</span></h3>
+        <p>We question every manual process. If a machine can do it better, we build the machine. Automation is not a last resort — it's the starting point.</p>
+      </div>
+      <div class="value reveal">
+        <div class="value-num">02</div>
+        <h3>Own <span class="ital">Everything</span></h3>
+        <p>Our products are built entirely in-house. Full ownership means full accountability and faster innovation — no middlemen, no excuses.</p>
+      </div>
+      <div class="value reveal">
+        <div class="value-num">03</div>
+        <h3>Evolve <span class="ital">Always</span></h3>
+        <p>Like the hive, we continuously learn, adapt, and improve — in our products and our culture. Stagnation is not in our vocabulary.</p>
+      </div>
+      <div class="value reveal">
+        <div class="value-num">04</div>
+        <h3>Impact <span class="ital">Matters</span></h3>
+        <p>Every feature we ship must create measurable value for the businesses that trust us. If it doesn't move the needle, it doesn't ship.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CTA =================== -->
+<section class="cta">
+  <div class="cta-hex" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <defs>
+        <pattern id="hex2" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="rgba(245,166,35,0.22)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex2)"/>
+    </svg>
+  </div>
+  <div class="glow" style="width:480px;height:480px;background:#F5A62322;left:50%;top:50%;transform:translate(-50%,-50%);opacity:0.3;filter:blur(80px);position:absolute;border-radius:50%;pointer-events:none;"></div>
+  <div class="wrap" style="position:relative;" class="reveal">
+    <span class="eyebrow" style="justify-content:center;">Ready to evolve?</span>
+    <h2>Let's build something<br/><span class="ital">that works — automatically.</span></h2>
+    <p class="lede">Book a free audit. We'll spend half an hour mapping the work that's bleeding your week. If we can't find ten hours to give you back, we tell you so.</p>
+    <div class="ctas">
+      <a href="index.html#cta" class="btn btn-primary">
+        Book a free audit
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="mailto:hi@beevolve.in" class="btn btn-ghost">
+        hi@beevolve.in
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FOOTER =================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name"><b>Bee</b><i>volve</i></span>
+        </a>
+        <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">AI agents</a></li>
+          <li><a href="#">CRM &amp; sales</a></li>
+          <li><a href="#">Documents</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Dashboards</a></li>
+          <li><a href="#">Custom builds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Case studies</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press kit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#">Automation 101</a></li>
+          <li><a href="#">Playbooks</a></li>
+          <li><a href="#">Tools we use</a></li>
+          <li><a href="#">Build vs buy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hi@beevolve.in">hi@beevolve.in</a></li>
+          <li><a href="#">Book a free audit</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X / Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Beevolve, Inc. — The hive keeps running.</span>
+      <span class="status"><span class="dot"></span>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Burger menu
+  const burger = document.getElementById('navBurger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (burger && mobileMenu) {
+    burger.addEventListener('click', () => {
+      const open = burger.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+      mobileMenu.classList.toggle('open', open);
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('open');
+      });
+    });
+  }
+
+  // Scroll reveal
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('in');
+        revealObs.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+
+</body>
+</html>

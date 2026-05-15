@@ -1,0 +1,2035 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Beevolve — AI automation, done for you</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&family=Audiowide&family=Michroma&family=Saira+Stencil+One&display=swap" rel="stylesheet" rel="stylesheet">
+
+<style>
+  :root {
+    --obsidian:    #0a0908;
+    --obsidian-2:  #121010;
+    --obsidian-3:  #1b1815;
+    --ink:         #2a2620;
+    --line:        rgba(241, 234, 217, 0.08);
+    --line-strong: rgba(241, 234, 217, 0.16);
+    --cream:       #f1ead9;
+    --cream-dim:   #cdc3ac;
+    --cream-mute:  #8a8170;
+    --amber:       #F5A623;
+    --amber-soft:  #f2bb5d;
+    --amber-deep:  #c6841a;
+
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --sans:  "DM Sans", "Inter", system-ui, sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, monospace;
+    --display: "Orbitron", "DM Sans", system-ui, sans-serif;
+
+    --maxw: 1280px;
+    --pad:  clamp(20px, 4vw, 56px);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--obsidian);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--amber); color: var(--obsidian); }
+
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  /* ---------- layout helpers ---------- */
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    display: inline-block;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .ital { font-style: italic; color: var(--amber-soft); }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(10, 9, 8, 0.55);
+    border-bottom: 1px solid transparent;
+    transition: border-color 240ms ease, background 240ms ease;
+  }
+  .nav.scrolled {
+    background: rgba(10, 9, 8, 0.82);
+    border-bottom-color: var(--line);
+  }
+  .nav-inner {
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 22px; height: 22px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    position: relative;
+    flex: none;
+  }
+  .brand-mark::after {
+    content: ""; position: absolute; inset: 4px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .brand-name b { font-weight: 400; }
+  .brand-name i { font-style: italic; color: var(--amber); margin-left: 1px; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 14px; color: var(--cream-dim);
+  }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1px; background: var(--amber);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 220ms ease;
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+  .nav-cta:hover { background: var(--amber-soft); transform: translateY(-1px); }
+
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: none;
+  }
+  .nav-burger span {
+    display: block;
+    height: 1.5px;
+    background: var(--cream);
+    border-radius: 999px;
+    transition: transform 240ms ease, opacity 180ms ease, width 240ms ease;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    z-index: 49;
+    background: rgba(10,9,8,0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 20px var(--pad) 28px;
+    flex-direction: column;
+    gap: 4px;
+    transform: translateY(-8px);
+    opacity: 0;
+    transition: transform 240ms ease, opacity 240ms ease;
+  }
+  .mobile-menu.open {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .mobile-menu a {
+    padding: 14px 0;
+    font-size: 18px;
+    color: var(--cream-dim);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-menu a:last-of-type { border-bottom: 0; }
+  .mobile-menu a:hover { color: var(--amber); }
+  .mobile-menu .mobile-cta {
+    margin-top: 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 14px 22px; border-radius: 999px;
+    font-size: 15px; font-weight: 500;
+    text-align: center; justify-content: center;
+  }
+
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+  }
+
+  /* ---------- hero bg video ---------- */
+  .hero-bg-video {
+    position: absolute;
+    top: 0; bottom: 0;
+    right: 0;
+    width: 55%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%);
+  }
+  .hero[data-bgvideo="true"] .hero-bg-video {
+    opacity: var(--bgvideo-opacity, 0.35);
+  }
+  .hero[data-bgvideo="true"] .hero-bg-scrim {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(10,9,8,1) 0%, rgba(10,9,8,0.95) 30%, rgba(10,9,8,0.55) 55%, rgba(10,9,8,0.25) 80%, rgba(10,9,8,0.1) 100%),
+      linear-gradient(180deg, rgba(10,9,8,0.2), rgba(10,9,8,0.5));
+  }
+  @media (max-width: 880px) {
+    .hero-bg-video {
+      width: 100%;
+      mask-image: linear-gradient(180deg, transparent 0%, #000 15%, #000 70%, transparent 100%),
+                  linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 15%, #000 70%, transparent 100%);
+    }
+    .hero[data-bgvideo="true"] .hero-bg-scrim {
+      background:
+        linear-gradient(180deg, rgba(10,9,8,0.85) 0%, rgba(10,9,8,0.6) 40%, rgba(10,9,8,0.8) 85%, rgba(10,9,8,1) 100%),
+        linear-gradient(90deg, rgba(10,9,8,0.5), rgba(10,9,8,0.5));
+    }
+  }
+
+  /* ---------- hex grid bg ---------- */
+  .hex-bg {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    mask-image: radial-gradient(ellipse 80% 70% at 30% 40%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 30% 40%, #000 30%, transparent 75%);
+    z-index: 1;
+  }
+  .hex-bg svg { width: 100%; height: 100%; display: block; }
+
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    opacity: 0.55;
+  }
+  .glow-1 { width: 480px; height: 480px; background: #F5A62333; left: -120px; top: 80px; }
+  .glow-2 { width: 380px; height: 380px; background: #c2570022; right: -80px; bottom: -80px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    padding-top: 140px;
+    padding-bottom: 96px;
+    overflow: hidden;
+  }
+  @media (max-width: 880px) {
+    .hero { padding-top: 100px; padding-bottom: 64px; }
+  }
+  @media (max-width: 480px) {
+    .hero { padding-top: 88px; padding-bottom: 48px; }
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 220px;
+    background: linear-gradient(180deg, transparent 0%, var(--obsidian) 92%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+  }
+  .hero-text { max-width: 600px; }
+
+  /* ---------- hero visual overlay ---------- */
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-self: center;
+    position: relative;
+  }
+  .hv-card {
+    background: rgba(18,16,16,0.72);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(241,234,217,0.10);
+    border-radius: 18px;
+    padding: 20px 22px;
+    box-shadow: 0 24px 64px -12px rgba(0,0,0,0.6);
+  }
+  .hv-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .hv-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #6dca78;
+    text-transform: uppercase;
+    flex: none;
+  }
+  .hv-live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #6dca78;
+    box-shadow: 0 0 8px #6dca78;
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+  @keyframes pulse-green {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.55; transform: scale(0.75); }
+  }
+  .hv-card-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--cream-mute);
+    text-transform: uppercase;
+    flex: 1;
+  }
+  .hv-counter {
+    font-family: var(--display);
+    font-size: 18px;
+    color: var(--amber);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .hv-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-height: 140px;
+  }
+  .hv-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: rgba(241,234,217,0.03);
+    border-radius: 10px;
+    border: 1px solid rgba(241,234,217,0.05);
+    animation: hv-slide 0.35s ease forwards;
+  }
+  @keyframes hv-slide {
+    from { opacity: 0; transform: translateX(8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .hv-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex: none;
+  }
+  .hv-dot.running { background: var(--amber); box-shadow: 0 0 6px rgba(245,166,35,0.7); }
+  .hv-dot.done    { background: #6dca78; }
+  .hv-dot.queued  { background: var(--cream-mute); }
+  .hv-item-text {
+    font-size: 12px;
+    color: var(--cream-dim);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hv-item-time {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--cream-mute);
+    flex: none;
+  }
+  .hv-card-footer {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(241,234,217,0.07);
+    display: flex;
+    gap: 20px;
+  }
+  .hv-stat { font-size: 12px; color: var(--cream-mute); }
+  .hv-stat b { color: var(--amber); font-weight: 600; }
+
+  .hv-mini {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 20px;
+  }
+  .hv-mini-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    margin-bottom: 4px;
+  }
+  .hv-mini-num {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .hv-mini-sub {
+    font-size: 11px;
+    color: var(--cream-dim);
+    margin-top: 3px;
+  }
+  .hv-mini-bar-wrap {
+    flex: 1;
+  }
+  .hv-mini-bar {
+    height: 4px;
+    background: rgba(241,234,217,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .hv-mini-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--amber-deep), var(--amber));
+    border-radius: 999px;
+    width: 0;
+    transition: width 1.4s ease;
+  }
+
+  @media (max-width: 920px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+  }
+  .hero h1 {
+    font-size: clamp(38px, 6.2vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin-top: 22px;
+  }
+  .hero h1 .ital { display: block; }
+  .hero p.lede {
+    margin-top: 28px;
+    max-width: 520px;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--cream-dim);
+  }
+  .hero-ctas {
+    margin-top: 36px;
+    display: flex; flex-wrap: wrap; gap: 12px;
+  }
+  @media (max-width: 480px) {
+    .hero h1 { font-size: clamp(34px, 9vw, 52px); margin-top: 16px; }
+    .hero p.lede { font-size: 15px; margin-top: 18px; }
+    .hero-ctas { margin-top: 24px; flex-direction: column; }
+    .hero-ctas .btn { justify-content: center; }
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn .arrow { transition: transform 200ms ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn-primary { background: var(--amber); color: var(--obsidian); }
+  .btn-primary:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--cream);
+    border: 1px solid var(--line-strong);
+  }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+
+  .hero-proof {
+    margin-top: 44px;
+    display: flex; align-items: center; gap: 14px;
+    color: var(--cream-mute);
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 480px) {
+    .hero-proof { margin-top: 28px; font-size: 12px; }
+  }
+  .avatars { display: flex; }
+  .avatars span {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid var(--obsidian);
+    margin-left: -8px;
+    background-size: cover; background-position: center;
+    display: inline-block;
+  }
+  .avatars span:first-child { margin-left: 0; }
+  .av-1 { background: linear-gradient(135deg, #F5A623, #c25700); }
+  .av-2 { background: linear-gradient(135deg, #6d655a, #2a2620); }
+  .av-3 { background: linear-gradient(135deg, #f1ead9, #8a8170); }
+  .av-4 { background: linear-gradient(135deg, #4a443d, #F5A623); }
+  .av-5 { background: linear-gradient(135deg, #cdc3ac, #6d655a); }
+
+  @media (max-width: 980px) {
+    .hero-inner { gap: 48px; }
+  }
+
+  /* ---------- stat counters ---------- */
+  .stat-band {
+    position: relative;
+    padding: 96px 0;
+    background: var(--obsidian);
+    overflow: hidden;
+  }
+  @media (max-width: 880px) { .stat-band { padding: 64px 0; } }
+  @media (max-width: 480px) { .stat-band { padding: 48px 0; } }
+  .stat-band::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(245,166,35,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    position: relative;
+  }
+  .stat {
+    position: relative;
+    padding-left: 28px;
+  }
+  .stat::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 6px;
+    width: 4px; height: 56px;
+    background: linear-gradient(180deg, var(--amber), transparent);
+  }
+  .stat .num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(56px, 8vw, 108px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    font-variant-numeric: tabular-nums;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .stat .suffix { color: var(--amber); margin-left: 2px; }
+  .stat .caption {
+    margin-top: 22px;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--cream-dim);
+    max-width: 240px;
+  }
+  @media (max-width: 880px) {
+    .stat-row { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  }
+  @media (max-width: 600px) {
+    .stat-row { grid-template-columns: 1fr; gap: 36px; }
+    .stat::before { height: 40px; }
+  }
+  .marquee {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    background: var(--obsidian-2);
+    overflow: hidden;
+  }
+  .marquee-row {
+    display: flex; gap: 36px;
+    white-space: nowrap;
+    animation: scroll var(--marquee-speed, 60s) linear infinite;
+    width: max-content;
+  }
+  .marquee:hover .marquee-row { animation-play-state: paused; }
+  .mq-item {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono);
+    font-size: 13px; letter-spacing: 0.04em;
+    color: var(--cream-mute);
+  }
+  .mq-item::before {
+    content: ""; width: 8px; height: 8px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    flex: none;
+  }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ---------- section header ---------- */
+  .section {
+    padding: var(--section-pad, 120px) 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  @media (max-width: 880px) { .section { padding: 72px 0; } }
+  @media (max-width: 480px) { .section { padding: 52px 0; } }
+  .section h2 {
+    font-size: clamp(36px, 4.6vw, 64px);
+    line-height: 1.05;
+    max-width: 760px;
+    margin-top: 18px;
+  }
+  .section .lede {
+    margin-top: 18px;
+    max-width: 580px;
+    font-size: 17px;
+    color: var(--cream-dim);
+  }
+
+  /* ---------- how it works ---------- */
+  .steps {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+  .step {
+    position: relative;
+    padding: 28px 24px 30px;
+    border-radius: var(--radius-card, 18px);
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    border: 1px solid var(--line);
+    transition: transform 280ms ease, border-color 280ms ease;
+  }
+  .step:hover {
+    transform: translateY(-6px);
+    border-color: rgba(245,166,35,0.3);
+  }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    background: transparent;
+    color: var(--amber);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 24px;
+    position: relative;
+  }
+  .step-num::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: rgba(245,166,35,0.12);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    z-index: -1;
+  }
+  .step h3 {
+    margin-top: 22px;
+    font-size: 26px;
+    line-height: 1.1;
+  }
+  .step p {
+    margin-top: 12px;
+    color: var(--cream-dim);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .step-meta {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--cream-mute);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 980px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ---------- services ---------- */
+  .services {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .svc {
+    padding: 38px 32px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 220ms ease;
+    overflow: hidden;
+  }
+  .svc:hover { background: rgba(245,166,35,0.04); }
+  .svc-icon {
+    width: 42px; height: 42px;
+    display: grid; place-items: center;
+    margin-bottom: 24px;
+  }
+  .svc-icon .hex {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--amber), var(--amber-deep));
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    position: relative;
+  }
+  .svc-icon .hex::after {
+    content: ""; position: absolute; inset: 2px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .svc-icon .glyph {
+    position: absolute;
+    width: 18px; height: 18px;
+    color: var(--amber);
+  }
+  .svc h3 {
+    font-size: 26px;
+    line-height: 1.1;
+  }
+  .svc h3 .ital { display: inline; }
+  .svc p {
+    margin-top: 10px;
+    color: var(--cream-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .svc .more {
+    margin-top: 24px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .svc .more::after {
+    content: ""; position: absolute; left: 0; right: auto;
+    width: 0; height: 1px; bottom: 0;
+    background: var(--amber);
+    transition: width 240ms ease;
+  }
+  .svc:hover .more::after { width: 100%; }
+  .svc:hover .more { color: var(--amber); }
+
+  @media (max-width: 880px) { .services { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .services { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) {
+    .svc { padding: 28px 20px 24px; }
+    .svc h3 { font-size: 22px; }
+  }
+
+  /* ---------- metrics ---------- */
+  .metrics {
+    padding: 80px 0;
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    border-bottom: 1px solid var(--line);
+  }
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  .metric {
+    padding: 0 8px;
+    border-left: 1px solid var(--line-strong);
+    padding-left: 24px;
+  }
+  .metric .n {
+    font-family: var(--serif);
+    font-size: clamp(48px, 5vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+  }
+  .metric .n .unit { color: var(--amber); font-style: italic; }
+  .metric .label {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  @media (max-width: 760px) {
+    .metrics-row { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
+  }
+
+  /* ---------- testimonials ---------- */
+  .quotes {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .quote {
+    padding: 32px 28px;
+    background: var(--obsidian-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card, 18px);
+    display: flex; flex-direction: column;
+  }
+  .quote .mark {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 56px;
+    line-height: 0.6;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .quote p {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--cream);
+    margin: 0;
+    flex: 1;
+  }
+  .quote .by {
+    margin-top: 28px;
+    display: flex; align-items: center; gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .quote .av {
+    width: 40px; height: 40px; border-radius: 50%;
+    background-size: cover;
+  }
+  .quote .by .who { font-size: 14px; }
+  .quote .by .who b { display: block; color: var(--cream); font-weight: 500; }
+  .quote .by .who span { color: var(--cream-mute); font-size: 12px; }
+  @media (max-width: 880px) { .quotes { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .quotes { grid-template-columns: 1fr; } }
+
+  /* ---------- big CTA ---------- */
+  .cta {
+    position: relative;
+    padding: 140px 0 130px;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+  .cta h2 {
+    font-size: clamp(44px, 6vw, 88px);
+    line-height: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .cta .lede {
+    margin: 28px auto 0;
+    max-width: 560px;
+    color: var(--cream-dim);
+    font-size: 17px;
+  }
+  .cta .hero-ctas { justify-content: center; margin-top: 40px; }
+  @media (max-width: 880px) {
+    .cta { padding: 100px 0 88px; }
+  }
+  @media (max-width: 480px) {
+    .cta { padding: 80px 0 72px; }
+    .cta h2 { font-size: clamp(36px, 9vw, 56px); }
+    .cta .hero-ctas { flex-direction: column; align-items: stretch; }
+    .cta .hero-ctas .btn { justify-content: center; }
+  }
+  .cta-hex-bg {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 30%, transparent 75%);
+  }
+
+  /* ---------- footer ---------- */
+  footer { padding: 80px 0 40px; background: var(--obsidian); }
+  .foot {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .foot h4 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    margin-bottom: 16px;
+  }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot a { color: var(--cream-dim); font-size: 14px; }
+  .foot a:hover { color: var(--amber); }
+  .foot-brand .blurb {
+    margin-top: 20px;
+    color: var(--cream-mute);
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 280px;
+  }
+  .foot-bottom {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--cream-mute);
+  }
+  .foot-bottom .status { display: inline-flex; align-items: center; gap: 8px; }
+  .foot-bottom .status .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #6dca78;
+    box-shadow: 0 0 10px #6dca78;
+  }
+  @media (max-width: 880px) {
+    .foot { grid-template-columns: 1fr 1fr; }
+    .foot-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 480px) {
+    .foot { grid-template-columns: 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    footer { padding: 56px 0 32px; }
+  }
+
+  /* ---------- utility ---------- */
+  .row { display: flex; align-items: center; }
+  .gap-2 { gap: 8px; } .gap-3 { gap: 12px; } .gap-4 { gap: 16px; }
+
+</style>
+</head>
+<body>
+
+<!-- =================== NAV =================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand" aria-label="Beevolve">
+      <span class="brand-mark"></span>
+      <span class="brand-name"><b>Bee</b><i>volve</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#how">Home</a>
+      <a href="products.html">Products</a>
+      <a href="learn-automation.html">Learn Automation</a>
+      <a href="case-studies.html">Case Studies</a>
+      <a href="about.html">About us</a>
+    </nav>
+    <a href="#cta" class="nav-cta">
+      Book a free audit
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+  <a href="#how">Home</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
+  <a href="case-studies.html">Case Studies</a>
+  <a href="about.html">About us</a>
+  <a href="#cta" class="mobile-cta">
+    Book a free audit
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</nav>
+
+<!-- =================== HERO =================== -->
+<section class="hero" id="hero">
+  <video class="hero-bg-video" id="heroBgVideo" src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="hero-bg-scrim" aria-hidden="true"></div>
+  <div class="hex-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="hex" width="60" height="52" patternUnits="userSpaceOnUse" patternTransform="translate(0,0)">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z"
+                fill="none" stroke="rgba(245,166,35,0.18)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex)"/>
+    </svg>
+  </div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">AI automation, done for you</span>
+      <h1>
+        Your business, <br/>
+        always working.
+        <span class="ital">Even while you sleep.</span>
+      </h1>
+      <p class="lede">
+        We map your manual workflows, design the automation layer, build it, and hand it back to your team — so you stop trading time for output and start scaling like you have an engineering org behind you.
+      </p>
+      <div class="hero-ctas">
+        <a href="#how" class="btn btn-ghost">
+          See how it works
+          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#cta" class="btn btn-primary">
+          Book a free audit
+          <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="hero-proof">
+        <div class="avatars">
+          <span class="av-1"></span><span class="av-2"></span><span class="av-3"></span><span class="av-4"></span><span class="av-5"></span>
+        </div>
+        <span>Trusted by 120+ founders &amp; ops teams to ship automation that sticks.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =================== STAT BAND =================== -->
+<section class="stat-band" id="stats" aria-label="Impact" style="font-size: 16px; font-weight: 400">
+  <div class="wrap" style="font-family: &quot;Crimson Text&quot;">
+    <div class="stat-row" id="statRow">
+      <div class="stat">
+        <div class="num" data-target="1000000" data-suffix="M+" data-format="M" style="font-family: ui-monospace">0<span class="suffix">M+</span></div>
+        <div class="caption">Automation across live systems.</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-target="10000" data-suffix="K+" data-format="K">0<span class="suffix">K+</span></div>
+        <div class="caption">Operational hours eliminated annually.</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-target="90" data-suffix="%" data-format="plain">0<span class="suffix">%</span></div>
+        <div class="caption">Reduction in process latency.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== USE-CASE MARQUEE =================== -->
+<section class="marquee" aria-label="What we automate">
+  <div class="marquee-row" id="marquee"></div>
+</section>
+
+<!-- =================== HOW IT WORKS =================== -->
+<section class="section" id="how">
+  <div class="wrap">
+    <span class="eyebrow">The process</span>
+    <h2>Four weeks, four steps. <span class="ital">No platform to learn.</span></h2>
+    <p class="lede">
+      Every engagement runs the same way — predictable, documented, and built to outlast us. You own the system at the end. We just leave you with one.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">i</div>
+        <h3>Audit</h3>
+        <p>We sit with your team for a week, shadow the work, and map every repetitive task to time and dollars. You get a workflow diagram and a ranked opportunity list.</p>
+        <div class="step-meta">Week 1 · On-site or remote</div>
+      </div>
+      <div class="step">
+        <div class="step-num">ii</div>
+        <h3>Design</h3>
+        <p>You see the system architecture before a line of code is written. Tools, integrations, hand-off points, failure modes — all on paper, all approved by you.</p>
+        <div class="step-meta">Week 1–2 · Async approvals</div>
+      </div>
+      <div class="step">
+        <div class="step-num">iii</div>
+        <h3>Build</h3>
+        <p>Our engineers ship the automation in three weeks on average. You get the source, the docs, the credentials, and a Loom for every moving part.</p>
+        <div class="step-meta">Week 2–4 · Daily updates</div>
+      </div>
+      <div class="step">
+        <div class="step-num">iv</div>
+        <h3>Hand-off</h3>
+        <p>We train your team, monitor the system for 30 days, and step away. No retainers, no lock-in. The hive keeps running because it was built to.</p>
+        <div class="step-meta">Week 4+ · 30-day warranty</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== SERVICES =================== -->
+<section class="section" id="services" style="padding-top: 120px;">
+  <div class="wrap">
+    <span class="eyebrow">What we build</span>
+    <h2>Six lanes of work, <span class="ital">one operating system</span> for your business.</h2>
+    <p class="lede">
+      Pick the one that's bleeding the most hours this quarter. Most clients start with two and expand from there.
+    </p>
+
+    <div class="services">
+      <div class="svc">
+        <div class="svc-icon"><span class="hex"></span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>AI <span class="ital">agents</span></h3>
+        <p>Autonomous workers that read your inbox, your CRM, your docs — and act on them. Trained on your SOPs, supervised by your team.</p>
+        <div class="more">See examples →</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon"><span class="hex"></span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="12" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>CRM &amp; sales <span class="ital">automation</span></h3>
+        <p>Lead enrichment, scoring, routing, follow-up sequences, deal hygiene. Your pipeline stops being a graveyard of half-typed notes.</p>
+        <div class="more">See examples →</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon"><span class="hex"></span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v14H7z" stroke="currentColor" stroke-width="1.5"/><path d="M14 3v4h4M10 12h6M10 16h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Document <span class="ital">workflows</span></h3>
+        <p>Contracts, invoices, intake forms, reports. Parsed, routed, redlined, and filed without a human re-typing a single field.</p>
+        <div class="more">See examples →</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon"><span class="hex"></span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="18" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 7l3 9M16 7l-3 9" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Systems <span class="ital">integration</span></h3>
+        <p>The 17 SaaS tools your team already pays for, finally talking to each other. No more copy-paste, no more "I'll Slack you the CSV."</p>
+        <div class="more">See examples →</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon"><span class="hex"></span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Ops <span class="ital">dashboards</span></h3>
+        <p>One screen for the metrics your leadership actually checks. Live, sourced from the system of record, no spreadsheet babysitting.</p>
+        <div class="more">See examples →</div>
+      </div>
+
+      <div class="svc">
+        <div class="svc-icon"><span class="hex"></span>
+          <svg class="glyph" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2 8 12.7 4 8.8l5.5-.8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Custom <span class="ital">AI builds</span></h3>
+        <p>Internal copilots, retrieval over your data, voice agents, fine-tuned models. The bespoke layer your team would build if you had a year.</p>
+        <div class="more">See examples →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== METRICS =================== -->
+<section class="metrics" id="proof">
+  <div class="wrap">
+    <div class="metrics-row">
+      <div class="metric"><div class="n">14<span class="unit">×</span></div><div class="label">Average ROI in 90 days</div></div>
+      <div class="metric"><div class="n">82<span class="unit">%</span></div><div class="label">Manual work eliminated</div></div>
+      <div class="metric"><div class="n">3<span class="unit">wk</span></div><div class="label">Median time to ship</div></div>
+      <div class="metric"><div class="n">120<span class="unit">+</span></div><div class="label">Hives running today</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== TESTIMONIALS =================== -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">In their words</span>
+    <h2>The kind of <span class="ital">quiet relief</span> you don't get from another tool subscription.</h2>
+
+    <div class="quotes">
+      <div class="quote">
+        <div class="mark">“</div>
+        <p>We were drowning in intake forms. Three weeks later, eighty percent of it ran itself. It felt illegal — and our finance team finally went home on time.</p>
+        <div class="by">
+          <div class="av av-1"></div>
+          <div class="who"><b>Maya Okafor</b><span>COO · Linden Health (38 employees)</span></div>
+        </div>
+      </div>
+      <div class="quote">
+        <div class="mark">“</div>
+        <p>I expected a tool I'd have to babysit. I got a system my ops lead actually trusts. They didn't try to sell us a platform — they fixed the problem and left the keys.</p>
+        <div class="by">
+          <div class="av av-4"></div>
+          <div class="who"><b>Dan Restrepo</b><span>Founder · Roam Logistics (12 employees)</span></div>
+        </div>
+      </div>
+      <div class="quote">
+        <div class="mark">“</div>
+        <p>First agency I've worked with that hands you the source code at the end. No vendor lock-in, no monthly seat fees, no "but how does it work?" Just a thing that works.</p>
+        <div class="by">
+          <div class="av av-3"></div>
+          <div class="who"><b>Priya Shah</b><span>Head of RevOps · Marker Capital</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CTA =================== -->
+<section class="cta" id="cta">
+  <div class="cta-hex-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <defs>
+        <pattern id="hex2" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="rgba(245,166,35,0.22)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex2)"/>
+    </svg>
+  </div>
+  <div class="glow glow-1" style="left:50%;top:50%;transform:translate(-50%,-50%);opacity:0.35;"></div>
+  <div class="wrap" style="position:relative;">
+    <span class="eyebrow" style="justify-content:center;">A 30-minute call. No deck.</span>
+    <h2>Stop trading time <br/><span class="ital">for output.</span></h2>
+    <p class="lede">
+      Book a free audit. We'll spend half an hour mapping the work that's bleeding your week. If we can't find ten hours to give you back, we tell you so — and you keep the diagram.
+    </p>
+    <div class="hero-ctas">
+      <a href="#" class="btn btn-primary">
+        Book a free audit
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#how" class="btn btn-ghost">
+        See how it works
+        <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FOOTER =================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a href="#" class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name"><b>Bee</b><i>volve</i></span>
+        </a>
+        <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">AI agents</a></li>
+          <li><a href="#">CRM &amp; sales</a></li>
+          <li><a href="#">Documents</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Dashboards</a></li>
+          <li><a href="#">Custom builds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Case studies</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press kit</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="#">Automation 101</a></li>
+          <li><a href="#">Playbooks</a></li>
+          <li><a href="#">Tools we use</a></li>
+          <li><a href="#">Build vs buy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:hi@beevolve.co">hi@beevolve.co</a></li>
+          <li><a href="#">Book a free audit</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">X / Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Beevolve, Inc. — The hive keeps running.</span>
+      <span class="status"><span class="dot"></span>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============== TWEAKS PANEL ============== -->
+<style>
+  .tweaks-fab {
+    position: fixed; right: 20px; bottom: 20px;
+    z-index: 200;
+    display: none;
+    align-items: center; gap: 8px;
+    padding: 10px 14px;
+    background: var(--amber); color: var(--obsidian);
+    border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    box-shadow: 0 12px 36px -8px rgba(0,0,0,0.6);
+    cursor: pointer;
+  }
+  .tweaks-fab.show { display: inline-flex; }
+  .tweaks-fab .hex {
+    width: 14px; height: 14px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+
+  .tweaks-panel {
+    position: fixed;
+    right: 20px; bottom: 20px;
+    width: 340px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    z-index: 201;
+    background: rgba(18,16,16,0.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line-strong);
+    border-radius: 18px;
+    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.8);
+    padding: 16px;
+    display: none;
+    color: var(--cream);
+    font-family: var(--sans);
+  }
+  .tweaks-panel.open { display: block; }
+  .tweaks-panel::-webkit-scrollbar { width: 6px; }
+  .tweaks-panel::-webkit-scrollbar-thumb { background: rgba(245,166,35,0.3); border-radius: 999px; }
+
+  .tweaks-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tweaks-head h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+  }
+  .tweaks-head h4 i { color: var(--amber); }
+  .tweaks-close {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    color: var(--cream-mute);
+    font-size: 14px;
+  }
+  .tweaks-close:hover { background: var(--line); color: var(--cream); }
+
+  /* groups */
+  .tw-group {
+    border-bottom: 1px solid var(--line);
+    padding: 6px 0;
+  }
+  .tw-group:last-of-type { border-bottom: 0; }
+  .tw-group summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 10px 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .tw-group summary::-webkit-details-marker { display: none; }
+  .tw-group summary::after {
+    content: "+";
+    font-family: var(--sans);
+    color: var(--amber);
+    font-size: 16px;
+    transition: transform 200ms ease;
+  }
+  .tw-group[open] summary::after { content: "−"; }
+  .tw-body { padding: 6px 4px 14px; display: flex; flex-direction: column; gap: 12px; }
+
+  .tw-row { display: flex; flex-direction: column; gap: 6px; }
+  .tw-label {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  .tw-label .v { color: var(--amber); }
+
+  .tw-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px;
+    background: var(--obsidian);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .tw-switch {
+    position: relative;
+    width: 32px; height: 18px;
+    background: var(--line-strong);
+    border-radius: 999px;
+    transition: background 180ms ease;
+    flex: none;
+  }
+  .tw-switch::after {
+    content: "";
+    position: absolute; top: 2px; left: 2px;
+    width: 14px; height: 14px;
+    background: var(--cream);
+    border-radius: 50%;
+    transition: transform 180ms ease;
+  }
+  .tw-toggle.on .tw-switch { background: var(--amber); }
+  .tw-toggle.on .tw-switch::after { transform: translateX(14px); background: var(--obsidian); }
+
+  .tw-slider {
+    width: 100%;
+    -webkit-appearance: none; appearance: none;
+    height: 3px;
+    background: var(--line-strong);
+    border-radius: 999px;
+    outline: none;
+  }
+  .tw-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    background: var(--amber);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid var(--obsidian);
+  }
+  .tw-slider::-moz-range-thumb {
+    width: 14px; height: 14px;
+    background: var(--amber);
+    border-radius: 50%;
+    border: 2px solid var(--obsidian);
+    cursor: pointer;
+  }
+
+  .tw-input {
+    width: 100%;
+    background: var(--obsidian);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 8px 10px;
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 12px;
+    resize: vertical;
+  }
+  .tw-input:focus { outline: none; border-color: var(--amber); }
+
+  /* swatches */
+  .tw-swatches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .tw-swatches button {
+    padding: 6px 4px;
+    background: var(--obsidian);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 9px; letter-spacing: 0.04em;
+    color: var(--cream-mute);
+    transition: border-color 180ms ease;
+  }
+  .tw-swatches button span {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--c);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .tw-swatches button:hover { border-color: var(--line-strong); }
+  .tw-swatches button.active { border-color: var(--amber); color: var(--cream); }
+  .tw-swatches[data-tw="bgTone"] { grid-template-columns: repeat(5, 1fr); }
+  .tw-swatches[data-tw="bgTone"] button span { border-radius: 6px; }
+
+  /* font cards */
+  .tw-fonts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .tw-fonts button {
+    padding: 12px 10px;
+    background: var(--obsidian);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--cream-dim);
+    font-size: 13px;
+    text-align: center;
+    transition: border-color 180ms ease, color 180ms ease;
+  }
+  .tw-fonts button:hover { color: var(--cream); border-color: var(--line-strong); }
+  .tw-fonts button.active { border-color: var(--amber); color: var(--amber); }
+</style>
+
+<button class="tweaks-fab" id="tweaksFab" aria-label="Open tweaks">
+  <span class="hex"></span> Tweaks
+</button>
+
+<aside class="tweaks-panel" id="tweaksPanel" aria-label="Tweaks">
+  <div class="tweaks-head">
+    <h4>Tw<i>eaks</i></h4>
+    <button class="tweaks-close" id="tweaksClose" aria-label="Close tweaks">✕</button>
+  </div>
+
+  <details class="tw-group" open>
+    <summary>Hero video</summary>
+    <div class="tw-body">
+      <div class="tw-toggle" data-tw-toggle="heroBgVideo">
+        <span>Show background video</span>
+        <span class="tw-switch"></span>
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Opacity <span class="v" data-display="bgOpacity">100%</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="bgOpacity" min="5" max="100" step="5" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Horizontal position <span class="v" data-display="videoPosX">100%</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="videoPosX" min="0" max="100" step="5" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Blur <span class="v" data-display="videoBlur">0px</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="videoBlur" min="0" max="20" step="1" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Saturation <span class="v" data-display="videoSaturation">100%</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="videoSaturation" min="0" max="200" step="10" />
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Atmosphere</summary>
+    <div class="tw-body">
+      <div class="tw-row">
+        <div class="tw-label">Hex grid <span class="v" data-display="hexOpacity">55%</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="hexOpacity" min="0" max="100" step="5" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Glow intensity <span class="v" data-display="glowIntensity">55%</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="glowIntensity" min="0" max="120" step="5" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Scrim darkness <span class="v" data-display="scrimIntensity">100%</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="scrimIntensity" min="0" max="150" step="5" />
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Accent color</summary>
+    <div class="tw-body">
+      <div class="tw-swatches" data-tw-swatch="palette">
+        <button data-val="amber"   style="--c:#F5A623"><span></span>Honey</button>
+        <button data-val="blue"    style="--c:#4a9eff"><span></span>Electric</button>
+        <button data-val="emerald" style="--c:#2ec27e"><span></span>Emerald</button>
+        <button data-val="magenta" style="--c:#e84393"><span></span>Magenta</button>
+        <button data-val="cream"   style="--c:#f1ead9"><span></span>Mono</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Background tone</summary>
+    <div class="tw-body">
+      <div class="tw-swatches" data-tw-swatch="bgTone">
+        <button data-val="obsidian" style="--c:#0a0908"><span></span>Obsidian</button>
+        <button data-val="slate"    style="--c:#0e1116"><span></span>Slate</button>
+        <button data-val="forest"   style="--c:#0a120e"><span></span>Forest</button>
+        <button data-val="ink"      style="--c:#1a1410"><span></span>Ink</button>
+        <button data-val="black"    style="--c:#000000"><span></span>Pure</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Typography</summary>
+    <div class="tw-body">
+      <div class="tw-row">
+        <div class="tw-label">Display (stats)</div>
+        <div class="tw-fonts" data-tw-font="displayFont">
+          <button data-val="orbitron"  style="font-family:Orbitron">Orbitron</button>
+          <button data-val="audiowide" style="font-family:Audiowide">Audiowide</button>
+          <button data-val="michroma"  style="font-family:Michroma;font-size:11px">Michroma</button>
+          <button data-val="saira"     style="font-family:'Saira Stencil One'">Saira</button>
+        </div>
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Serif (headlines)</div>
+        <div class="tw-fonts" data-tw-font="serifFont">
+          <button data-val="instrument" style="font-family:'Instrument Serif';font-style:italic;font-size:16px">Instrument</button>
+          <button data-val="garamond"   style="font-family:'EB Garamond';font-style:italic;font-size:16px">Garamond</button>
+          <button data-val="cormorant"  style="font-family:Cormorant;font-style:italic;font-size:16px">Cormorant</button>
+          <button data-val="playfair"   style="font-family:'Playfair Display';font-style:italic;font-size:13px">Playfair</button>
+        </div>
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Sans (body)</div>
+        <div class="tw-fonts" data-tw-font="sansFont">
+          <button data-val="dmsans"        style="font-family:'DM Sans'">DM Sans</button>
+          <button data-val="manrope"       style="font-family:Manrope">Manrope</button>
+          <button data-val="outfit"        style="font-family:Outfit">Outfit</button>
+          <button data-val="spacegrotesk"  style="font-family:'Space Grotesk';font-size:11px">Space Grotesk</button>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Layout</summary>
+    <div class="tw-body">
+      <div class="tw-row">
+        <div class="tw-label">Section spacing <span class="v" data-display="sectionPad">120px</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="sectionPad" min="60" max="200" step="10" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Card radius <span class="v" data-display="radius">18px</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="radius" min="0" max="36" step="2" />
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Motion</summary>
+    <div class="tw-body">
+      <div class="tw-row">
+        <div class="tw-label">Marquee speed <span class="v" data-display="marqueeSpeed">60s</span></div>
+        <input type="range" class="tw-slider" data-tw-slider="marqueeSpeed" min="15" max="120" step="5" />
+      </div>
+    </div>
+  </details>
+
+  <details class="tw-group">
+    <summary>Copy</summary>
+    <div class="tw-body">
+      <div class="tw-row">
+        <div class="tw-label">Headline</div>
+        <textarea class="tw-input" data-tw-text="headline" rows="2"></textarea>
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Italic accent</div>
+        <input class="tw-input" data-tw-text="italic" />
+      </div>
+      <div class="tw-row">
+        <div class="tw-label">Sub-copy</div>
+        <textarea class="tw-input" data-tw-text="sub" rows="4"></textarea>
+      </div>
+    </div>
+  </details>
+</aside>
+
+<script>
+  // -------- Tweak defaults (host rewrites this on persist) --------
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "heroBgVideo": true,
+    "bgOpacity": 100,
+    "videoPosX": 100,
+    "videoBlur": 0,
+    "videoSaturation": 100,
+    "hexOpacity": 55,
+    "glowIntensity": 55,
+    "scrimIntensity": 100,
+    "palette": "amber",
+    "bgTone": "obsidian",
+    "displayFont": "orbitron",
+    "serifFont": "instrument",
+    "sansFont": "dmsans",
+    "sectionPad": 120,
+    "radius": 18,
+    "marqueeSpeed": 60,
+    "headline": "Automate Today, ",
+    "italic": "Evolve Tomorrow.",
+    "sub": "We map your manual workflows, design the automation layer, build it, and hand it back to your team — so you stop trading time for output and start scaling like you have an engineering org behind you."
+  }/*EDITMODE-END*/;
+
+  const tweaks = { ...TWEAK_DEFAULTS };
+
+  const PALETTES = {
+    amber:   { a: '#F5A623', s: '#f2bb5d', d: '#c6841a' },
+    blue:    { a: '#4a9eff', s: '#7ab5ff', d: '#2a78d0' },
+    emerald: { a: '#2ec27e', s: '#5ed4a0', d: '#1a9962' },
+    magenta: { a: '#e84393', s: '#f06bab', d: '#b32b6e' },
+    cream:   { a: '#f1ead9', s: '#ffffff', d: '#cdc3ac' },
+  };
+  const BG_TONES = {
+    obsidian: { o1: '#0a0908', o2: '#121010', o3: '#1b1815' },
+    slate:    { o1: '#0e1116', o2: '#151a22', o3: '#1d2330' },
+    forest:   { o1: '#0a120e', o2: '#10181a', o3: '#172220' },
+    ink:      { o1: '#1a1410', o2: '#221a14', o3: '#2c2218' },
+    black:    { o1: '#000000', o2: '#0a0a0a', o3: '#141414' },
+  };
+  const FONTS = {
+    displayFont: {
+      orbitron:  '"Orbitron", sans-serif',
+      audiowide: '"Audiowide", sans-serif',
+      michroma:  '"Michroma", sans-serif',
+      saira:     '"Saira Stencil One", sans-serif',
+    },
+    serifFont: {
+      instrument: '"Instrument Serif", serif',
+      garamond:   '"EB Garamond", serif',
+      cormorant:  '"Cormorant", serif',
+      playfair:   '"Playfair Display", serif',
+    },
+    sansFont: {
+      dmsans:        '"DM Sans", system-ui, sans-serif',
+      manrope:       '"Manrope", system-ui, sans-serif',
+      outfit:        '"Outfit", system-ui, sans-serif',
+      spacegrotesk:  '"Space Grotesk", system-ui, sans-serif',
+    },
+  };
+
+  const $hero = document.getElementById('hero');
+  const $bgVideo = document.getElementById('heroBgVideo');
+  const $scrim = document.querySelector('.hero-bg-scrim');
+  const $hexBg = document.querySelector('.hex-bg');
+  const $glows = document.querySelectorAll('.hero .glow');
+  const $h1 = document.querySelector('.hero h1');
+  const $lede = document.querySelector('.hero p.lede');
+  const root = document.documentElement;
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function renderHeadline() {
+    const head = (tweaks.headline || '').trim();
+    const ital = (tweaks.italic || '').trim();
+    const parts = head.split(/\n+/);
+    let h = parts.map(p => escapeHtml(p)).join('<br/>');
+    if (ital) h += ' <span class="ital">' + escapeHtml(ital) + '</span>';
+    $h1.innerHTML = h;
+  }
+
+  function apply() {
+    // Hero video
+    $hero.setAttribute('data-bgvideo', tweaks.heroBgVideo ? 'true' : 'false');
+    $hero.style.setProperty('--bgvideo-opacity', (tweaks.bgOpacity / 100).toFixed(2));
+    if ($bgVideo) {
+      $bgVideo.style.objectPosition = tweaks.videoPosX + '% center';
+      $bgVideo.style.filter = 'blur(' + tweaks.videoBlur + 'px) saturate(' + tweaks.videoSaturation + '%)';
+    }
+
+    // Atmosphere
+    if ($hexBg) $hexBg.style.opacity = (tweaks.hexOpacity / 100).toFixed(2);
+    $glows.forEach(g => g.style.opacity = (tweaks.glowIntensity / 100).toFixed(2));
+    if ($scrim) $scrim.style.opacity = (tweaks.scrimIntensity / 100).toFixed(2);
+
+    // Color palette
+    const p = PALETTES[tweaks.palette] || PALETTES.amber;
+    root.style.setProperty('--amber', p.a);
+    root.style.setProperty('--amber-soft', p.s);
+    root.style.setProperty('--amber-deep', p.d);
+
+    // BG tone
+    const b = BG_TONES[tweaks.bgTone] || BG_TONES.obsidian;
+    root.style.setProperty('--obsidian', b.o1);
+    root.style.setProperty('--obsidian-2', b.o2);
+    root.style.setProperty('--obsidian-3', b.o3);
+
+    // Fonts
+    root.style.setProperty('--display', FONTS.displayFont[tweaks.displayFont] || FONTS.displayFont.orbitron);
+    root.style.setProperty('--serif',   FONTS.serifFont[tweaks.serifFont]     || FONTS.serifFont.instrument);
+    root.style.setProperty('--sans',    FONTS.sansFont[tweaks.sansFont]       || FONTS.sansFont.dmsans);
+
+    // Layout
+    root.style.setProperty('--section-pad', tweaks.sectionPad + 'px');
+    root.style.setProperty('--radius-card', tweaks.radius + 'px');
+
+    // Motion
+    root.style.setProperty('--marquee-speed', tweaks.marqueeSpeed + 's');
+
+    // Copy
+    renderHeadline();
+    $lede.textContent = tweaks.sub;
+
+    // Sync UI
+    document.querySelectorAll('[data-tw-toggle]').forEach(el => {
+      el.classList.toggle('on', !!tweaks[el.dataset.twToggle]);
+    });
+    document.querySelectorAll('[data-tw-slider]').forEach(el => {
+      el.value = tweaks[el.dataset.twSlider];
+    });
+    document.querySelectorAll('[data-display]').forEach(el => {
+      const k = el.dataset.display;
+      const v = tweaks[k];
+      const unit = ({bgOpacity:'%',videoPosX:'%',videoBlur:'px',videoSaturation:'%',hexOpacity:'%',glowIntensity:'%',scrimIntensity:'%',sectionPad:'px',radius:'px',marqueeSpeed:'s'})[k] || '';
+      el.textContent = v + unit;
+    });
+    document.querySelectorAll('[data-tw-swatch]').forEach(g => {
+      const key = g.dataset.twSwatch;
+      g.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.val === tweaks[key]));
+    });
+    document.querySelectorAll('[data-tw-font]').forEach(g => {
+      const key = g.dataset.twFont;
+      g.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.val === tweaks[key]));
+    });
+    document.querySelectorAll('[data-tw-text]').forEach(el => {
+      el.value = tweaks[el.dataset.twText];
+    });
+  }
+
+  function setTweak(patch) {
+    Object.assign(tweaks, patch);
+    apply();
+    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*'); } catch(e){}
+  }
+
+  // wire controls
+  document.querySelectorAll('[data-tw-toggle]').forEach(el => {
+    el.addEventListener('click', () => {
+      const k = el.dataset.twToggle;
+      setTweak({ [k]: !tweaks[k] });
+    });
+  });
+  document.querySelectorAll('[data-tw-slider]').forEach(el => {
+    el.addEventListener('input', e => setTweak({ [el.dataset.twSlider]: +e.target.value }));
+  });
+  document.querySelectorAll('[data-tw-swatch]').forEach(g => {
+    g.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => setTweak({ [g.dataset.twSwatch]: b.dataset.val }));
+    });
+  });
+  document.querySelectorAll('[data-tw-font]').forEach(g => {
+    g.querySelectorAll('button').forEach(b => {
+      b.addEventListener('click', () => setTweak({ [g.dataset.twFont]: b.dataset.val }));
+    });
+  });
+  document.querySelectorAll('[data-tw-text]').forEach(el => {
+    el.addEventListener('input', e => setTweak({ [el.dataset.twText]: e.target.value }));
+  });
+
+  apply();
+
+  // -------- Tweak panel host protocol --------
+  const $panel = document.getElementById('tweaksPanel');
+  const $fab = document.getElementById('tweaksFab');
+  let active = false;
+
+  function openPanel() { $panel.classList.add('open'); $fab.classList.remove('show'); }
+  function closePanel() {
+    $panel.classList.remove('open');
+    if (active) $fab.classList.add('show');
+  }
+
+  window.addEventListener('message', (e) => {
+    const t = e?.data?.type;
+    if (t === '__activate_edit_mode') { active = true; openPanel(); }
+    if (t === '__deactivate_edit_mode') {
+      active = false;
+      $panel.classList.remove('open');
+      $fab.classList.remove('show');
+    }
+  });
+
+  document.getElementById('tweaksClose').addEventListener('click', () => {
+    closePanel();
+    try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch(e){}
+    active = false;
+    $fab.classList.remove('show');
+  });
+  $fab.addEventListener('click', openPanel);
+
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch(e){}
+</script>
+
+<script>
+  // ---- hero visual overlay animation
+  const hvFeed    = document.getElementById('hvFeed');
+  const hvCounter = document.getElementById('hvCount');
+  const hvBar     = document.getElementById('hvBar');
+
+  const automations = [
+    { text: 'Lead enriched — Prism SaaS',         status: 'done'    },
+    { text: 'Invoice parsed — Linden Health',      status: 'running' },
+    { text: 'CRM sync — Roam Logistics',           status: 'done'    },
+    { text: 'Inbox triage — Marker Capital',       status: 'running' },
+    { text: 'Report generated — Vela.io',          status: 'done'    },
+    { text: 'Contract filed — NorthPath',          status: 'queued'  },
+    { text: 'Slack → CRM — Atrium',               status: 'running' },
+    { text: 'Payroll prep — Cascade HR',           status: 'done'    },
+    { text: 'Quote gen — Summit B2B',              status: 'running' },
+    { text: 'Support routed — Helios',             status: 'done'    },
+  ];
+
+  let count = 247;
+  let aiIdx  = 0;
+
+  function addFeedItem() {
+    if (!hvFeed) return;
+    const a   = automations[aiIdx % automations.length]; aiIdx++;
+    const mins = Math.floor(Math.random() * 8) + 1;
+    const el  = document.createElement('div');
+    el.className = 'hv-item';
+    el.innerHTML = `<span class="hv-dot ${a.status}"></span><span class="hv-item-text">${a.text}</span><span class="hv-item-time">${mins}m ago</span>`;
+    hvFeed.prepend(el);
+    while (hvFeed.children.length > 4) hvFeed.lastElementChild.remove();
+    count++;
+    if (hvCounter) hvCounter.textContent = count;
+  }
+
+  // Seed 4 items then animate
+  for (let i = 0; i < 4; i++) addFeedItem();
+  setInterval(addFeedItem, 3000);
+
+  // Animate progress bar into view
+  setTimeout(() => { if (hvBar) hvBar.style.width = '82%'; }, 600);
+</script>
+
+<script>
+  // ---- burger menu toggle
+  const $burger = document.getElementById('navBurger');
+  const $mobileMenu = document.getElementById('mobileMenu');
+  $burger.addEventListener('click', () => {
+    const isOpen = $mobileMenu.classList.toggle('open');
+    $burger.classList.toggle('open', isOpen);
+    $burger.setAttribute('aria-expanded', isOpen);
+  });
+  $mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      $mobileMenu.classList.remove('open');
+      $burger.classList.remove('open');
+      $burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ---- nav scrolled state
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ---- build marquee (duplicated so the loop is seamless)
+  const useCases = [
+    "Lead enrichment", "Invoice processing", "Inbox triage", "Onboarding workflows",
+    "Pipeline routing", "Report generation", "Document review", "Contract redlining",
+    "CRM hygiene", "Slack-to-CRM sync", "Quote generation", "Support routing",
+    "Ticket summarization", "Internal RAG search", "Call summarization",
+    "Vendor data sync", "Compliance checks", "Approval flows", "Payroll prep",
+    "Cohort analytics"
+  ];
+  const mq = document.getElementById('marquee');
+  const html = useCases.map(t => `<span class="mq-item">${t}</span>`).join('');
+  mq.innerHTML = html + html;
+
+  // ---- count-up animation (triggers on scroll-into-view, once)
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function formatStat(value, fmt) {
+    if (fmt === 'M') {
+      // 0..1000000 -> "0M+" .. "1M+"
+      const v = value / 1000000;
+      if (value >= 1000000) return '1';
+      return (Math.floor(v * 10) / 10).toFixed(1).replace(/\.0$/, '');
+    }
+    if (fmt === 'K') {
+      const v = value / 1000;
+      return Math.round(v).toString();
+    }
+    return Math.round(value).toString();
+  }
+  function animateCount(el) {
+    const target = +el.dataset.target;
+    const fmt = el.dataset.format;
+    const suffix = el.dataset.suffix;
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min(1, (now - start) / duration);
+      const value = target * easeOutCubic(t);
+      el.innerHTML = formatStat(value, fmt) + (fmt === 'M' && value < 1000000 ? 'M+' : (fmt === 'K' ? 'K+' : (fmt === 'plain' ? '%' : ''))).replace(/M\+|K\+|%/, m => `<span class="suffix">${m}</span>`);
+      if (t < 1) requestAnimationFrame(step);
+      else el.innerHTML = (fmt === 'M' ? '1' : (fmt === 'K' ? '10' : '90')) + `<span class="suffix">${suffix}</span>`;
+    }
+    requestAnimationFrame(step);
+  }
+  const statObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.num').forEach(animateCount);
+        statObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.35 });
+  const $stats = document.getElementById('statRow');
+  if ($stats) statObs.observe($stats);
+</script>
+
+</body>
+</html>
