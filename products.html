@@ -1280,7 +1280,8 @@
     <canvas class="wa-bee-canvas" id="wa-bee-canvas"></canvas>
   </div>
 </a>
-<script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);var c=document.getElementById('wa-bee-canvas');if(!c)return;var x=c.getContext('2d');var im=new Image();im.src='assets/buzzy-bee-mascot.png';im.onload=function(){c.width=im.naturalWidth;c.height=im.naturalHeight;x.drawImage(im,0,0);var dt=x.getImageData(0,0,c.width,c.height);var d=dt.data;var bR=d[0],bG=d[1],bB=d[2],tol=40;for(var i=0;i<d.length;i+=4){var dist=Math.max(Math.abs(d[i]-bR),Math.abs(d[i+1]-bG),Math.abs(d[i+2]-bB));if(dist<tol){d[i+3]=Math.round(d[i+3]*(dist/tol));}}x.putImageData(dt,0,0);};})();</script>
+<script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);var c=document.getElementById('wa-bee-canvas');if(!c)return;var x=c.getContext('2d');var im=new Image();im.src='assets/buzzy-bee-mascot.png';im.onload=function(){c.width=im.naturalWidth;c.height=im.naturalHeight;x.drawImage(im,0,0);try{var dt=x.getImageData(0,0,c.width,c.height);var d=dt.data;for(var i=0;i<d.length;i+=4){var r=d[i],g=d[i+1],b=d[i+2],avg=(r+g+b)/3,grey=Math.max(Math.abs(r-g),Math.abs(g-b),Math.abs(r-b));if(grey<40&&avg>150){d[i+3]=Math.round(d[i+3]*Math.max(0,1-(avg-150)/105));}}x.putImageData(dt,0,0);}catch(e){c.style.display='none';var fb=document.createElement('img');fb.src=im.src;fb.className=c.className;fb.style.cssText='width:80px;height:80px;object-fit:contain';c.parentNode.insertBefore(fb,c);}};})();</script>
 
 </body>
 </html>
+

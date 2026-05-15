@@ -1018,7 +1018,7 @@
 
 <!-- =================== HERO =================== -->
 <section class="hero" id="hero">
-  <video class="hero-bg-video" id="heroBgVideo" src="mp4tytzm-instead_of_that_lady_use_this.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <video class="hero-bg-video" id="heroBgVideo" src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   <div class="hero-bg-scrim" aria-hidden="true"></div>
   <div class="hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
@@ -2145,32 +2145,45 @@
       setTimeout(function() { w.classList.remove('peeking'); }, 3200);
     }, 4000);
 
-    // Canvas background removal — strips grey/white box from PNG
+    // Canvas background removal — removes grey/white rectangular bg from PNG
     var canvas = document.getElementById('wa-bee-canvas');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var img = new Image();
-    img.src = 'mp75c8vo-BuzzyBee-mascot.png';
+    img.src = 'assets/buzzy-bee-mascot.png';
     img.onload = function() {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       ctx.drawImage(img, 0, 0);
-      var data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      var d = data.data;
-      // Sample top-left corner as background color
-      var bgR = d[0], bgG = d[1], bgB = d[2];
-      var tol = 40;
-      for (var i = 0; i < d.length; i += 4) {
-        var dist = Math.max(Math.abs(d[i]-bgR), Math.abs(d[i+1]-bgG), Math.abs(d[i+2]-bgB));
-        if (dist < tol) {
-          // Fade near-edge pixels for smooth anti-aliased removal
-          d[i+3] = Math.round(d[i+3] * (dist / tol));
+      try {
+        var data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var d = data.data;
+        for (var i = 0; i < d.length; i += 4) {
+          var r = d[i], g = d[i+1], b = d[i+2];
+          var avg = (r + g + b) / 3;
+          // "Greyness" = how close R, G, B are to each other
+          var greyness = Math.max(Math.abs(r-g), Math.abs(g-b), Math.abs(r-b));
+          // Remove pixels that are light (avg>150) AND near-grey (greyness<40)
+          // This catches the grey/white background box without touching yellow/black bee parts
+          if (greyness < 40 && avg > 150) {
+            // Smooth fade: fully transparent at bright end, taper toward threshold
+            d[i+3] = Math.round(d[i+3] * Math.max(0, 1 - (avg - 150) / 105));
+          }
         }
+        ctx.putImageData(data, 0, 0);
+      } catch(e) {
+        // CORS/security blocked — fall back to raw img
+        canvas.style.display = 'none';
+        var fb = document.createElement('img');
+        fb.src = img.src;
+        fb.className = canvas.className;
+        fb.style.cssText = 'width:80px;height:80px;object-fit:contain';
+        canvas.parentNode.insertBefore(fb, canvas);
       }
-      ctx.putImageData(data, 0, 0);
     };
   })();
 </script>
 
 </body>
 </html>
+
