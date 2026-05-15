@@ -1234,32 +1234,24 @@
     pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
   }
   #wa-bee-widget:hover .wa-tooltip, #wa-bee-widget.peeking .wa-tooltip { opacity: 1; transform: translateY(0); }
-  #wa-bee-widget .wa-bubble {
-    width: 90px; height: 90px; border-radius: 50%;
-    background: #0a0908; border: 2px solid rgba(245,166,35,0.35);
-    box-shadow: 0 0 0 0 rgba(245,166,35,0.25), 0 8px 28px rgba(0,0,0,0.6);
-    display: flex; align-items: center; justify-content: center;
-    animation: bubble-pulse 2.4s ease-in-out infinite; transition: transform 0.2s;
+  #wa-bee-widget .wa-logo {
+    width: 90px; height: 90px; object-fit: contain; display: block;
+    animation: bee-float 2.8s ease-in-out infinite;
+    filter: drop-shadow(0 4px 16px rgba(245,166,35,0.35)); transition: filter 0.25s;
   }
-  #wa-bee-widget:hover .wa-bubble { transform: scale(1.06); animation: none; }
-  #wa-bee-widget .wa-bee-canvas {
-    width: 80px; height: 80px; display: block;
-    animation: bee-jump 1.6s cubic-bezier(0.36,0.07,0.19,0.97) infinite;
-    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+  #wa-bee-widget:hover .wa-logo {
+    filter: drop-shadow(0 0 10px rgba(245,200,74,1)) drop-shadow(0 0 28px rgba(245,166,35,0.7)) drop-shadow(0 0 56px rgba(245,166,35,0.35));
+    animation: bee-float-fast 0.7s ease-in-out infinite alternate;
   }
-  #wa-bee-widget:hover .wa-bee-canvas { animation: bee-excited 0.35s ease-in-out infinite alternate; }
-  @keyframes bee-jump { 0%,100%{transform:translateY(0) rotate(-2deg)} 35%{transform:translateY(-14px) rotate(2deg)} 65%{transform:translateY(-6px) rotate(-1deg)} }
-  @keyframes bee-excited { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(-12px) scale(1.06) rotate(4deg)} }
-  @keyframes bubble-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0.25),0 8px 28px rgba(0,0,0,0.6)} 50%{box-shadow:0 0 0 10px rgba(245,166,35,0),0 8px 28px rgba(0,0,0,0.6)} }
-  @media(max-width:480px){#wa-bee-widget{bottom:20px;right:16px}#wa-bee-widget .wa-bubble{width:72px;height:72px}#wa-bee-widget .wa-bee-canvas{width:64px;height:64px}}
+  @keyframes bee-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  @keyframes bee-float-fast { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(-10px) scale(1.06)} }
+  @media(max-width:480px){#wa-bee-widget{bottom:20px;right:16px}#wa-bee-widget .wa-logo{width:72px;height:72px}}
 </style>
 <a id="wa-bee-widget" href="https://wa.me/919004861408?text=Hi%20Beevolve!%20I%27d%20like%20to%20know%20more%20about%20your%20automation%20services." target="_blank" rel="noopener" aria-label="Chat with Beevolve on WhatsApp">
   <span class="wa-tooltip">Chat with us on WhatsApp</span>
-  <div class="wa-bubble">
-    <canvas class="wa-bee-canvas" id="wa-bee-canvas"></canvas>
-  </div>
+  <img class="wa-logo" src="logo-hexagon.png" alt="Chat on WhatsApp" loading="lazy">
 </a>
-<script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);var c=document.getElementById('wa-bee-canvas');if(!c)return;var x=c.getContext('2d');var im=new Image();im.src='mp75c8vo-BuzzyBee-mascot.png';im.onload=function(){c.width=im.naturalWidth;c.height=im.naturalHeight;x.drawImage(im,0,0);try{var dt=x.getImageData(0,0,c.width,c.height);var d=dt.data;for(var i=0;i<d.length;i+=4){var r=d[i],g=d[i+1],b=d[i+2],avg=(r+g+b)/3,grey=Math.max(Math.abs(r-g),Math.abs(g-b),Math.abs(r-b));if(grey<40&&avg>150){d[i+3]=Math.round(d[i+3]*Math.max(0,1-(avg-150)/105));}}x.putImageData(dt,0,0);}catch(e){c.style.display='none';var fb=document.createElement('img');fb.src=im.src;fb.className=c.className;fb.style.cssText='width:80px;height:80px;object-fit:contain';c.parentNode.insertBefore(fb,c);}};})();</script>
+<script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);})();</script>
 
 </body>
 </html>
