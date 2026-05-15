@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Beevolve</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --obsidian: #0b0c0e;
+    --ink: #111318;
+    --surface: #16181e;
+    --line: rgba(255,255,255,0.08);
+    --cream: #f2ede6;
+    --cream-dim: rgba(242,237,230,0.72);
+    --cream-mute: rgba(242,237,230,0.40);
+    --amber: #d97706;
+    --amber-glow: rgba(217,119,6,0.18);
+    --sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--obsidian); color: var(--cream-dim); font-family: var(--sans); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  a { color: var(--amber); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ---- wrap ---- */
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 640px) { .wrap { padding: 0 20px; } }
+
+  /* ---- nav ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,12,14,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line);
+    height: 64px;
+    display: flex; align-items: center;
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand-mark { width: 28px; height: 28px; background: var(--amber); border-radius: 6px; position: relative; }
+  .brand-mark::after { content: ''; position: absolute; inset: 6px; border: 2px solid var(--obsidian); border-radius: 3px; }
+  .brand-name { font-size: 18px; color: var(--cream); letter-spacing: -0.01em; }
+  .brand-name b { font-weight: 700; }
+  .brand-name i { font-style: normal; color: var(--amber); font-weight: 400; }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--cream-dim); transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--cream); text-decoration: none; }
+  .nav-cta { background: var(--amber); color: var(--obsidian) !important; padding: 8px 18px; border-radius: 6px; font-weight: 600; font-size: 13px; }
+  .nav-cta:hover { background: #c96500 !important; }
+
+  /* burger */
+  .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; z-index: 200; }
+  .burger span { display: block; width: 22px; height: 2px; background: var(--cream); border-radius: 2px; transition: all 0.25s; }
+  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--ink); border-bottom: 1px solid var(--line); z-index: 99; flex-direction: column; padding: 24px 20px; gap: 18px; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: var(--cream-dim); font-size: 16px; }
+  .mobile-menu a:hover { color: var(--cream); text-decoration: none; }
+  .mobile-menu .nav-cta { text-align: center; padding: 12px; }
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .burger { display: flex; }
+  }
+
+  /* ---- page hero ---- */
+  .page-hero {
+    padding: clamp(96px, 14vw, 160px) 0 clamp(48px, 6vw, 80px);
+    border-bottom: 1px solid var(--line);
+  }
+  .page-hero .kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--amber); margin-bottom: 20px;
+  }
+  .page-hero h1 {
+    font-size: clamp(36px, 6vw, 64px); font-weight: 700; color: var(--cream);
+    line-height: 1.1; letter-spacing: -0.02em; max-width: 680px;
+  }
+  .page-hero .meta {
+    margin-top: 20px; font-family: var(--mono); font-size: 12px;
+    color: var(--cream-mute); letter-spacing: 0.06em;
+  }
+
+  /* ---- legal content ---- */
+  .legal-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 64px;
+    padding: 72px 0 100px;
+  }
+  @media (max-width: 860px) { .legal-layout { grid-template-columns: 1fr; gap: 48px; } }
+
+  /* TOC sidebar */
+  .legal-toc { position: sticky; top: 88px; align-self: start; }
+  .legal-toc ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .legal-toc a { font-size: 13px; color: var(--cream-mute); transition: color 0.2s; }
+  .legal-toc a:hover { color: var(--amber); text-decoration: none; }
+  .toc-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-mute); margin-bottom: 14px; }
+  @media (max-width: 860px) { .legal-toc { display: none; } }
+
+  /* content */
+  .legal-body { max-width: 720px; }
+  .legal-body h2 {
+    font-size: 22px; font-weight: 700; color: var(--cream);
+    margin: 56px 0 16px; padding-top: 8px;
+  }
+  .legal-body h2:first-child { margin-top: 0; }
+  .legal-body p { color: var(--cream-dim); font-size: 15px; line-height: 1.75; margin-bottom: 16px; }
+  .legal-body ul { padding-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .legal-body ul li { color: var(--cream-dim); font-size: 15px; line-height: 1.65; }
+  .legal-body .highlight-box {
+    background: var(--surface); border: 1px solid var(--line);
+    border-left: 3px solid var(--amber);
+    border-radius: 8px; padding: 20px 24px; margin: 24px 0;
+  }
+  .legal-body .highlight-box p { margin: 0; font-size: 14px; }
+  .contact-block {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 28px 32px; margin-top: 48px;
+  }
+  .contact-block h3 { font-size: 17px; color: var(--cream); margin-bottom: 16px; font-weight: 600; }
+  .contact-block p { font-size: 14px; margin-bottom: 8px; }
+  .contact-block a { color: var(--amber); }
+
+  /* ---- footer ---- */
+  footer { padding: 80px 0 40px; background: var(--obsidian); border-top: 1px solid var(--line); }
+  .foot { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 40px; }
+  .foot h4 { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-mute); margin-bottom: 16px; }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot a { color: var(--cream-dim); font-size: 14px; }
+  .foot a:hover { color: var(--amber); }
+  .foot-brand .blurb { margin-top: 20px; color: var(--cream-mute); font-size: 13px; line-height: 1.55; max-width: 280px; }
+  .foot-social { display: flex; gap: 14px; margin-top: 18px; }
+  .foot-social a { color: var(--cream-dim); display: flex; align-items: center; transition: color 0.2s; }
+  .foot-social a:hover { color: var(--amber); }
+  .foot-bottom { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--cream-mute); }
+  .foot-bottom .status { display: inline-flex; align-items: center; gap: 8px; }
+  .foot-bottom .status .dot { width: 7px; height: 7px; border-radius: 50%; background: #6dca78; box-shadow: 0 0 10px #6dca78; }
+  @media (max-width: 880px) { .foot { grid-template-columns: 1fr 1fr; } .foot-brand { grid-column: 1 / -1; } }
+  @media (max-width: 480px) { .foot { grid-template-columns: 1fr; gap: 32px; } .foot-bottom { flex-direction: column; gap: 12px; text-align: center; } footer { padding: 56px 0 32px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="mp4tk3w7-index.html" class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name"><b>Bee</b><i>volve</i></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="mp4tk3w7-index.html">Home</a></li>
+        <li><a href="mp6r8l5w-products.html">Products</a></li>
+        <li><a href="mp6r8l5x-learn-automation.html">Learn Automation</a></li>
+        <li><a href="case-studies.html">Case Studies</a></li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="#" class="nav-cta">Book a free audit</a></li>
+      </ul>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="mp4tk3w7-index.html">Home</a>
+  <a href="mp6r8l5w-products.html">Products</a>
+  <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+  <a href="case-studies.html">Case Studies</a>
+  <a href="about.html">About us</a>
+  <a href="#" class="nav-cta">Book a free audit</a>
+</div>
+
+<div class="page-hero">
+  <div class="wrap">
+    <p class="kicker">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective date: April 28, 2026 &nbsp;·&nbsp; Last updated: April 28, 2026</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="legal-layout">
+
+    <aside class="legal-toc">
+      <p class="toc-label">On this page</p>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#collection">Information we collect</a></li>
+        <li><a href="#usage">How we use your data</a></li>
+        <li><a href="#sharing">Third-party sharing</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#security">Security</a></li>
+        <li><a href="#rights">Your rights</a></li>
+        <li><a href="#children">Children's privacy</a></li>
+        <li><a href="#changes">Policy changes</a></li>
+        <li><a href="#contact">Contact us</a></li>
+      </ul>
+    </aside>
+
+    <div class="legal-body">
+
+      <div class="highlight-box">
+        <p>Your privacy matters to us. This policy explains what information Beevolve collects, how we use it, and what rights you have over your data. We do not sell your personal information.</p>
+      </div>
+
+      <h2 id="overview">Overview</h2>
+      <p>Beevolve ("we", "our", or "us") operates the website <a href="https://beevolve.in">beevolve.in</a> and provides AI automation consulting and professional training services. This Privacy Policy describes how we collect, use, and protect information when you visit our website or engage our services.</p>
+      <p>By using our website, you agree to the collection and use of information in accordance with this policy.</p>
+
+      <h2 id="collection">Information we collect</h2>
+      <p>We collect information you provide directly to us and information gathered automatically when you use our website.</p>
+      <p><strong style="color:var(--cream)">Personal information you provide:</strong></p>
+      <ul>
+        <li>Name, email address, and phone number — collected through inquiry forms and call-booking flows</li>
+        <li>Professional details such as company name, job title, and industry — provided when you describe your automation needs</li>
+        <li>Messages and project briefs you send us through the contact form</li>
+      </ul>
+      <p><strong style="color:var(--cream)">Information collected automatically:</strong></p>
+      <ul>
+        <li>Log files containing IP addresses, browser type, and pages visited</li>
+        <li>Usage analytics — how you navigate the site, which sections you spend time on</li>
+        <li>Device and connection information</li>
+      </ul>
+
+      <h2 id="usage">How we use your data</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Provide, operate, and maintain our website and automation services</li>
+        <li>Respond to your inquiries and fulfil service requests</li>
+        <li>Improve our services and develop new features based on usage patterns</li>
+        <li>Send relevant service communications and updates you have opted into</li>
+        <li>Prevent fraud and ensure security of our systems</li>
+        <li>Comply with legal obligations</li>
+      </ul>
+      <p>We do not use your data for automated decision-making or profiling that produces legal or similarly significant effects.</p>
+
+      <h2 id="sharing">Third-party sharing</h2>
+      <p>We do not sell your personal information. We may share your data with trusted third-party service providers who assist us in running our business — such as payment processors, CRM platforms, and email service providers — under strict confidentiality obligations.</p>
+      <p>We may disclose information when required by law or to protect our rights and safety, or the safety of others.</p>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>Our website uses cookies to enhance your experience. Cookies are small files placed on your device that help us understand how the site is used and remember your preferences.</p>
+      <ul>
+        <li><strong style="color:var(--cream)">Essential cookies</strong> — required for the website to function correctly</li>
+        <li><strong style="color:var(--cream)">Analytics cookies</strong> — help us understand visitor behaviour in aggregate, anonymised form</li>
+      </ul>
+      <p>You can instruct your browser to refuse cookies. Note that some parts of the site may not function correctly without them.</p>
+
+      <h2 id="security">Security</h2>
+      <p>We implement commercially reasonable security measures to protect your personal information from unauthorised access, disclosure, alteration, or destruction. This includes encrypted transmission (HTTPS), access controls, and periodic security reviews.</p>
+      <p>No method of transmission over the internet or electronic storage is 100% secure. We encourage you to use strong passwords and report any suspected vulnerabilities to <a href="mailto:Info@beevolve.in">Info@beevolve.in</a>.</p>
+
+      <h2 id="rights">Your rights</h2>
+      <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li>Right to access the personal data we hold about you</li>
+        <li>Right to correct inaccurate or incomplete data</li>
+        <li>Right to request deletion of your data</li>
+        <li>Right to object to or restrict processing</li>
+        <li>Right to data portability</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:Info@beevolve.in">Info@beevolve.in</a>. We will respond within 30 days.</p>
+
+      <h2 id="children">Children's privacy</h2>
+      <p>Our services are not directed to children under 16. We do not knowingly collect personal information from children. If you believe we have inadvertently collected such information, please contact us immediately and we will delete it.</p>
+
+      <h2 id="changes">Policy changes</h2>
+      <p>We may update this Privacy Policy from time to time. We will notify you of material changes by posting the new policy on this page with an updated effective date. We encourage you to review this page periodically.</p>
+
+      <h2 id="contact">Contact us</h2>
+      <div class="contact-block">
+        <h3>Questions about this policy?</h3>
+        <p>Beevolve<br>303, Muktidham Tower, Station Road<br>Kalwa, Thane — 400605<br>Maharashtra, India</p>
+        <p style="margin-top:14px;"><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></p>
+        <p><a href="tel:+919004861408">+91 90048 61408</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a href="mp4tk3w7-index.html" class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name"><b>Bee</b><i>volve</i></span>
+        </a>
+        <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
+        <div class="foot-social">
+          <a href="https://www.facebook.com/Beevolve.in/" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="http://www.linkedin.com/in/beevolve-in-39b9b93b5" target="_blank" rel="noopener" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.instagram.com/beevolve.in" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">AI agents</a></li>
+          <li><a href="#">CRM &amp; sales</a></li>
+          <li><a href="#">Documents</a></li>
+          <li><a href="#">Integrations</a></li>
+          <li><a href="#">Dashboards</a></li>
+          <li><a href="#">Custom builds</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="case-studies.html">Case studies</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="privacy-policy.html">Privacy policy</a></li>
+          <li><a href="terms-of-service.html">Terms of service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="mp6r8l5x-learn-automation.html">Automation 101</a></li>
+          <li><a href="#">Playbooks</a></li>
+          <li><a href="#">Tools we use</a></li>
+          <li><a href="#">Build vs buy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+919004861408">+91 90048 61408</a></li>
+          <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
+          <li><a href="#">Book a free audit</a></li>
+          <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Beevolve. All rights reserved.</span>
+      <span class="status"><span class="dot"></span>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const burger = document.getElementById('burger');
+  const menu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    menu.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+</script>
+</body>
+</html>
