@@ -124,14 +124,30 @@
   }
   .page-hero::after {
     content: ""; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 180px;
+    height: 200px;
     background: linear-gradient(to bottom, transparent, var(--obsidian));
     pointer-events: none;
+    z-index: 1;
+  }
+  .page-hero-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0; transition: opacity 600ms ease; pointer-events: none; z-index: 0;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-video { opacity: 0.26; }
+  .page-hero-scrim {
+    display: none; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-scrim {
+    display: block;
+    background:
+      linear-gradient(180deg, rgba(10,9,8,0.80) 0%, rgba(10,9,8,0.45) 40%, rgba(10,9,8,0.70) 78%, rgba(10,9,8,1) 95%),
+      linear-gradient(90deg, rgba(10,9,8,0.55), rgba(10,9,8,0.25));
   }
   .hero-hex-bg {
     position: absolute; inset: 0; z-index: 0; opacity: 0.35; pointer-events: none;
   }
-  .page-hero .wrap { position: relative; z-index: 1; max-width: 760px; }
+  .page-hero .wrap { position: relative; z-index: 2; max-width: 760px; }
   .page-hero h1 { font-size: clamp(42px, 6vw, 72px); line-height: 1.08; margin: 20px 0 24px; }
   .page-hero .lede { font-size: clamp(17px, 2.2vw, 20px); color: var(--cream-dim); max-width: 560px; margin: 0 auto 40px; line-height: 1.65; }
 
@@ -294,7 +310,10 @@
 </nav>
 
 <!-- PAGE HERO -->
-<section class="page-hero">
+<section class="page-hero" id="pricingHero">
+  <video class="page-hero-video" id="pricingBgVideo"
+    muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="page-hero-scrim" aria-hidden="true"></div>
   <div class="hero-hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%">
       <defs>
@@ -625,6 +644,32 @@
     t.classList.add('peek');
     setTimeout(() => t.classList.remove('peek'), 4000);
   }, 3000);
+
+  // Hero background video — HLS
+  const HLS_SRC = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
+  const $hero = document.getElementById('pricingHero');
+  const $vid  = document.getElementById('pricingBgVideo');
+  if ($vid && $hero) {
+    const reveal = () => { $hero.setAttribute('data-bgvideo', 'true'); };
+    $vid.addEventListener('playing', reveal, { once: true });
+    $vid.addEventListener('canplay', () => { if (!$vid.paused) reveal(); }, { once: true });
+    if ($vid.canPlayType('application/vnd.apple.mpegurl')) {
+      $vid.src = HLS_SRC; $vid.play().catch(() => {});
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+      s.onload = () => {
+        if (Hls.isSupported()) {
+          const hls = new Hls({ autoStartLoad: true, startLevel: -1 });
+          hls.loadSource(HLS_SRC);
+          hls.attachMedia($vid);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => $vid.play().catch(() => {}));
+        }
+      };
+      document.head.appendChild(s);
+    }
+    if ($vid.readyState >= 3) reveal();
+  }
 </script>
 
 </body>
