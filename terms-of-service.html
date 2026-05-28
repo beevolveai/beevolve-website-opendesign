@@ -128,14 +128,14 @@
 <nav>
   <div class="wrap">
     <div class="nav-inner">
-      <a href="mp4tk3w7-index.html" class="brand">
-        <img src="assets/logo.png" class="brand-svg" width="36" height="36" alt="Beevolve logo" style="border-radius:8px;">
+      <a href="index.html" class="brand">
+        <canvas class="brand-svg brand-logo-canvas" width="44" height="44" data-src="assets/logo.png" aria-label="Beevolve logo" style="display:block;"></canvas>
         <span class="brand-name"><b>Bee</b><i>volve</i></span>
       </a>
       <ul class="nav-links">
-        <li><a href="mp4tk3w7-index.html">Home</a></li>
-        <li><a href="mp6r8l5w-products.html">Products</a></li>
-        <li><a href="mp6r8l5x-learn-automation.html">Learn Automation</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="learn-automation.html">Learn Automation</a></li>
         <li><a href="case-studies.html">Case Studies</a></li>
         <li><a href="about.html">About us</a></li>
         <li><a href="#" class="nav-cta" target="_blank" rel="noopener">Book a free audit</a></li>
@@ -148,9 +148,9 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="mp4tk3w7-index.html">Home</a>
-  <a href="mp6r8l5w-products.html">Products</a>
-  <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+  <a href="index.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="#" class="nav-cta" target="_blank" rel="noopener">Book a free audit</a>
@@ -266,8 +266,8 @@
   <div class="wrap">
     <div class="foot">
       <div class="foot-brand">
-        <a href="mp4tk3w7-index.html" class="brand">
-          <img src="assets/logo.png" class="brand-svg" width="36" height="36" alt="Beevolve logo" style="border-radius:8px;">
+        <a href="index.html" class="brand">
+          <canvas class="brand-svg brand-logo-canvas" width="44" height="44" data-src="assets/logo.png" aria-label="Beevolve logo" style="display:block;"></canvas>
           <span class="brand-name"><b>Bee</b><i>volve</i></span>
         </a>
         <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
@@ -280,12 +280,12 @@
       <div>
         <h4>Services</h4>
         <ul>
-          <li><a href="mp6r8l5w-products.html">AI agents</a></li>
-          <li><a href="mp6r8l5w-products.html">CRM &amp; sales</a></li>
-          <li><a href="mp6r8l5w-products.html">Documents</a></li>
-          <li><a href="mp6r8l5w-products.html">Integrations</a></li>
-          <li><a href="mp6r8l5w-products.html">Dashboards</a></li>
-          <li><a href="mp6r8l5w-products.html">Custom builds</a></li>
+          <li><a href="products.html">AI agents</a></li>
+          <li><a href="products.html">CRM &amp; sales</a></li>
+          <li><a href="products.html">Documents</a></li>
+          <li><a href="products.html">Integrations</a></li>
+          <li><a href="products.html">Dashboards</a></li>
+          <li><a href="products.html">Custom builds</a></li>
         </ul>
       </div>
       <div>
@@ -302,7 +302,7 @@
       <div>
         <h4>Learn</h4>
         <ul>
-          <li><a href="mp6r8l5x-learn-automation.html">Automation 101</a></li>
+          <li><a href="learn-automation.html">Automation 101</a></li>
           <li><a href="mp6r8l5x-learn-automation.html#playbooks">Playbooks</a></li>
           <li><a href="mp6r8l5x-learn-automation.html#tools">Tools we use</a></li>
           <li><a href="mp6r8l5x-learn-automation.html#build-vs-buy">Build vs buy</a></li>
@@ -423,5 +423,24 @@
   </svg>
 </a>
 <script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);})();</script>
+<script>
+(function(){
+  document.querySelectorAll('.brand-logo-canvas').forEach(function(c){
+    var img=new Image();img.src=c.dataset.src;
+    img.onload=function(){
+      var w=img.naturalWidth,h=img.naturalHeight;
+      c.width=w;c.height=h;
+      var ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+      var d=ctx.getImageData(0,0,w,h),px=d.data;
+      for(var i=0;i<px.length;i+=4){
+        var r=px[i],g=px[i+1],b=px[i+2],lum=(r+g+b)/3;
+        if(lum<60)px[i+3]=0;
+        else if(lum<100){px[i+3]=Math.round((lum-60)/40*255);}
+      }
+      ctx.putImageData(d,0,0);
+    };
+  });
+})();
+</script>
 </body>
 </html>

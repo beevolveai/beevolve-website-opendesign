@@ -486,14 +486,14 @@ footer {
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="mp4tk3w7-index.html" class="brand">
-      <img src="assets/logo.png" class="brand-svg" width="36" height="36" alt="Beevolve logo" style="border-radius:8px;">
+    <a href="index.html" class="brand">
+      <canvas class="brand-svg brand-logo-canvas" width="44" height="44" data-src="assets/logo.png" aria-label="Beevolve logo" style="display:block;"></canvas>
       <div class="brand-name"><b>Bee</b><i>volve</i></div>
     </a>
     <div class="nav-links">
-      <a href="mp4tk3w7-index.html">Home</a>
-      <a href="mp6r8l5w-products.html">Products</a>
-      <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="learn-automation.html">Learn Automation</a>
       <a href="case-studies.html" class="active">Case Studies</a>
       <a href="about.html">About us</a>
     </div>
@@ -506,9 +506,9 @@ footer {
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu">
-  <a href="mp4tk3w7-index.html">Home</a>
-  <a href="mp6r8l5w-products.html">Products</a>
-  <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+  <a href="index.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="https://calendly.com/beevolve" class="mobile-cta">Book a free audit →</a>
@@ -814,7 +814,7 @@ footer {
     <p>Book a free 30-minute audit. We'll find your highest-leverage automation — at no cost.</p>
     <div class="cta-actions">
       <a href="https://calendly.com/beevolve" class="btn-primary">Book a free audit →</a>
-      <a href="mp4tk3w7-index.html" class="btn-secondary">See what we build</a>
+      <a href="index.html" class="btn-secondary">See what we build</a>
     </div>
   </div>
 </section>
@@ -825,7 +825,7 @@ footer {
     <div class="footer-top">
       <div>
         <div class="brand">
-          <img src="assets/logo.png" class="brand-svg" width="36" height="36" alt="Beevolve logo" style="border-radius:8px;">
+          <canvas class="brand-svg brand-logo-canvas" width="44" height="44" data-src="assets/logo.png" aria-label="Beevolve logo" style="display:block;"></canvas>
           <div class="brand-name"><b>Bee</b><i>volve</i></div>
         </div>
         <p class="footer-brand-desc">AI-powered automation, done for you. Built in India. Deployed globally.</p>
@@ -833,10 +833,10 @@ footer {
       <div class="footer-col">
         <h5>Products</h5>
         <ul>
-          <li><a href="mp6r8l5w-products.html">BeeOps</a></li>
-          <li><a href="mp6r8l5w-products.html">BeeLeads</a></li>
-          <li><a href="mp6r8l5w-products.html">BeeFinance</a></li>
-          <li><a href="mp6r8l5w-products.html">BeeContent</a></li>
+          <li><a href="products.html">BeeOps</a></li>
+          <li><a href="products.html">BeeLeads</a></li>
+          <li><a href="products.html">BeeFinance</a></li>
+          <li><a href="products.html">BeeContent</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -844,7 +844,7 @@ footer {
         <ul>
           <li><a href="about.html">About us</a></li>
           <li><a href="case-studies.html">Case studies</a></li>
-          <li><a href="mp6r8l5x-learn-automation.html">Learn automation</a></li>
+          <li><a href="learn-automation.html">Learn automation</a></li>
           <li><a href="privacy-policy.html">Privacy policy</a></li>
           <li><a href="terms-of-service.html">Terms of service</a></li>
         </ul>
@@ -1122,5 +1122,24 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({
 </a>
 <script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);})();</script>
 
+<script>
+(function(){
+  document.querySelectorAll('.brand-logo-canvas').forEach(function(c){
+    var img=new Image();img.src=c.dataset.src;
+    img.onload=function(){
+      var w=img.naturalWidth,h=img.naturalHeight;
+      c.width=w;c.height=h;
+      var ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+      var d=ctx.getImageData(0,0,w,h),px=d.data;
+      for(var i=0;i<px.length;i+=4){
+        var r=px[i],g=px[i+1],b=px[i+2],lum=(r+g+b)/3;
+        if(lum<60)px[i+3]=0;
+        else if(lum<100){px[i+3]=Math.round((lum-60)/40*255);}
+      }
+      ctx.putImageData(d,0,0);
+    };
+  });
+})();
+</script>
 </body>
 </html>
