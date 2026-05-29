@@ -601,29 +601,40 @@
     .stat::before { height: 40px; }
   }
   .marquee {
-    padding: 28px 0;
-    border-bottom: 1px solid var(--line);
-    background: var(--obsidian-2);
+    padding: 0;
+    border-top: 1px solid rgba(245,166,35,0.30);
+    border-bottom: 1px solid rgba(245,166,35,0.30);
+    background: linear-gradient(90deg, #0a0908 0%, #1a1208 20%, #221608 50%, #1a1208 80%, #0a0908 100%);
     overflow: hidden;
+    position: relative;
   }
+  .marquee::before, .marquee::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+  }
+  .marquee::before { left: 0; background: linear-gradient(90deg, var(--obsidian) 0%, transparent 100%); }
+  .marquee::after  { right: 0; background: linear-gradient(270deg, var(--obsidian) 0%, transparent 100%); }
   .marquee-row {
     display: flex; gap: 36px;
     white-space: nowrap;
     animation: scroll var(--marquee-speed, 60s) linear infinite;
     width: max-content;
+    padding: 22px 0;
   }
   .marquee:hover .marquee-row { animation-play-state: paused; }
   .mq-item {
     display: inline-flex; align-items: center; gap: 10px;
     font-family: var(--mono);
-    font-size: 13px; letter-spacing: 0.04em;
-    color: var(--cream-mute);
+    font-size: 13px; letter-spacing: 0.06em;
+    color: var(--amber-soft);
+    text-shadow: 0 0 12px rgba(245,166,35,0.35);
   }
   .mq-item::before {
     content: ""; width: 8px; height: 8px;
     background: var(--amber);
     clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
     flex: none;
+    filter: drop-shadow(0 0 4px rgba(245,166,35,0.8));
   }
   @keyframes scroll {
     from { transform: translateX(0); }
@@ -1812,7 +1823,6 @@
 </script>
 </body>
 </html>
-
 
 
 
