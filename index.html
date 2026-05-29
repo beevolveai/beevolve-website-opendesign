@@ -1548,30 +1548,36 @@
 </script>
 
 <script>
-// hero background video — HLS + reveal on play
-const HLS_SRC_IDX = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
+// hero background video — local mp4 primary, Mux HLS fallback
 (function() {
   var $vid = document.getElementById('heroBgVideo');
   if (!$vid) return;
   $vid.addEventListener('playing', function() {
     document.querySelector('.hero').setAttribute('data-bgvideo', 'true');
   }, { once: true });
-  if ($vid.canPlayType('application/vnd.apple.mpegurl')) {
-    $vid.src = HLS_SRC_IDX;
-    $vid.load(); $vid.play().catch(function(){});
-  } else {
-    var s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
-    s.onload = function() {
-      if (Hls.isSupported()) {
-        var hls = new Hls({ autoStartLoad: true, startLevel: -1 });
-        hls.loadSource(HLS_SRC_IDX);
-        hls.attachMedia($vid);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() { $vid.play().catch(function(){}); });
-      }
-    };
-    document.head.appendChild(s);
-  }
+  // try local mp4 first (works on Hostinger without CDN)
+  $vid.src = 'assets/hero.mp4';
+  $vid.load();
+  $vid.play().catch(function() {
+    // fallback to Mux HLS if local file fails
+    var HLS_SRC = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
+    if ($vid.canPlayType('application/vnd.apple.mpegurl')) {
+      $vid.src = HLS_SRC;
+      $vid.load(); $vid.play().catch(function(){});
+    } else {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+      s.onload = function() {
+        if (Hls.isSupported()) {
+          var hls = new Hls({ autoStartLoad: true, startLevel: -1 });
+          hls.loadSource(HLS_SRC);
+          hls.attachMedia($vid);
+          hls.on(Hls.Events.MANIFEST_PARSED, function() { $vid.play().catch(function(){}); });
+        }
+      };
+      document.head.appendChild(s);
+    }
+  });
 })();
 </script>
 
