@@ -234,13 +234,13 @@
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%);
   }
   .hero[data-bgvideo="true"] .hero-bg-video {
-    opacity: var(--bgvideo-opacity, 0.35);
+    opacity: var(--bgvideo-opacity, 0.65);
   }
   .hero[data-bgvideo="true"] .hero-bg-scrim {
     position: absolute; inset: 0; z-index: 0; pointer-events: none;
     background:
-      linear-gradient(90deg, rgba(10,9,8,1) 0%, rgba(10,9,8,0.95) 30%, rgba(10,9,8,0.55) 55%, rgba(10,9,8,0.25) 80%, rgba(10,9,8,0.1) 100%),
-      linear-gradient(180deg, rgba(10,9,8,0.2), rgba(10,9,8,0.5));
+      linear-gradient(90deg, rgba(10,9,8,0.92) 0%, rgba(10,9,8,0.70) 35%, rgba(10,9,8,0.20) 65%, rgba(10,9,8,0.05) 100%),
+      linear-gradient(180deg, rgba(10,9,8,0.15), rgba(10,9,8,0.35));
   }
   @media (max-width: 880px) {
     .hero-bg-video {
@@ -251,8 +251,8 @@
     }
     .hero[data-bgvideo="true"] .hero-bg-scrim {
       background:
-        linear-gradient(180deg, rgba(10,9,8,0.85) 0%, rgba(10,9,8,0.6) 40%, rgba(10,9,8,0.8) 85%, rgba(10,9,8,1) 100%),
-        linear-gradient(90deg, rgba(10,9,8,0.5), rgba(10,9,8,0.5));
+        linear-gradient(180deg, rgba(10,9,8,0.75) 0%, rgba(10,9,8,0.45) 40%, rgba(10,9,8,0.65) 85%, rgba(10,9,8,0.95) 100%),
+        linear-gradient(90deg, rgba(10,9,8,0.35), rgba(10,9,8,0.35));
     }
   }
 
@@ -1064,7 +1064,7 @@
 
 <!-- =================== STAT BAND =================== -->
 <section class="stat-band" id="stats" aria-label="Impact">
-  <div class="wrap" >
+  <div class="wrap">
     <div class="stat-row" id="statRow">
       <div class="stat">
         <div class="num" data-target="1000000" data-suffix="M+" data-format="M">1<span class="suffix">M+</span></div>
@@ -1789,28 +1789,29 @@
 (function(){
   var v = document.getElementById('heroBgVideo');
   if(!v) return;
+  // Play the local mp4 directly. Only fall back to Mux HLS if the file fails to load.
   var hlsUrl = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
-  function onPlay(){ v.style.opacity='0.35'; }
-  v.addEventListener('playing', onPlay, {once:true});
-  if(v.canPlayType('application/vnd.apple.mpegurl')){
-    v.src = hlsUrl; v.play().catch(function(){});
-  } else {
-    var s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
-    s.onload=function(){
-      if(window.Hls && Hls.isSupported()){
-        var h=new Hls(); h.loadSource(hlsUrl); h.attachMedia(v);
-        h.on(Hls.Events.MANIFEST_PARSED,function(){ v.play().catch(function(){}); });
-      }
-    };
-    document.head.appendChild(s);
+  function loadHls(){
+    if(v.canPlayType('application/vnd.apple.mpegurl')){
+      v.src = hlsUrl; v.play().catch(function(){});
+    } else {
+      var s=document.createElement('script');
+      s.src='https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+      s.onload=function(){
+        if(window.Hls && Hls.isSupported()){
+          var h=new Hls(); h.loadSource(hlsUrl); h.attachMedia(v);
+          h.on(Hls.Events.MANIFEST_PARSED,function(){ v.play().catch(function(){}); });
+        }
+      };
+      document.head.appendChild(s);
+    }
   }
+  v.addEventListener('error', loadHls, {once:true});
+  v.play().catch(function(){ loadHls(); });
 })();
 </script>
 </body>
 </html>
-
-
 
 
 
