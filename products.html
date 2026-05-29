@@ -1230,7 +1230,7 @@
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
           <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
-          <li><a href="https://wa.me/919004861408?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20automation%20audit%20with%20Beevolve." target="_blank" rel="noopener">Book a free audit</a></li>
+          <li><a href="#" target="_blank" rel="noopener" onclick="return openAuditForm(event)">Book a free audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
         <div class="foot-social">
@@ -1355,6 +1355,227 @@
   });
 })();
 </script>
+
+<!-- Book a Free Audit Modal -->
+<style>
+.audit-backdrop{position:fixed;inset:0;background:rgba(5,4,3,0.82);backdrop-filter:blur(10px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.24s ease}
+.audit-backdrop.open{opacity:1;pointer-events:auto}
+.audit-modal{background:#111009;border:1px solid rgba(245,166,35,0.18);border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:44px 40px 40px;position:relative;transform:translateY(30px) scale(0.97);transition:transform 0.28s cubic-bezier(0.16,1,0.3,1)}
+.audit-backdrop.open .audit-modal{transform:translateY(0) scale(1)}
+.audit-close-x{position:absolute;top:16px;right:20px;background:none;border:none;color:#8a8170;font-size:20px;cursor:pointer;padding:6px 10px;line-height:1;transition:color 0.15s}
+.audit-close-x:hover{color:#f1ead9}
+.audit-header{text-align:center;margin-bottom:32px}
+.audit-mark{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px}
+.audit-mark-name{font-family:"Instrument Serif",Georgia,serif;font-size:18px;color:#f1ead9;line-height:1}
+.audit-mark-name i{font-style:italic;color:#F5A623}
+.audit-title{font-family:"Instrument Serif",Georgia,serif;font-size:30px;font-weight:400;color:#f1ead9;line-height:1.15;margin-bottom:6px}
+.audit-title em{font-style:italic;color:#F5A623}
+.audit-sub{font-size:14px;color:#8a8170}
+.audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.audit-field{display:flex;flex-direction:column;gap:7px}
+.audit-field.full{grid-column:1/-1}
+.audit-field label{font-size:13px;font-weight:500;color:#cdc3ac;letter-spacing:0.01em}
+.audit-field .req{color:#F5A623}
+.audit-field input,.audit-field select,.audit-field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(241,234,217,0.12);border-radius:10px;padding:12px 14px;color:#f1ead9;font-size:14px;font-family:"DM Sans",system-ui,sans-serif;outline:none;transition:border-color 0.18s,background 0.18s;width:100%}
+.audit-field input::placeholder,.audit-field textarea::placeholder{color:#6a6058}
+.audit-field input:focus,.audit-field select:focus,.audit-field textarea:focus{border-color:#F5A623;background:rgba(245,166,35,0.05)}
+.audit-field input.error,.audit-field select.error,.audit-field textarea.error{border-color:#dc2626}
+.audit-field select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8170' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.audit-field select option{background:#1a1612}
+.audit-field textarea{resize:vertical;min-height:90px}
+.phone-wrap{display:flex;gap:0}
+.phone-wrap .phone-cc{width:110px;flex-shrink:0;border-radius:10px 0 0 10px;border-right:none}
+.phone-wrap .phone-cc:focus{border-right:none}
+.phone-wrap .phone-num{border-radius:0 10px 10px 0;flex:1}
+.audit-submit{width:100%;margin-top:24px;padding:15px;background:#F5A623;color:#0a0908;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:"DM Sans",system-ui,sans-serif;transition:background 0.18s,transform 0.14s;display:flex;align-items:center;justify-content:center;gap:8px}
+.audit-submit:hover{background:#f2bb5d;transform:translateY(-1px)}
+.audit-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.audit-privacy{font-size:12px;color:#6a6058;text-align:center;margin-top:12px;line-height:1.5}
+.audit-privacy a{color:#F5A623;text-underline-offset:2px}
+.audit-success{display:none;flex-direction:column;align-items:center;text-align:center;padding:20px 0;gap:20px}
+.audit-success-icon{width:72px;height:72px;background:rgba(245,166,35,0.12);border:2px solid #F5A623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;color:#F5A623}
+.audit-success h3{font-family:"Instrument Serif",Georgia,serif;font-size:28px;font-weight:400;color:#f1ead9}
+.audit-success h3 em{font-style:italic;color:#F5A623}
+.audit-success p{font-size:14px;color:#8a8170;max-width:340px;line-height:1.65}
+.audit-close-btn{margin-top:4px;padding:11px 28px;border:1px solid rgba(241,234,217,0.12);border-radius:8px;background:none;color:#cdc3ac;font-size:14px;cursor:pointer;font-family:"DM Sans",system-ui,sans-serif;transition:border-color 0.15s,color 0.15s}
+.audit-close-btn:hover{border-color:#F5A623;color:#f1ead9}
+@media(max-width:520px){.audit-modal{padding:32px 22px 28px}.audit-grid{grid-template-columns:1fr}.audit-field.full{grid-column:1}.phone-wrap{flex-direction:column}.phone-wrap .phone-cc{width:100%;border-radius:10px;border-right:1px solid rgba(241,234,217,0.12)}.phone-wrap .phone-num{border-radius:10px}}
+</style>
+
+<div id="audit-modal" class="audit-backdrop" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
+  <div class="audit-modal">
+    <button class="audit-close-x" onclick="closeAuditForm()" aria-label="Close form">✕</button>
+    <div id="audit-form-wrap">
+      <div class="audit-header">
+        <div class="audit-mark">
+          <img src="assets/logo.svg" height="32" alt="Beevolve" style="border-radius:6px;background:#1a1410;padding:3px;">
+          <span class="audit-mark-name">Bee<i>volve</i></span>
+        </div>
+        <h2 class="audit-title" id="audit-modal-title">Book Your <em>Free Audit</em></h2>
+        <p class="audit-sub">Takes less than 60 seconds</p>
+      </div>
+      <form id="audit-form" novalidate>
+        <div class="audit-grid">
+          <div class="audit-field">
+            <label for="af-name">Full Name <span class="req">*</span></label>
+            <input id="af-name" type="text" name="full_name" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="audit-field">
+            <label for="af-company">Company Name</label>
+            <input id="af-company" type="text" name="company" placeholder="Your company" autocomplete="organization">
+          </div>
+          <div class="audit-field">
+            <label for="af-email">Email <span class="req">*</span></label>
+            <input id="af-email" type="email" name="email" placeholder="your@email.com" autocomplete="email">
+          </div>
+          <div class="audit-field">
+            <label for="af-phone">Phone <span class="req">*</span></label>
+            <div class="phone-wrap">
+              <select name="phone_country" class="phone-cc" aria-label="Country code">
+                <option value="+91" selected>IN +91</option>
+                <option value="+1">US +1</option>
+                <option value="+44">UK +44</option>
+                <option value="+971">UAE +971</option>
+                <option value="+65">SG +65</option>
+                <option value="+61">AU +61</option>
+                <option value="+49">DE +49</option>
+                <option value="+33">FR +33</option>
+                <option value="+81">JP +81</option>
+                <option value="+86">CN +86</option>
+              </select>
+              <input id="af-phone" type="tel" name="phone" placeholder="98765 43210" class="phone-num" autocomplete="tel">
+            </div>
+          </div>
+          <div class="audit-field full">
+            <label for="af-service">What are you looking for?</label>
+            <select id="af-service" name="service">
+              <option value="" disabled selected>Select a service</option>
+              <option value="ai-agents">AI Agents &amp; Chatbots</option>
+              <option value="crm-automation">CRM Workflow Automation</option>
+              <option value="document-automation">Document Automation</option>
+              <option value="systems-integration">Systems Integration</option>
+              <option value="dashboards">Dashboards &amp; Reporting</option>
+              <option value="custom-build">Custom Build</option>
+              <option value="not-sure">Not sure yet — let's explore</option>
+            </select>
+          </div>
+          <div class="audit-field full">
+            <label for="af-project">Tell us about your project</label>
+            <textarea id="af-project" name="project" rows="4" placeholder="What processes do you want to automate? What's your biggest bottleneck?"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="audit-submit" id="audit-submit-btn">
+          <span id="audit-btn-text">Get My Free Automation Audit →</span>
+        </button>
+        <p class="audit-privacy">By submitting you agree to our <a href="privacy-policy.html">Privacy Policy</a>. We never share your data.</p>
+      </form>
+    </div>
+    <div id="audit-success" class="audit-success">
+      <div class="audit-success-icon">✓</div>
+      <h3>You're <em>booked in!</em></h3>
+      <p>We'll reach out within 24 hours to schedule your free automation audit. Check your inbox.</p>
+      <button class="audit-close-btn" onclick="closeAuditForm()">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var backdrop = document.getElementById('audit-modal');
+  var form = document.getElementById('audit-form');
+  var submitBtn = document.getElementById('audit-submit-btn');
+  var btnText = document.getElementById('audit-btn-text');
+  var successEl = document.getElementById('audit-success');
+  var formWrap = document.getElementById('audit-form-wrap');
+
+  window.openAuditForm = function(e){
+    if(e){ e.preventDefault(); }
+    document.body.style.overflow = 'hidden';
+    backdrop.classList.add('open');
+    setTimeout(function(){ var f = document.getElementById('af-name'); if(f) f.focus(); }, 280);
+    return false;
+  };
+
+  window.closeAuditForm = function(){
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function(){
+      successEl.style.display = 'none';
+      formWrap.querySelector('#audit-form').style.display = '';
+      formWrap.querySelector('.audit-header').style.display = '';
+      submitBtn.disabled = false;
+      btnText.textContent = 'Get My Free Automation Audit →';
+    }, 300);
+  };
+
+  backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
+
+  function validateForm(){
+    var ok = true;
+    ['af-name','af-email','af-phone'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var val = el.value.trim();
+      var valid = val.length > 0;
+      if(id === 'af-email') valid = valid && /^[^@]+@[^@]+.[^@]+$/.test(val);
+      if(id === 'af-phone') valid = valid && val.replace(/D/g,'').length >= 7;
+      el.classList.toggle('error', !valid);
+      if(!valid) ok = false;
+    });
+    return ok;
+  }
+
+  ['af-name','af-email','af-phone'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('input', function(){ el.classList.remove('error'); });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validateForm()) return;
+
+    submitBtn.disabled = true;
+    btnText.textContent = 'Sending…';
+
+    var data = {
+      full_name: document.getElementById('af-name').value.trim(),
+      company: document.getElementById('af-company').value.trim(),
+      email: document.getElementById('af-email').value.trim(),
+      phone_country: form.querySelector('[name="phone_country"]').value,
+      phone: document.getElementById('af-phone').value.trim(),
+      service: document.getElementById('af-service').value,
+      project: document.getElementById('af-project').value.trim(),
+      submitted_at: new Date().toISOString(),
+      page: window.location.href
+    };
+
+    fetch('https://formspree.io/f/xanojepq', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res.ok || res.next){
+        formWrap.querySelector('.audit-header').style.display = 'none';
+        form.style.display = 'none';
+        successEl.style.display = 'flex';
+      } else {
+        throw new Error('Form error');
+      }
+    })
+    .catch(function(){
+      submitBtn.disabled = false;
+      btnText.textContent = 'Get My Free Automation Audit →';
+      alert('Something went wrong. Please try WhatsApp or email us at Info@beevolve.in');
+    });
+  });
+})();
+</script>
+<!-- End Audit Modal -->
 </body>
 </html>
+
+
 
