@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -1027,7 +1027,7 @@
 
 <!-- =================== HERO =================== -->
 <section class="hero" id="hero" data-bgvideo="true">
-  <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" src="mp4twsi2-hero.mp4" aria-hidden="true"></video>
+  <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" src="assets/hero.mp4" aria-hidden="true"></video>
   <div class="hero-bg-scrim" aria-hidden="true"></div>
   <div class="hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
@@ -1683,6 +1683,22 @@
             <label for="af-project">Tell us about your project</label>
             <textarea id="af-project" name="project" rows="4" placeholder="What processes do you want to automate? What's your biggest bottleneck?"></textarea>
           </div>
+          <div class="audit-field full">
+            <label for="af-hear">How did you hear about us?</label>
+            <select id="af-hear" name="hear_about">
+              <option value="" disabled selected>Select an option</option>
+              <option value="Instagram">Instagram</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Facebook">Facebook</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Google Search">Google Search</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Friend / Word of mouth">Friend / Word of mouth</option>
+              <option value="Blog / Article">Blog / Article</option>
+              <option value="Email">Email</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
         <button type="submit" class="audit-submit" id="audit-submit-btn">
           <span id="audit-btn-text">Get My Free Automation Audit →</span>
@@ -1766,8 +1782,9 @@
       phone: document.getElementById('af-phone').value.trim(),
       service: document.getElementById('af-service').value,
       project: document.getElementById('af-project').value.trim(),
+      hear_about: document.getElementById('af-hear').value,
       submitted_at: new Date().toISOString(),
-      page: window.location.href
+      page: window.location.href,
       form_type: 'lead'
     };
 

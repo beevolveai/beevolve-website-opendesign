@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -704,8 +704,8 @@
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="index.html">Home</a>
-      <a href="mp6r8l5w-products.html">Products</a>
-      <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+      <a href="products.html">Products</a>
+      <a href="learn-automation.html">Learn Automation</a>
       <a href="case-studies.html">Case Studies</a>
       <a href="about.html">About us</a>
       <a href="contact.html" class="active">Contact</a>
@@ -722,8 +722,8 @@
 
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
   <a href="index.html">Home</a>
-  <a href="mp6r8l5w-products.html">Products</a>
-  <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="contact.html" class="active">Contact</a>
@@ -899,6 +899,22 @@
                 <label for="cf-message">Message <span class="req">*</span></label>
                 <textarea id="cf-message" name="message" placeholder="Tell us what you're working on, what's slowing you down, or what you'd like to automate…"></textarea>
               </div>
+              <div class="form-field full">
+                <label for="cf-hear">How did you hear about us?</label>
+                <select id="cf-hear" name="hear_about">
+                  <option value="" disabled selected>Select an option</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="Google Search">Google Search</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="Friend / Word of mouth">Friend / Word of mouth</option>
+                  <option value="Blog / Article">Blog / Article</option>
+                  <option value="Email">Email</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </div>
             <button type="submit" class="form-submit" id="cf-submit">
               Send Message
@@ -1020,12 +1036,12 @@
       <div>
         <h4>Services</h4>
         <ul>
-          <li><a href="mp6r8l5w-products.html">AI agents</a></li>
-          <li><a href="mp6r8l5w-products.html">CRM &amp; sales</a></li>
-          <li><a href="mp6r8l5w-products.html">Documents</a></li>
-          <li><a href="mp6r8l5w-products.html">Integrations</a></li>
-          <li><a href="mp6r8l5w-products.html">Dashboards</a></li>
-          <li><a href="mp6r8l5w-products.html">Custom builds</a></li>
+          <li><a href="products.html">AI agents</a></li>
+          <li><a href="products.html">CRM &amp; sales</a></li>
+          <li><a href="products.html">Documents</a></li>
+          <li><a href="products.html">Integrations</a></li>
+          <li><a href="products.html">Dashboards</a></li>
+          <li><a href="products.html">Custom builds</a></li>
         </ul>
       </div>
       <div>
@@ -1042,7 +1058,7 @@
       <div>
         <h4>Learn</h4>
         <ul>
-          <li><a href="mp6r8l5x-learn-automation.html">Automation 101</a></li>
+          <li><a href="learn-automation.html">Automation 101</a></li>
         </ul>
       </div>
       <div>
@@ -1171,9 +1187,10 @@
         phone:        phone.value.trim(),
         service:      subject ? subject.value : '',
         project:      message.value.trim(),
+        hear_about:   document.getElementById('cf-hear') ? document.getElementById('cf-hear').value : '',
         page:         window.location.href
       };
-      fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
+      fetch(SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) })
         .then(function() {
           document.getElementById('contact-form-wrap').style.display = 'none';
           var s = document.getElementById('contact-success');
@@ -1331,6 +1348,22 @@
             <label for="af-project">Tell us about your project</label>
             <textarea id="af-project" name="project" placeholder="What process are you looking to automate? What's slowing your team down?"></textarea>
           </div>
+          <div class="audit-field full">
+            <label for="af-hear">How did you hear about us?</label>
+            <select id="af-hear" name="hear_about">
+              <option value="" disabled selected>Select an option</option>
+              <option value="Instagram">Instagram</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Facebook">Facebook</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Google Search">Google Search</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Friend / Word of mouth">Friend / Word of mouth</option>
+              <option value="Blog / Article">Blog / Article</option>
+              <option value="Email">Email</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
         <button type="submit" class="audit-submit" id="audit-submit-btn">
           Book my free audit
@@ -1373,7 +1406,7 @@ if(auditForm){
     var cc=auditForm.querySelector('[name="phone_country"]').value;
     var svc=document.getElementById('af-service');
     var proj=document.getElementById('af-project');
-    var payload={submitted_at:new Date().toISOString(),full_name:nm.value.trim(),company:document.getElementById('af-company').value.trim(),email:em.value.trim(),phone_country:cc,phone:ph.value.trim(),service:svc?svc.value:'',project:proj?proj.value.trim():'',page:window.location.href};
+    var payload={submitted_at:new Date().toISOString(),full_name:nm.value.trim(),company:document.getElementById('af-company').value.trim(),email:em.value.trim(),phone_country:cc,phone:ph.value.trim(),service:svc?svc.value:'',project:proj?proj.value.trim():'',hear_about:document.getElementById('af-hear')?document.getElementById('af-hear').value:'',page:window.location.href};
     fetch(SHEET_URL_AUDIT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)}).then(function(){ showAuditSuccess(); }).catch(function(){ showAuditSuccess(); });
   });
 }

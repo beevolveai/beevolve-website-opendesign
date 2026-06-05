@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -165,8 +165,8 @@
       </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="mp6r8l5w-products.html">Products</a></li>
-        <li><a href="mp6r8l5x-learn-automation.html">Learn Automation</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="learn-automation.html">Learn Automation</a></li>
         <li><a href="case-studies.html">Case Studies</a></li>
         <li><a href="about.html">About us</a></li>
         <li><a href="#" class="nav-cta" target="_blank" rel="noopener" onclick="return openAuditForm(event)">Book a free audit</a></li>
@@ -180,8 +180,8 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
-  <a href="mp6r8l5w-products.html">Products</a>
-  <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="#" class="nav-cta" target="_blank" rel="noopener" onclick="return openAuditForm(event)">Book a free audit</a>
@@ -314,12 +314,12 @@
       <div>
         <h4>Services</h4>
         <ul>
-          <li><a href="mp6r8l5w-products.html">AI agents</a></li>
-          <li><a href="mp6r8l5w-products.html">CRM &amp; sales</a></li>
-          <li><a href="mp6r8l5w-products.html">Documents</a></li>
-          <li><a href="mp6r8l5w-products.html">Integrations</a></li>
-          <li><a href="mp6r8l5w-products.html">Dashboards</a></li>
-          <li><a href="mp6r8l5w-products.html">Custom builds</a></li>
+          <li><a href="products.html">AI agents</a></li>
+          <li><a href="products.html">CRM &amp; sales</a></li>
+          <li><a href="products.html">Documents</a></li>
+          <li><a href="products.html">Integrations</a></li>
+          <li><a href="products.html">Dashboards</a></li>
+          <li><a href="products.html">Custom builds</a></li>
         </ul>
       </div>
       <div>
@@ -336,7 +336,7 @@
       <div>
         <h4>Learn</h4>
         <ul>
-          <li><a href="mp6r8l5x-learn-automation.html">Automation 101</a></li>
+          <li><a href="learn-automation.html">Automation 101</a></li>
         </ul>
       </div>
       <div>
@@ -541,6 +541,22 @@
             <label for="af-project">Tell us about your project</label>
             <textarea id="af-project" name="project" rows="4" placeholder="What processes do you want to automate? What's your biggest bottleneck?"></textarea>
           </div>
+          <div class="audit-field full">
+            <label for="af-hear">How did you hear about us?</label>
+            <select id="af-hear" name="hear_about">
+              <option value="" disabled selected>Select an option</option>
+              <option value="Instagram">Instagram</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Facebook">Facebook</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Google Search">Google Search</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Friend / Word of mouth">Friend / Word of mouth</option>
+              <option value="Blog / Article">Blog / Article</option>
+              <option value="Email">Email</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
         <button type="submit" class="audit-submit" id="audit-submit-btn">
           <span id="audit-btn-text">Get My Free Automation Audit →</span>
@@ -624,6 +640,7 @@
       phone: document.getElementById('af-phone').value.trim(),
       service: document.getElementById('af-service').value,
       project: document.getElementById('af-project').value.trim(),
+      hear_about: document.getElementById('af-hear') ? document.getElementById('af-hear').value : '',
       submitted_at: new Date().toISOString(),
       page: window.location.href
       form_type: 'lead'
