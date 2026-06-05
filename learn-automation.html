@@ -666,7 +666,7 @@
       <a href="case-studies.html">Case Studies</a>
       <a href="about.html">About Us</a>
     <a href="contact.html">Contact</a></nav>
-    <a href="#" class="nav-cta" data-audit="1">
+    <a href="javascript:void(0)" class="nav-cta" data-audit="1">
       Apply now
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -682,7 +682,7 @@
   <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About Us</a>
-  <a href="#" class="mobile-cta" data-audit="1">
+  <a href="javascript:void(0)" class="mobile-cta" data-audit="1">
     Apply now
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
@@ -720,7 +720,7 @@
         <a href="#curriculum" class="btn btn-ghost">See the curriculum
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="#" class="btn btn-primary" data-audit="1">Apply now
+        <a href="javascript:void(0)" class="btn btn-primary" data-audit="1">Apply now
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
@@ -1210,7 +1210,7 @@
   <div class="wrap">
     <h2>Architects ship. <span class="ital">Operators wait.</span></h2>
     <p class="lede">Apply for the next cohort. Twelve weeks, five modules, one real capstone. Limited seats — we cap each cohort at 30 to keep mentorship dense.</p>
-    <a href="#" class="btn btn-primary" data-student="1">Apply for next cohort
+    <a href="javascript:void(0)" class="btn btn-primary" data-student="1">Apply for next cohort
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
@@ -1567,7 +1567,7 @@
   // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
   function wireFormButtons() {
     document.querySelectorAll('[data-audit]').forEach(function(el) {
-      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+      el.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); openAuditForm(e); }, { capture: true });
     });
     document.querySelectorAll('[data-student]').forEach(function(el) {
       el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });

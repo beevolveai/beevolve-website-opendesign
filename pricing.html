@@ -836,7 +836,7 @@
   // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
   function wireFormButtons() {
     document.querySelectorAll('[data-audit]').forEach(function(el) {
-      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+      el.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); openAuditForm(e); }, { capture: true });
     });
     document.querySelectorAll('[data-student]').forEach(function(el) {
       el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
