@@ -1449,6 +1449,22 @@
             <label for="af-project">What do you want to learn or achieve? <span class="req">*</span></label>
             <textarea id="af-project" name="project" rows="4" placeholder="e.g. I want to learn n8n to automate my freelance work, build AI agents, or start an automation business…"></textarea>
           </div>
+          <div class="audit-field full">
+            <label for="af-heardabout">How did you hear about us? <span class="req">*</span></label>
+            <select id="af-heardabout" name="hear_about">
+              <option value="" disabled selected>Select a source…</option>
+              <option value="Instagram">Instagram</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Facebook">Facebook</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Google Search">Google Search</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Friend / Word of mouth">Friend / Word of mouth</option>
+              <option value="Blog / Article">Blog / Article</option>
+              <option value="Email">Email</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
         <button type="submit" class="audit-submit" id="audit-submit-btn">
           <span id="audit-btn-text">Apply Now →</span>
@@ -1532,6 +1548,7 @@
       phone: document.getElementById('af-phone').value.trim(),
       service: document.getElementById('af-service').value,
       project: document.getElementById('af-project').value.trim(),
+      hear_about: document.getElementById('af-heardabout').value.trim(),
       submitted_at: new Date().toISOString(),
       page: window.location.href,
       form_type: 'student'
@@ -1560,4 +1577,5 @@
 <!-- End Audit Modal -->
 </body>
 </html>
+
 
