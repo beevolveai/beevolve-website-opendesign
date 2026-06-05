@@ -1881,6 +1881,34 @@
   v.play().catch(function(){ loadHls(); });
 })();
 </script>
+
+<!-- Standalone form opener - independent of IIFE -->
+<script>
+(function(){
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    while(el&&el!==document){
+      if(el.getAttribute&&el.getAttribute('data-audit')==='1'){
+        e.preventDefault();e.stopPropagation();
+        var bd=document.getElementById('audit-modal');
+        if(bd){bd.classList.add('open');document.body.style.overflow='hidden';}
+        var f=document.getElementById('af-name');
+        if(f)setTimeout(function(){f.focus();},280);
+        return;
+      }
+      if(el.getAttribute&&el.getAttribute('data-student')==='1'){
+        e.preventDefault();e.stopPropagation();
+        var bd2=document.getElementById('student-modal');
+        if(bd2){bd2.classList.add('open');document.body.style.overflow='hidden';}
+        var f2=document.getElementById('sf-name');
+        if(f2)setTimeout(function(){f2.focus();},280);
+        return;
+      }
+      el=el.parentNode;
+    }
+  },true);
+})();
+</script>
 </body>
 </html>
 
