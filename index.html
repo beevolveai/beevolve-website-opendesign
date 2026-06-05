@@ -1775,15 +1775,20 @@
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
-  // Wire all audit trigger buttons via event delegation (CSP-safe, no inline onclick needed)
-  document.addEventListener('DOMContentLoaded', function() {
+  // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
+  function wireFormButtons() {
     document.querySelectorAll('[data-audit]').forEach(function(el) {
       el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
     });
     document.querySelectorAll('[data-student]').forEach(function(el) {
       el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
     });
-  });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireFormButtons);
+  } else {
+    wireFormButtons();
+  }
 
   function validateForm(){
     var ok = true;

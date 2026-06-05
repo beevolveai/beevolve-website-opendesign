@@ -497,7 +497,7 @@ footer {
       <a href="case-studies.html" class="active">Case Studies</a>
       <a href="about.html">About us</a>
     </div>
-    <a href="#" class="nav-cta" onclick="return openAuditForm(event)">Book a free audit →</a>
+    <a href="#" class="nav-cta" data-audit="1">Book a free audit →</a>
     <button class="nav-burger" id="burger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -511,7 +511,7 @@ footer {
   <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
-  <a href="#" class="mobile-cta" onclick="return openAuditForm(event)">Book a free audit →</a>
+  <a href="#" class="mobile-cta" data-audit="1">Book a free audit →</a>
 </div>
 
 <!-- PAGE HERO -->
@@ -813,7 +813,7 @@ footer {
     <h2>Your business deserves <span class="ital">its own</span> case study.</h2>
     <p>Book a free 30-minute audit. We'll find your highest-leverage automation — at no cost.</p>
     <div class="cta-actions">
-      <a href="#" class="btn-primary" onclick="return openAuditForm(event)">Book a free audit →</a>
+      <a href="#" class="btn-primary" data-audit="1">Book a free audit →</a>
       <a href="index.html" class="btn-secondary">See what we build</a>
     </div>
   </div>
@@ -1272,15 +1272,20 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
-  // Wire all audit trigger buttons via event delegation (CSP-safe, no inline onclick needed)
-  document.addEventListener('DOMContentLoaded', function() {
+  // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
+  function wireFormButtons() {
     document.querySelectorAll('[data-audit]').forEach(function(el) {
       el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
     });
     document.querySelectorAll('[data-student]').forEach(function(el) {
       el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
     });
-  });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireFormButtons);
+  } else {
+    wireFormButtons();
+  }
 
   function validateForm(){
     var ok = true;

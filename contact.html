@@ -1390,13 +1390,6 @@ function openAuditForm(e){ if(e){e.preventDefault();} document.getElementById('a
 function closeAuditForm(){ document.getElementById('audit-modal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('audit-modal').addEventListener('click',function(e){ if(e.target===this) closeAuditForm(); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAuditForm(); });
-// Wire data-audit buttons (CSP-safe, no inline onclick)
-function wireContactAuditBtns() {
-  document.querySelectorAll('[data-audit]').forEach(function(el) {
-    el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
-  });
-}
-if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', wireContactAuditBtns); } else { wireContactAuditBtns(); }
 var auditForm = document.getElementById('audit-form');
 if(auditForm){
   auditForm.addEventListener('submit',function(e){
