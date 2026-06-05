@@ -656,7 +656,7 @@
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a href="index.html" class="brand" aria-label="Beevolve">
-      <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+      <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="mpqehmn4-Beevolve_logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
       <span class="brand-name"><b>Bee</b><i>volve</i></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
@@ -1170,7 +1170,7 @@
     <div class="foot">
       <div class="foot-brand">
         <a href="index.html" class="brand">
-          <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+          <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="mpqehmn4-Beevolve_logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
           <span class="brand-name"><b>Bee</b><i>volve</i></span>
         </a>
         <p class="blurb">AI automation, done for you — and taught to you. Build, ship, and own the systems that scale your operations.</p>
@@ -1384,28 +1384,28 @@
     <div id="audit-form-wrap">
       <div class="audit-header">
         <div class="audit-mark">
-          <img src="assets/logo.svg" height="32" alt="Beevolve" style="border-radius:6px;background:#1a1410;padding:3px;">
+          <img src="mpqehmn4-Beevolve_logo.svg" height="32" alt="Beevolve" style="border-radius:6px;background:#1a1410;padding:3px;">
           <span class="audit-mark-name">Bee<i>volve</i></span>
         </div>
-        <h2 class="audit-title" id="audit-modal-title">Book Your <em>Free Audit</em></h2>
-        <p class="audit-sub">Takes less than 60 seconds</p>
+        <h2 class="audit-title" id="audit-modal-title">Apply to <em>Learn Automation</em></h2>
+        <p class="audit-sub">Takes less than 60 seconds — we'll reach out within 24 hours</p>
       </div>
       <form id="audit-form" novalidate>
         <div class="audit-grid">
           <div class="audit-field">
             <label for="af-name">Full Name <span class="req">*</span></label>
-            <input id="af-name" type="text" name="full_name" placeholder="Your name" autocomplete="name">
+            <input id="af-name" type="text" name="full_name" placeholder="Your full name" autocomplete="name">
           </div>
           <div class="audit-field">
-            <label for="af-company">Company Name</label>
-            <input id="af-company" type="text" name="company" placeholder="Your company" autocomplete="organization">
+            <label for="af-age">Age</label>
+            <input id="af-age" type="number" name="age" placeholder="e.g. 22" min="15" max="60">
           </div>
           <div class="audit-field">
             <label for="af-email">Email <span class="req">*</span></label>
             <input id="af-email" type="email" name="email" placeholder="your@email.com" autocomplete="email">
           </div>
           <div class="audit-field">
-            <label for="af-phone">Phone <span class="req">*</span></label>
+            <label for="af-phone">Phone / WhatsApp <span class="req">*</span></label>
             <div class="phone-wrap">
               <select name="phone_country" class="phone-cc" aria-label="Country code">
                 <option value="+91" selected>IN +91</option>
@@ -1423,33 +1423,43 @@
             </div>
           </div>
           <div class="audit-field full">
-            <label for="af-service">What are you looking for?</label>
-            <select id="af-service" name="service">
-              <option value="" disabled selected>Select a service</option>
-              <option value="ai-agents">AI Agents &amp; Chatbots</option>
-              <option value="crm-automation">CRM Workflow Automation</option>
-              <option value="document-automation">Document Automation</option>
-              <option value="systems-integration">Systems Integration</option>
-              <option value="dashboards">Dashboards &amp; Reporting</option>
-              <option value="custom-build">Custom Build</option>
-              <option value="not-sure">Not sure yet — let's explore</option>
+            <label for="af-background">Your background</label>
+            <select id="af-background" name="company">
+              <option value="" disabled selected>Select your background</option>
+              <option value="student">Student (College / University)</option>
+              <option value="fresher">Fresher / Recent Graduate</option>
+              <option value="working-professional">Working Professional</option>
+              <option value="freelancer">Freelancer</option>
+              <option value="entrepreneur">Entrepreneur / Business Owner</option>
+              <option value="career-switcher">Career Switcher</option>
+              <option value="other">Other</option>
             </select>
           </div>
           <div class="audit-field full">
-            <label for="af-project">Tell us about your project</label>
-            <textarea id="af-project" name="project" rows="4" placeholder="What processes do you want to automate? What's your biggest bottleneck?"></textarea>
+            <label for="af-service">Current skill level in automation</label>
+            <select id="af-service" name="service">
+              <option value="" disabled selected>Select your level</option>
+              <option value="complete-beginner">Complete Beginner — never used any automation tool</option>
+              <option value="basic">Basic — I've heard of Zapier / Make / n8n</option>
+              <option value="intermediate">Intermediate — I've built a few workflows</option>
+              <option value="advanced">Advanced — I build automations but want to go deeper</option>
+            </select>
+          </div>
+          <div class="audit-field full">
+            <label for="af-project">What do you want to learn or achieve? <span class="req">*</span></label>
+            <textarea id="af-project" name="project" rows="4" placeholder="e.g. I want to learn n8n to automate my freelance work, build AI agents, or start an automation business…"></textarea>
           </div>
         </div>
         <button type="submit" class="audit-submit" id="audit-submit-btn">
-          <span id="audit-btn-text">Get My Free Automation Audit →</span>
+          <span id="audit-btn-text">Apply Now →</span>
         </button>
         <p class="audit-privacy">By submitting you agree to our <a href="privacy-policy.html">Privacy Policy</a>. We never share your data.</p>
       </form>
     </div>
     <div id="audit-success" class="audit-success">
       <div class="audit-success-icon">✓</div>
-      <h3>You're <em>booked in!</em></h3>
-      <p>We'll reach out within 24 hours to schedule your free automation audit. Check your inbox.</p>
+      <h3>Application <em>received!</em></h3>
+      <p>We'll review your application and reach out within 24 hours on WhatsApp or email. Get ready to automate!</p>
       <button class="audit-close-btn" onclick="closeAuditForm()">Close</button>
     </div>
   </div>
@@ -1480,7 +1490,7 @@
       formWrap.querySelector('#audit-form').style.display = '';
       formWrap.querySelector('.audit-header').style.display = '';
       submitBtn.disabled = false;
-      btnText.textContent = 'Get My Free Automation Audit →';
+      btnText.textContent = 'Apply Now →';
     }, 300);
   };
 
@@ -1516,7 +1526,7 @@
 
     var data = {
       full_name: document.getElementById('af-name').value.trim(),
-      company: document.getElementById('af-company').value.trim(),
+      company: document.getElementById('af-background') ? document.getElementById('af-background').value : '',
       email: document.getElementById('af-email').value.trim(),
       phone_country: form.querySelector('[name="phone_country"]').value,
       phone: document.getElementById('af-phone').value.trim(),
@@ -1541,7 +1551,7 @@
     })
     .catch(function(){
       submitBtn.disabled = false;
-      btnText.textContent = 'Get My Free Automation Audit →';
+      btnText.textContent = 'Apply Now →';
       alert('Something went wrong. Please try WhatsApp or email us at Info@beevolve.in');
     });
   });
