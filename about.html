@@ -1334,20 +1334,23 @@
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
-  // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
-  function wireFormButtons() {
-    document.querySelectorAll('[data-audit]').forEach(function(el) {
-      el.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); openAuditForm(e); }, { capture: true });
-    });
-    document.querySelectorAll('[data-student]').forEach(function(el) {
-      el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
-    });
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', wireFormButtons);
-  } else {
-    wireFormButtons();
-  }
+  // Delegated click handler — catches data-audit/data-student anywhere in the DOM
+  document.addEventListener('click', function(e) {
+    var el = e.target;
+    while (el && el !== document) {
+      if (el.hasAttribute && el.hasAttribute('data-audit')) {
+        e.preventDefault(); e.stopPropagation();
+        openAuditForm(e);
+        return;
+      }
+      if (el.hasAttribute && el.hasAttribute('data-student')) {
+        e.preventDefault(); e.stopPropagation();
+        if (window.openStudentForm) openStudentForm(e);
+        return;
+      }
+      el = el.parentNode;
+    }
+  }, true);
 
   function validateForm(){
     var ok = true;

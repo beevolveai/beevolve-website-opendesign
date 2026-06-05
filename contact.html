@@ -1390,6 +1390,7 @@ function openAuditForm(e){ if(e){e.preventDefault();} document.getElementById('a
 function closeAuditForm(){ document.getElementById('audit-modal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('audit-modal').addEventListener('click',function(e){ if(e.target===this) closeAuditForm(); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAuditForm(); });
+document.addEventListener('click',function(e){var el=e.target;while(el&&el!==document){if(el.hasAttribute&&el.hasAttribute('data-audit')){e.preventDefault();e.stopPropagation();openAuditForm(e);return;}el=el.parentNode;}},true);
 var auditForm = document.getElementById('audit-form');
 if(auditForm){
   auditForm.addEventListener('submit',function(e){
