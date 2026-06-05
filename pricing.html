@@ -287,7 +287,7 @@
       <a href="case-studies.html">Case Studies</a>
       <a href="about.html">About us</a>
     <a href="contact.html">Contact</a></nav>
-    <a href="#" onclick="return openAuditForm(event)" class="nav-cta">
+    <a href="javascript:void(0)" data-audit="1" class="nav-cta">
       Book a free audit
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -304,7 +304,7 @@
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="contact.html">Contact</a>
-  <a href="#" onclick="return openAuditForm(event)" class="mobile-cta">
+  <a href="javascript:void(0)" data-audit="1" class="mobile-cta">
     Book a free audit
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
@@ -476,7 +476,7 @@
     <h2>Ready to see the <span class="ital">number?</span></h2>
     <p>Book the free audit. We'll scope your workflows, identify what to automate first, and give you a fixed quote with no obligation.</p>
     <div class="cta-btns">
-      <a href="#" onclick="return openAuditForm(event)" class="btn btn-primary">
+      <a href="javascript:void(0)" data-audit="1" class="btn btn-primary">
         Book a free audit
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -532,7 +532,7 @@
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
           <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
-          <li><a href="#" onclick="return openAuditForm(event)">Book a free audit</a></li>
+          <li><a href="javascript:void(0)" data-audit="1">Book a free audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
         <div class="foot-social">
@@ -833,6 +833,15 @@
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
+  // Wire all audit trigger buttons via event delegation (CSP-safe, no inline onclick needed)
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-audit]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+    });
+    document.querySelectorAll('[data-student]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
+    });
+  });
 
   function validateForm(){
     var ok = true;

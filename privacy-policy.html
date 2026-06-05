@@ -344,7 +344,7 @@
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
           <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
-          <li><a href="#" onclick="return openAuditForm(event)">Book a free audit</a></li>
+          <li><a href="javascript:void(0)" data-audit="1">Book a free audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
       </div>
@@ -604,6 +604,15 @@
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
+  // Wire all audit trigger buttons via event delegation (CSP-safe, no inline onclick needed)
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-audit]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+    });
+    document.querySelectorAll('[data-student]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
+    });
+  });
 
   function validateForm(){
     var ok = true;

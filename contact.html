@@ -710,7 +710,7 @@
       <a href="about.html">About us</a>
       <a href="contact.html" class="active">Contact</a>
     </nav>
-    <a href="#" onclick="return openAuditForm(event)" class="nav-cta">
+    <a href="javascript:void(0)" data-audit="1" class="nav-cta">
       Book a free audit
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -727,7 +727,7 @@
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="contact.html" class="active">Contact</a>
-  <a href="#" onclick="return openAuditForm(event)" class="mobile-cta">
+  <a href="javascript:void(0)" data-audit="1" class="mobile-cta">
     Book a free audit
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
@@ -1010,7 +1010,7 @@
     <h2 class="reveal">Start with a <span class="ital">free audit.</span></h2>
     <p class="sub reveal">30 minutes. No commitment. Walk away with a clear picture of what automation can save your team.</p>
     <div class="cta-btns reveal">
-      <button class="btn-primary" onclick="openAuditForm(event)">
+      <button class="btn-primary" data-audit="1">
         Book a free audit
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M8.5 3.5L14 8l-5.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -1066,7 +1066,7 @@
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
           <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
-          <li><a href="#" onclick="return openAuditForm(event)">Book a free audit</a></li>
+          <li><a href="javascript:void(0)" data-audit="1">Book a free audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
         <div class="foot-social">
@@ -1390,6 +1390,13 @@ function openAuditForm(e){ if(e){e.preventDefault();} document.getElementById('a
 function closeAuditForm(){ document.getElementById('audit-modal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('audit-modal').addEventListener('click',function(e){ if(e.target===this) closeAuditForm(); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAuditForm(); });
+// Wire data-audit buttons (CSP-safe, no inline onclick)
+function wireContactAuditBtns() {
+  document.querySelectorAll('[data-audit]').forEach(function(el) {
+    el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+  });
+}
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', wireContactAuditBtns); } else { wireContactAuditBtns(); }
 var auditForm = document.getElementById('audit-form');
 if(auditForm){
   auditForm.addEventListener('submit',function(e){

@@ -1170,7 +1170,7 @@
           <li style="font-size:13px;color:var(--cream-mute);display:flex;gap:8px;"><span style="color:var(--amber);">✓</span> Community access</li>
           <li style="font-size:13px;color:var(--cream-mute);display:flex;gap:8px;"><span style="color:var(--amber);">✓</span> Lifetime updates</li>
         </ul>
-        <a href="#" onclick="return openStudentForm(event)" style="display:block;text-align:center;padding:12px;border:1px solid rgba(245,166,35,0.40);border-radius:8px;color:var(--amber);font-size:14px;font-weight:600;text-decoration:none;">Enrol now →</a>
+        <a href="javascript:void(0)" data-student="1" style="display:block;text-align:center;padding:12px;border:1px solid rgba(245,166,35,0.40);border-radius:8px;color:var(--amber);font-size:14px;font-weight:600;text-decoration:none;">Enrol now →</a>
       </div>
       <div style="padding:36px 28px;border:1.5px solid rgba(245,166,35,0.50);border-radius:16px;background:rgba(245,166,35,0.06);position:relative;">
         <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--amber);color:var(--obsidian);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 14px;border-radius:999px;">Most popular</div>
@@ -1184,7 +1184,7 @@
           <li style="font-size:13px;color:var(--cream-mute);display:flex;gap:8px;"><span style="color:var(--amber);">✓</span> Peer cohort (≤30 seats)</li>
           <li style="font-size:13px;color:var(--cream-mute);display:flex;gap:8px;"><span style="color:var(--amber);">✓</span> Certificate of completion</li>
         </ul>
-        <a href="#" onclick="return openStudentForm(event)" style="display:block;text-align:center;padding:12px;background:var(--amber);color:var(--obsidian);border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;">Apply for next cohort →</a>
+        <a href="javascript:void(0)" data-student="1" style="display:block;text-align:center;padding:12px;background:var(--amber);color:var(--obsidian);border-radius:8px;font-size:14px;font-weight:700;text-decoration:none;">Apply for next cohort →</a>
       </div>
       <div style="padding:36px 28px;border:1px solid rgba(241,234,217,0.10);border-radius:16px;background:rgba(255,255,255,0.03);">
         <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Corporate workshop</div>
@@ -1258,7 +1258,7 @@
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
           <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
-          <li><a href="#" onclick="return openAuditForm(event)">Book a free audit</a></li>
+          <li><a href="javascript:void(0)" data-audit="1">Book a free audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
         <div class="foot-social">
@@ -1564,6 +1564,15 @@
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
+  // Wire all audit trigger buttons via event delegation (CSP-safe, no inline onclick needed)
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-audit]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+    });
+    document.querySelectorAll('[data-student]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
+    });
+  });
 
   function validateForm(){
     var ok = true;
