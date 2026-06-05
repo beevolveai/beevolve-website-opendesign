@@ -656,7 +656,7 @@
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
     <a href="index.html" class="brand" aria-label="Beevolve">
-      <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="mpqehmn4-Beevolve_logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+      <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
       <span class="brand-name"><b>Bee</b><i>volve</i></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
@@ -1170,7 +1170,7 @@
     <div class="foot">
       <div class="foot-brand">
         <a href="index.html" class="brand">
-          <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="mpqehmn4-Beevolve_logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+          <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
           <span class="brand-name"><b>Bee</b><i>volve</i></span>
         </a>
         <p class="blurb">AI automation, done for you — and taught to you. Build, ship, and own the systems that scale your operations.</p>
@@ -1384,7 +1384,7 @@
     <div id="audit-form-wrap">
       <div class="audit-header">
         <div class="audit-mark">
-          <img src="mpqehmn4-Beevolve_logo.svg" height="32" alt="Beevolve" style="border-radius:6px;background:#1a1410;padding:3px;">
+          <img src="assets/logo.svg" height="32" alt="Beevolve" style="border-radius:6px;background:#1a1410;padding:3px;">
           <span class="audit-mark-name">Bee<i>volve</i></span>
         </div>
         <h2 class="audit-title" id="audit-modal-title">Apply to <em>Learn Automation</em></h2>
@@ -1533,10 +1533,10 @@
       service: document.getElementById('af-service').value,
       project: document.getElementById('af-project').value.trim(),
       submitted_at: new Date().toISOString(),
-      page: window.location.href
+      page: window.location.href,
+      form_type: 'student'
     };
 
-    // Google Sheets — replace YOUR_APPS_SCRIPT_ID with your deployed Web App URL
     var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwhBpnbrWkl82PRKF-hW3LDi6LTELZpPU3NoOEkI0bjjHDrIl62xZP4-BHkqOLgHH-F/exec';
     fetch(SHEET_URL, {
       method: 'POST',

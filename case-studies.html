@@ -1292,6 +1292,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({
       project: document.getElementById('af-project').value.trim(),
       submitted_at: new Date().toISOString(),
       page: window.location.href
+      form_type: 'lead'
     };
 
     // Google Sheets — replace YOUR_APPS_SCRIPT_ID with your deployed Web App URL
