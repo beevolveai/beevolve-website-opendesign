@@ -1526,20 +1526,18 @@
       page: window.location.href
     };
 
-    fetch('https://formspree.io/f/xanojepq', {
+    // Google Sheets — replace YOUR_APPS_SCRIPT_ID with your deployed Web App URL
+    var SHEET_URL = 'https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec';
+    fetch(SHEET_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(data)
     })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.ok || res.next){
-        formWrap.querySelector('.audit-header').style.display = 'none';
-        form.style.display = 'none';
-        successEl.style.display = 'flex';
-      } else {
-        throw new Error('Form error');
-      }
+    .then(function(){
+      formWrap.querySelector('.audit-header').style.display = 'none';
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
     })
     .catch(function(){
       submitBtn.disabled = false;

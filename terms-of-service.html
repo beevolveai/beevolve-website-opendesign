@@ -128,14 +128,14 @@
 <nav>
   <div class="wrap">
     <div class="nav-inner">
-      <a href="mp4tk3w7-index.html" class="brand">
+      <a href="index.html" class="brand">
         <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
         <span class="brand-name"><b>Bee</b><i>volve</i></span>
       </a>
       <ul class="nav-links">
-        <li><a href="mp4tk3w7-index.html">Home</a></li>
-        <li><a href="mp6r8l5w-products.html">Products</a></li>
-        <li><a href="mp6r8l5x-learn-automation.html">Learn Automation</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="learn-automation.html">Learn Automation</a></li>
         <li><a href="case-studies.html">Case Studies</a></li>
         <li><a href="about.html">About us</a></li>
         <li><a href="#" class="nav-cta" target="_blank" rel="noopener" onclick="return openAuditForm(event)">Book a free audit</a></li>
@@ -148,9 +148,9 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="mp4tk3w7-index.html">Home</a>
-  <a href="mp6r8l5w-products.html">Products</a>
-  <a href="mp6r8l5x-learn-automation.html">Learn Automation</a>
+  <a href="index.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
   <a href="#" class="nav-cta" target="_blank" rel="noopener" onclick="return openAuditForm(event)">Book a free audit</a>
@@ -266,7 +266,7 @@
   <div class="wrap">
     <div class="foot">
       <div class="foot-brand">
-        <a href="mp4tk3w7-index.html" class="brand">
+        <a href="index.html" class="brand">
           <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
           <span class="brand-name"><b>Bee</b><i>volve</i></span>
         </a>
@@ -280,12 +280,12 @@
       <div>
         <h4>Services</h4>
         <ul>
-          <li><a href="mp6r8l5w-products.html">AI agents</a></li>
-          <li><a href="mp6r8l5w-products.html">CRM &amp; sales</a></li>
-          <li><a href="mp6r8l5w-products.html">Documents</a></li>
-          <li><a href="mp6r8l5w-products.html">Integrations</a></li>
-          <li><a href="mp6r8l5w-products.html">Dashboards</a></li>
-          <li><a href="mp6r8l5w-products.html">Custom builds</a></li>
+          <li><a href="products.html">AI agents</a></li>
+          <li><a href="products.html">CRM &amp; sales</a></li>
+          <li><a href="products.html">Documents</a></li>
+          <li><a href="products.html">Integrations</a></li>
+          <li><a href="products.html">Dashboards</a></li>
+          <li><a href="products.html">Custom builds</a></li>
         </ul>
       </div>
       <div>
@@ -302,7 +302,7 @@
       <div>
         <h4>Learn</h4>
         <ul>
-          <li><a href="mp6r8l5x-learn-automation.html">Automation 101</a></li>
+          <li><a href="learn-automation.html">Automation 101</a></li>
         </ul>
       </div>
       <div>
@@ -592,20 +592,18 @@
       page: window.location.href
     };
 
-    fetch('https://formspree.io/f/xanojepq', {
+    // Google Sheets — replace YOUR_APPS_SCRIPT_ID with your deployed Web App URL
+    var SHEET_URL = 'https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec';
+    fetch(SHEET_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(data)
     })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.ok || res.next){
-        formWrap.querySelector('.audit-header').style.display = 'none';
-        form.style.display = 'none';
-        successEl.style.display = 'flex';
-      } else {
-        throw new Error('Form error');
-      }
+    .then(function(){
+      formWrap.querySelector('.audit-header').style.display = 'none';
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
     })
     .catch(function(){
       submitBtn.disabled = false;

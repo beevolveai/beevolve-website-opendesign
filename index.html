@@ -996,7 +996,7 @@
       <span class="brand-name"><b>Bee</b><i>volve</i></span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="mp4tk3w7-index.html">Home</a>
+      <a href="index.html">Home</a>
       <a href="products.html">Products</a>
       <a href="learn-automation.html">Learn Automation</a>
       <a href="case-studies.html">Case Studies</a>
@@ -1013,7 +1013,7 @@
 </header>
 
 <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
-  <a href="mp4tk3w7-index.html">Home</a>
+  <a href="index.html">Home</a>
   <a href="products.html">Products</a>
   <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
@@ -1026,7 +1026,7 @@
 
 <!-- =================== HERO =================== -->
 <section class="hero" id="hero" data-bgvideo="true">
-  <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" src="assets/hero.mp4" aria-hidden="true"></video>
+  <video class="hero-bg-video" id="heroBgVideo" autoplay muted loop playsinline preload="auto" src="mp4twsi2-hero.mp4" aria-hidden="true"></video>
   <div class="hero-bg-scrim" aria-hidden="true"></div>
   <div class="hex-bg" aria-hidden="true">
     <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
@@ -1769,20 +1769,18 @@
       page: window.location.href
     };
 
-    fetch('https://formspree.io/f/xanojepq', {
+    // Google Sheets — replace YOUR_APPS_SCRIPT_ID with your deployed Web App URL
+    var SHEET_URL = 'https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec';
+    fetch(SHEET_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(data)
     })
-    .then(function(r){ return r.json(); })
-    .then(function(res){
-      if(res.ok || res.next){
-        formWrap.querySelector('.audit-header').style.display = 'none';
-        form.style.display = 'none';
-        successEl.style.display = 'flex';
-      } else {
-        throw new Error('Form error');
-      }
+    .then(function(){
+      formWrap.querySelector('.audit-header').style.display = 'none';
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
     })
     .catch(function(){
       submitBtn.disabled = false;
