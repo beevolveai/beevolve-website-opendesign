@@ -1390,6 +1390,10 @@ function openAuditForm(e){ if(e){e.preventDefault();} document.getElementById('a
 function closeAuditForm(){ document.getElementById('audit-modal').classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('audit-modal').addEventListener('click',function(e){ if(e.target===this) closeAuditForm(); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeAuditForm(); });
+var _xClose = document.getElementById('audit-x-close');
+if(_xClose) _xClose.addEventListener('click', function(){ closeAuditForm(); });
+var _sClose = document.getElementById('audit-success-close');
+if(_sClose) _sClose.addEventListener('click', function(){ closeAuditForm(); });
 var auditForm = document.getElementById('audit-form');
 if(auditForm){
   auditForm.addEventListener('submit',function(e){
