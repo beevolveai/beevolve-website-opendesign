@@ -1290,7 +1290,7 @@
 
 <div id="audit-modal" class="audit-backdrop" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
   <div class="audit-modal">
-    <button class="audit-close-x" id="audit-x-close" aria-label="Close form">&#10005;</button>
+    <button class="audit-close-x" id="audit-x-close" data-close-audit="1" aria-label="Close form">&#10005;</button>
     <div id="audit-form-wrap">
       <div class="audit-header">
         <div class="audit-mark">
@@ -1379,7 +1379,7 @@
       <div class="audit-success-icon">✓</div>
       <h3>You're <em>booked in!</em></h3>
       <p>We'll reach out within a few hours to confirm your 30-minute audit slot. Check your inbox.</p>
-      <button class="audit-close-btn" id="audit-success-close">Close</button>
+      <button class="audit-close-btn" id="audit-success-close" data-close-audit="1">Close</button>
     </div>
   </div>
 </div>
@@ -1424,6 +1424,12 @@ function showAuditSuccess(){ document.getElementById('audit-form-wrap').style.di
   document.addEventListener('click',function(e){
     var el=e.target;
     while(el&&el!==document){
+      if(el.getAttribute&&el.getAttribute('data-close-audit')==='1'){
+        e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+        var bd=document.getElementById('audit-modal');
+        if(bd){bd.classList.remove('open');document.body.style.overflow='';}
+        return;
+      }
       if(el.getAttribute&&el.getAttribute('data-audit')==='1'){
         e.preventDefault();e.stopPropagation();
         var bd=document.getElementById('audit-modal');
