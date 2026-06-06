@@ -138,8 +138,7 @@
         <li><a href="learn-automation.html">Learn Automation</a></li>
         <li><a href="case-studies.html">Case Studies</a></li>
         <li><a href="about.html">About us</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="javascript:void(0)" class="nav-cta" data-audit="1">Book a free audit</a></li>
+        <li><a href="#" class="nav-cta" data-audit="1">Book a free audit</a></li>
       </ul>
       <button class="burger" id="burger" aria-label="Menu">
         <span></span><span></span><span></span>
@@ -154,8 +153,7 @@
   <a href="learn-automation.html">Learn Automation</a>
   <a href="case-studies.html">Case Studies</a>
   <a href="about.html">About us</a>
-  <a href="contact.html">Contact</a>
-  <a href="javascript:void(0)" class="nav-cta" data-audit="1">Book a free audit</a>
+  <a href="#" class="nav-cta" data-audit="1">Book a free audit</a>
 </div>
 
 <div class="page-hero">
@@ -448,7 +446,7 @@
 
 <div id="audit-modal" class="audit-backdrop" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
   <div class="audit-modal">
-    <button class="audit-close-x" data-close-audit="1" aria-label="Close form">✕</button>
+    <button class="audit-close-x" onclick="closeAuditForm()" aria-label="Close form">✕</button>
     <div id="audit-form-wrap">
       <div class="audit-header">
         <div class="audit-mark">
@@ -534,7 +532,7 @@
       <div class="audit-success-icon">✓</div>
       <h3>You're <em>booked in!</em></h3>
       <p>We'll reach out within 24 hours to schedule your free automation audit. Check your inbox.</p>
-      <button class="audit-close-btn" data-close-audit="1">Close</button>
+      <button class="audit-close-btn" onclick="closeAuditForm()">Close</button>
     </div>
   </div>
 </div>
@@ -570,23 +568,20 @@
 
   backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
-  // Delegated click handler — catches data-audit/data-student anywhere in the DOM
-  document.addEventListener('click', function(e) {
-    var el = e.target;
-    while (el && el !== document) {
-      if (el.hasAttribute && el.hasAttribute('data-audit')) {
-        e.preventDefault(); e.stopPropagation();
-        openAuditForm(e);
-        return;
-      }
-      if (el.hasAttribute && el.hasAttribute('data-student')) {
-        e.preventDefault(); e.stopPropagation();
-        if (window.openStudentForm) openStudentForm(e);
-        return;
-      }
-      el = el.parentNode;
-    }
-  }, true);
+  // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
+  function wireFormButtons() {
+    document.querySelectorAll('[data-audit]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+    });
+    document.querySelectorAll('[data-student]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireFormButtons);
+  } else {
+    wireFormButtons();
+  }
 
   function validateForm(){
     var ok = true;
@@ -674,23 +669,12 @@
         if(f2)setTimeout(function(){f2.focus();},280);
         return;
       }
-      if(el.getAttribute&&(el.getAttribute('data-close-audit')==='1'||el.classList.contains('audit-close-x')||el.classList.contains('audit-close-btn'))){
-        e.preventDefault();e.stopPropagation();
-        var bd3=document.getElementById('audit-modal');
-        if(bd3){bd3.classList.remove('open');document.body.style.overflow='';}
-        return;
-      }
-      if(el.getAttribute&&(el.getAttribute('data-close-student')==='1'||el.classList.contains('student-close-x')||el.classList.contains('student-close-btn'))){
-        e.preventDefault();e.stopPropagation();
-        var bd4=document.getElementById('student-modal');
-        if(bd4){bd4.classList.remove('open');document.body.style.overflow='';}
-        return;
-      }
       el=el.parentNode;
     }
   },true);
 })();
 </script>
+
 </body>
 </html>
 
