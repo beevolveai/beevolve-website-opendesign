@@ -482,7 +482,7 @@
 
 <div id="audit-modal" class="audit-backdrop" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
   <div class="audit-modal">
-    <button class="audit-close-x" data-close-audit="1" aria-label="Close form">✕</button>
+    <button id="audit-close-x-btn" type="button" class="audit-close-x" data-close-audit="1" aria-label="Close form">✕</button>
     <div id="audit-form-wrap">
       <div class="audit-header">
         <div class="audit-mark">
@@ -568,7 +568,7 @@
       <div class="audit-success-icon">✓</div>
       <h3>You're <em>booked in!</em></h3>
       <p>We'll reach out within 24 hours to schedule your free automation audit. Check your inbox.</p>
-      <button class="audit-close-btn" data-close-audit="1">Close</button>
+      <button id="audit-success-close-btn" type="button" class="audit-close-btn" data-close-audit="1">Close</button>
     </div>
   </div>
 </div>
@@ -682,6 +682,19 @@
 })();
 </script>
 <!-- End Audit Modal -->
+<script>
+(function(){
+  function _closeM(id){var m=document.getElementById(id);if(m){m.classList.remove('open');document.body.style.overflow='';}}
+  var x1=document.getElementById('audit-close-x-btn');
+  if(x1)x1.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();_closeM('audit-modal');},false);
+  var s1=document.getElementById('audit-success-close-btn');
+  if(s1)s1.addEventListener('click',function(e){e.preventDefault();_closeM('audit-modal');},false);
+  var x2=document.getElementById('student-close-x-btn');
+  if(x2)x2.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();_closeM('student-modal');},false);
+  var s2=document.getElementById('student-success-close-btn');
+  if(s2)s2.addEventListener('click',function(e){e.preventDefault();_closeM('student-modal');},false);
+})();
+</script>
 
 <!-- Standalone form opener - independent of IIFE -->
 <script>
