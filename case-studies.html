@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Case Studies — Beevolve</title>
-<meta name="description" content="See how Beevolve has helped 120+ founders and ops teams automate workflows, eliminate manual work, and scale operations across e-commerce, healthcare, SaaS, and more." />
+<title>Beevolve — Demo Builds</title>
+<meta name="description" content="Explore production-ready automation architectures demonstrated with synthetic test data across real estate, healthcare, and accounting." />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,6 +238,7 @@ h1,h2,h3,h4 { font-family: var(--serif); font-weight: 400; color: var(--cream); 
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
   padding: 4px 10px; border-radius: 4px; border: 1px solid var(--line-strong); color: var(--cream-mute);
 }
+.tag.demo-badge { border-color: rgba(245, 166, 35, 0.4); background: rgba(245, 166, 35, 0.1); color: var(--amber); }
 .tag.amber { border-color: rgba(245,166,35,0.35); color: var(--amber); }
 .featured-title { font-size: clamp(28px, 4vw, 48px); line-height: 1.12; margin-bottom: 18px; }
 .featured-excerpt { font-size: 16px; color: var(--cream-dim); line-height: 1.65; margin-bottom: 36px; }
@@ -346,35 +347,6 @@ h1,h2,h3,h4 { font-family: var(--serif); font-weight: 400; color: var(--cream); 
 @media (max-width: 1024px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .cases-grid { grid-template-columns: 1fr; } }
 
-/* ---- testimonials ---- */
-.testimonials-section {
-  padding: clamp(52px, 7vw, 120px) 0;
-  border-top: 1px solid var(--line);
-}
-.testi-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-}
-@media (max-width: 880px) { .testi-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 580px) { .testi-grid { grid-template-columns: 1fr; } }
-.testi-card {
-  background: var(--obsidian-2); border: 1px solid var(--line);
-  border-radius: 14px; padding: 32px;
-}
-.testi-quote { font-family: var(--serif); font-size: 18px; line-height: 1.5; color: var(--cream); margin-bottom: 28px; font-style: italic; }
-.testi-quote::before { content: "\201C"; color: var(--amber); font-size: 32px; line-height: 0; vertical-align: -12px; margin-right: 4px; }
-.testi-author { display: flex; align-items: center; gap: 14px; }
-.testi-avatar {
-  width: 42px; height: 42px; border-radius: 50%;
-  background: var(--obsidian-3); border: 1px solid var(--line-strong);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 13px; color: var(--amber); flex: none;
-}
-.testi-name { font-size: 14px; font-weight: 500; }
-.testi-role { font-size: 12px; color: var(--cream-mute); }
-.testi-company { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-top: 2px; }
-
-@media (max-width: 1024px) { .testi-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .testi-grid { grid-template-columns: 1fr; } }
 
 /* ---- metrics band ---- */
 .metrics-band {
@@ -493,11 +465,10 @@ footer {
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="products.html">Services</a>
-      <a href="learn-automation.html">Learn Automation</a>
-      <a href="case-studies.html" class="active">Case Studies</a>
+      <a href="case-studies.html" class="active">Demo Builds</a>
       <a href="about.html">About us</a>
     </div>
-    <a href="#" class="nav-cta" data-audit="1">Book a free audit →</a>
+    <a href="#" class="nav-cta" data-audit="1">Book a free 30-minute audit →</a>
     <button class="nav-burger" id="burger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -508,10 +479,9 @@ footer {
 <div class="mobile-menu" id="mobile-menu">
   <a href="index.html">Home</a>
   <a href="products.html">Services</a>
-  <a href="learn-automation.html">Learn Automation</a>
-  <a href="case-studies.html">Case Studies</a>
+  <a href="case-studies.html">Demo Builds</a>
   <a href="about.html">About us</a>
-  <a href="#" class="mobile-cta" data-audit="1">Book a free audit →</a>
+  <a href="#" class="mobile-cta" data-audit="1">Book a free 30-minute audit →</a>
 </div>
 
 <!-- PAGE HERO -->
@@ -520,288 +490,68 @@ footer {
     muted loop playsinline preload="auto" aria-hidden="true"></video>
   <div class="page-hero-scrim" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="page-hero-eyebrow"><span class="eyebrow">Real results · Real clients</span></div>
-    <h1>The automation <span class="ital">worked.</span><br>Here's the proof.</h1>
-    <p class="page-hero-lead">From bootstrapped founders to enterprise ops teams — every story here started with one question: "What if we automated that?" These are the answers.</p>
-    <div class="filter-bar" id="filterBar">
-      <button class="filter-btn active" data-filter="all">All industries</button>
-      <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
-      <button class="filter-btn" data-filter="finance">Finance</button>
-      <button class="filter-btn" data-filter="healthcare">Healthcare</button>
-      <button class="filter-btn" data-filter="saas">SaaS</button>
-      <button class="filter-btn" data-filter="real-estate">Real Estate</button>
-      <button class="filter-btn" data-filter="logistics">Logistics</button>
-    </div>
+    <div class="page-hero-eyebrow"><span class="eyebrow">Interactive Architectures · Synthetic Test Data</span></div>
+    <h1>Demo <span class="ital">builds</span></h1>
+    <p class="page-hero-lead">Explore our production-ready automation architectures demonstrated with synthetic test data. Each build represents a real system pattern deployed with zero client confidential data.</p>
   </div>
 </section>
 
-<!-- FEATURED CASE STUDY -->
-<section class="featured-case">
+<!-- DEMO BUILDS SECTION -->
+<section class="cases-section" id="demo-builds">
   <div class="wrap">
-    <div class="featured-inner">
-      <div class="featured-content">
-        <div class="featured-meta">
-          <span class="eyebrow">Featured</span>
-          <span class="tag amber">E-commerce</span>
-          <span class="tag">Order operations</span>
-        </div>
-        <h2 class="featured-title">How Kiran Stores scaled to 3× orders without hiring a single ops person</h2>
-        <p class="featured-excerpt">A growing D2C brand drowning in manual order reconciliation, return requests, and supplier emails. Beevolve rebuilt their back-office with a fully automated ops pipeline — from order intake to supplier PO to final dispatch, zero manual handoffs.</p>
-        <div class="featured-stats">
-          <div>
-            <div class="fstat-val">94%</div>
-            <div class="fstat-label">Ops time saved</div>
-          </div>
-          <div>
-            <div class="fstat-val">3×</div>
-            <div class="fstat-label">Order volume handled</div>
-          </div>
-          <div>
-            <div class="fstat-val">₹0</div>
-            <div class="fstat-label">Extra headcount cost</div>
-          </div>
-        </div>
-        <button class="read-more" onclick="openModal('kiran')">Read full case study →</button>
-      </div>
-
-      <div class="featured-visual">
-        <div class="featured-visual-inner">
-          <div class="vis-company">Kiran Stores · Order velocity</div>
-          <div class="vis-chart" id="featChart">
-            <div class="vis-bar" style="height:30%" data-h="30"></div>
-            <div class="vis-bar" style="height:38%" data-h="38"></div>
-            <div class="vis-bar" style="height:45%" data-h="45"></div>
-            <div class="vis-bar" style="height:52%" data-h="52"></div>
-            <div class="vis-bar" style="height:61%" data-h="61"></div>
-            <div class="vis-bar" style="height:72%" data-h="72"></div>
-            <div class="vis-bar" style="height:88%" data-h="88"></div>
-            <div class="vis-bar" style="height:100%;background:var(--amber);border-radius:4px 4px 0 0;" data-h="100"></div>
-          </div>
-          <div class="vis-timeline">
-            <span>Jan '24</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span><span>Jan '25</span><span>Now</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- AGGREGATE METRICS -->
-<div class="metrics-band">
-  <div class="wrap">
-    <div class="metrics-inner">
-      <div>
-        <div class="metric-val">120+</div>
-        <div class="metric-label">clients automated across industries</div>
-      </div>
-      <div>
-        <div class="metric-val">1M+</div>
-        <div class="metric-label">automation runs across live systems</div>
-      </div>
-      <div>
-        <div class="metric-val">10K+</div>
-        <div class="metric-label">operational hours eliminated annually</div>
-      </div>
-      <div>
-        <div class="metric-val">90%</div>
-        <div class="metric-label">avg. reduction in process latency</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CASE STUDIES GRID -->
-<section class="cases-section">
-  <div class="wrap">
-    <h2>More client <span class="ital">stories</span></h2>
     <div class="cases-grid" id="casesGrid">
 
-      <!-- Finance -->
-      <div class="case-card" data-industry="finance" onclick="openModal('fintech')">
-        <div class="case-card-top">
-          <div class="case-icon">🏦</div>
-          <div class="case-tags"><span class="tag">Finance</span><span class="tag">Lending</span></div>
-        </div>
-        <h3 class="case-title">Fintech NBFC cuts loan processing from 4 days to 6 hours</h3>
-        <p class="case-excerpt">A Pune-based NBFC processing 300+ personal loan applications monthly was buried in document collection, KYC verification, and credit bureau checks — all manual. Beevolve built an end-to-end document intake + verification + decision pipeline.</p>
-        <div class="case-results">
-          <div>
-            <div class="cresult-val">94%</div>
-            <div class="cresult-label">Faster processing</div>
-          </div>
-          <div>
-            <div class="cresult-val">₹0</div>
-            <div class="cresult-label">Extra staff cost</div>
-          </div>
-        </div>
-        <div class="case-footer">
-          <span class="case-industry">NBFC · Pune</span>
-          <div class="arrow-link">→</div>
-        </div>
-      </div>
-
-      <!-- Healthcare -->
-      <div class="case-card" data-industry="healthcare" onclick="openModal('clinic')">
-        <div class="case-card-top">
-          <div class="case-icon">🏥</div>
-          <div class="case-tags"><span class="tag">Healthcare</span><span class="tag">Ops</span></div>
-        </div>
-        <h3 class="case-title">Multi-specialty clinic automates appointment ops across 6 branches</h3>
-        <p class="case-excerpt">Juggling 6 clinics, 40+ doctors, and a WhatsApp-based booking system meant constant missed appointments and double bookings. A unified automation layer now handles scheduling, reminders, follow-ups, and billing across all branches.</p>
-        <div class="case-results">
-          <div>
-            <div class="cresult-val">72%</div>
-            <div class="cresult-label">No-show reduction</div>
-          </div>
-          <div>
-            <div class="cresult-val">3×</div>
-            <div class="cresult-label">Booking capacity</div>
-          </div>
-        </div>
-        <div class="case-footer">
-          <span class="case-industry">Healthcare · Mumbai</span>
-          <div class="arrow-link">→</div>
-        </div>
-      </div>
-
-      <!-- SaaS -->
-      <div class="case-card" data-industry="saas" onclick="openModal('saas')">
-        <div class="case-card-top">
-          <div class="case-icon">⚙️</div>
-          <div class="case-tags"><span class="tag">SaaS</span><span class="tag">Revenue ops</span></div>
-        </div>
-        <h3 class="case-title">B2B SaaS startup closes deals 40% faster with automated sales ops</h3>
-        <p class="case-excerpt">A 15-person SaaS team spending 18+ hours a week on lead enrichment, follow-up emails, and CRM updates. After automation: sales reps spend 100% of their time selling. CRM data writes itself.</p>
-        <div class="case-results">
-          <div>
-            <div class="cresult-val">40%</div>
-            <div class="cresult-label">Faster deal close</div>
-          </div>
-          <div>
-            <div class="cresult-val">18h</div>
-            <div class="cresult-label">Saved per week</div>
-          </div>
-        </div>
-        <div class="case-footer">
-          <span class="case-industry">B2B SaaS · Bengaluru</span>
-          <div class="arrow-link">→</div>
-        </div>
-      </div>
-
-      <!-- Real Estate -->
-      <div class="case-card" data-industry="real-estate" onclick="openModal('realestate')">
+      <!-- Card 1: Real Estate -->
+      <div class="case-card" onclick="openModal('realestate')">
         <div class="case-card-top">
           <div class="case-icon">🏗️</div>
-          <div class="case-tags"><span class="tag">Real Estate</span><span class="tag">Lead ops</span></div>
-        </div>
-        <h3 class="case-title">Real estate agency responds to every lead within 90 seconds — automatically</h3>
-        <p class="case-excerpt">With 500+ leads monthly across MagicBricks, 99acres, and Instagram, response time was averaging 4+ hours. A unified lead capture + qualification + instant-response system now fires within 90 seconds of any lead arriving.</p>
-        <div class="case-results">
-          <div>
-            <div class="cresult-val">90s</div>
-            <div class="cresult-label">Response time</div>
-          </div>
-          <div>
-            <div class="cresult-val">2.3×</div>
-            <div class="cresult-label">Lead conversion</div>
+          <div class="case-tags">
+            <span class="tag demo-badge">Demo build · test data</span>
+            <span class="tag">Real Estate</span>
           </div>
         </div>
+        <h3 class="case-title">Lead reply for real estate</h3>
+        <p class="case-excerpt">Captures inbound property inquiries instantly across portals and social channels. The AI agent qualifies buyer budget, location preference, and purchase timeline via automated chat, and schedules site visits directly into the broker’s calendar.</p>
         <div class="case-footer">
-          <span class="case-industry">Real Estate · Hyderabad</span>
+          <span class="case-industry">Architecture: Webhook → WhatsApp AI → CRM Sync</span>
           <div class="arrow-link">→</div>
         </div>
       </div>
 
-      <!-- Logistics -->
-      <div class="case-card" data-industry="logistics" onclick="openModal('logistics')">
+      <!-- Card 2: Clinic -->
+      <div class="case-card" onclick="openModal('clinic')">
         <div class="case-card-top">
-          <div class="case-icon">🚚</div>
-          <div class="case-tags"><span class="tag">Logistics</span><span class="tag">Supply chain</span></div>
-        </div>
-        <h3 class="case-title">3PL warehouse eliminates daily dispatch errors with automated pick-pack routing</h3>
-        <p class="case-excerpt">A third-party logistics provider handling 1,200 daily shipments had a 3.8% error rate in pick-pack routing — costing ₹4.2L/month in returns and rework. Automated routing, exception flagging, and courier assignment eliminated dispatch errors entirely.</p>
-        <div class="case-results">
-          <div>
-            <div class="cresult-val">0%</div>
-            <div class="cresult-label">Dispatch error rate</div>
-          </div>
-          <div>
-            <div class="cresult-val">₹50L+</div>
-            <div class="cresult-label">Annual savings</div>
+          <div class="case-icon">🏥</div>
+          <div class="case-tags">
+            <span class="tag demo-badge">Demo build · test data</span>
+            <span class="tag">Healthcare</span>
           </div>
         </div>
+        <h3 class="case-title">Clinic Reel-to-booking</h3>
+        <p class="case-excerpt">Connects social media video campaigns and direct messages directly to practice scheduling. Inquiries are automatically greeted, checked against doctor availability across branches, and booked with automated patient reminders and pre-visit intake forms.</p>
         <div class="case-footer">
-          <span class="case-industry">Logistics · Delhi NCR</span>
+          <span class="case-industry">Architecture: Social DM → Slot Booking Engine → Calendar Sync</span>
           <div class="arrow-link">→</div>
         </div>
       </div>
 
-      <!-- E-commerce 2 -->
-      <div class="case-card" data-industry="ecommerce" onclick="openModal('ecom2')">
+      <!-- Card 3: CA -->
+      <div class="case-card" onclick="openModal('ca')">
         <div class="case-card-top">
-          <div class="case-icon">🛍️</div>
-          <div class="case-tags"><span class="tag">E-commerce</span><span class="tag">Returns</span></div>
-        </div>
-        <h3 class="case-title">Fashion brand reduces return processing time from 11 days to same day</h3>
-        <p class="case-excerpt">A fashion D2C brand with 22% return rate was taking 11 days to process refunds — destroying repeat purchase rate. An automated returns intake, warehouse inspection trigger, and refund disbursement pipeline now resolves every return the same day it's received.</p>
-        <div class="case-results">
-          <div>
-            <div class="cresult-val">1 day</div>
-            <div class="cresult-label">Return resolution</div>
-          </div>
-          <div>
-            <div class="cresult-val">31%</div>
-            <div class="cresult-label">Repeat purchase lift</div>
+          <div class="case-icon">📊</div>
+          <div class="case-tags">
+            <span class="tag demo-badge">Demo build · test data</span>
+            <span class="tag">Tax &amp; Accounting</span>
           </div>
         </div>
+        <h3 class="case-title">CA enquiry tracker</h3>
+        <p class="case-excerpt">Centralizes client tax and compliance inquiries across email and messaging. The workflow parses inbound tax documents, updates the filing stage on a shared tracker, and automatically notifies clients when documentation is missing.</p>
         <div class="case-footer">
-          <span class="case-industry">Fashion D2C · Surat</span>
+          <span class="case-industry">Architecture: Email/Form Intake → OCR Parser → Tracker &amp; Alerts</span>
           <div class="arrow-link">→</div>
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <div class="wrap">
-    <div class="page-hero-eyebrow" style="margin-bottom:32px"><span class="eyebrow">What clients say</span></div>
-    <div class="testi-grid">
-      <div class="testi-card">
-        <p class="testi-quote">We scaled from 800 to 2,400 orders a month and didn't hire a single additional ops person. The automation just… absorbed it.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">KS</div>
-          <div>
-            <div class="testi-name">Kavya Sharma</div>
-            <div class="testi-role">Founder & CEO</div>
-            <div class="testi-company">Kiran Stores</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-quote">Our loan officers used to spend 60% of their time chasing documents. Now they spend 100% of their time reviewing decisions. That's the product Beevolve actually delivered.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">RB</div>
-          <div>
-            <div class="testi-name">Rajan Bose</div>
-            <div class="testi-role">VP Operations</div>
-            <div class="testi-company">Fintech NBFC</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <p class="testi-quote">I was skeptical automation could handle the nuance of our lead qualification. Then our first automated response booked a site visit. Now I'm a believer.</p>
-        <div class="testi-author">
-          <div class="testi-avatar">PS</div>
-          <div>
-            <div class="testi-name">Priya Shah</div>
-            <div class="testi-role">Director, Sales</div>
-            <div class="testi-company">Real Estate Agency</div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -810,10 +560,10 @@ footer {
 <section class="cta-section">
   <div class="wrap">
     <div class="eyebrow" style="justify-content:center;margin-bottom:24px">Start your story</div>
-    <h2>Your business deserves <span class="ital">its own</span> case study.</h2>
-    <p>Book a free 30-minute audit. We'll find your highest-leverage automation — at no cost.</p>
+    <h2>Ready to automate <span class="ital">your operations?</span></h2>
+    <p>Book a free 30-minute audit. We'll map one repetitive process in your business and show you exactly how to automate it.</p>
     <div class="cta-actions">
-      <a href="#" class="btn-primary" data-audit="1">Book a free audit →</a>
+      <a href="#" class="btn-primary" data-audit="1">Book a free 30-minute audit →</a>
       <a href="index.html" class="btn-secondary">See what we build</a>
     </div>
   </div>
@@ -845,8 +595,7 @@ footer {
         <h5>Company</h5>
         <ul>
           <li><a href="about.html">About us</a></li>
-          <li><a href="case-studies.html">Case studies</a></li>
-          <li><a href="learn-automation.html">Learn automation</a></li>
+          <li><a href="case-studies.html">Demo builds</a></li>
           <li><a href="privacy-policy.html">Privacy policy</a></li>
           <li><a href="terms-of-service.html">Terms of service</a></li>
         </ul>
@@ -855,13 +604,13 @@ footer {
         <h5>Contact</h5>
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
-          <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
+          <li><a href="mailto:info@beevolve.in">info@beevolve.in</a></li>
           <li><a href="javascript:void(0)" data-audit="1">Book a free audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
         <div class="footer-social">
           <a href="https://www.facebook.com/Beevolve.in/" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          <a href="http://www.linkedin.com/in/beevolve-in-39b9b93b5" target="_blank" rel="noopener" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.linkedin.com/company/beevolveai/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
           <a href="https://www.instagram.com/beevolve.in" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
       </div>
@@ -900,92 +649,31 @@ mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => 
   mobileMenu.classList.remove('open');
 }));
 
-/* Filter tabs */
-document.getElementById('filterBar').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const filter = btn.dataset.filter;
-  document.querySelectorAll('.case-card').forEach(card => {
-    card.style.display = (filter === 'all' || card.dataset.industry === filter) ? '' : 'none';
-  });
-});
-
-/* Chart animate on intersection */
-const chart = document.getElementById('featChart');
-const io = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting) {
-    chart.querySelectorAll('.vis-bar').forEach(bar => bar.classList.add('animate'));
-    io.disconnect();
-  }
-}, { threshold: 0.3 });
-io.observe(chart);
-
 /* Modal data */
 const cases = {
-  kiran: {
-    tag: 'E-commerce · Order operations',
-    title: 'How Kiran Stores scaled to 3× orders without hiring a single ops person',
-    lead: 'A growing D2C brand drowning in manual order reconciliation, return requests, and supplier emails. Beevolve rebuilt their back-office with a fully automated ops pipeline.',
-    stats: [['94%','Ops time saved'],['3×','Order volume'],['₹0','Extra headcount']],
-    challenge: 'Kiran Stores was processing 800 orders/month manually — every order required a human to check inventory, raise a supplier PO, update the CRM, generate an invoice, and send a dispatch notification. Growth was bottlenecked entirely by ops capacity.',
-    solution: 'Beevolve built a 6-node automation: order intake → inventory check → auto-PO to supplier → invoice generation → dispatch trigger → customer notification. Each node runs independently and escalates exceptions to a Slack channel.',
-    impact: ['94% reduction in manual ops time','Scaled to 2,400 orders/month with same headcount','Supplier PO turnaround from 24h to 4 minutes','Return requests auto-acknowledged and routed within 2 minutes']
-  },
-  fintech: {
-    tag: 'Finance · NBFC · Lending',
-    title: 'NBFC cuts loan processing from 4 days to 6 hours',
-    lead: 'A Pune-based NBFC processing 300+ personal loan applications monthly was buried in document collection, KYC verification, and credit bureau checks — all manual.',
-    stats: [['94%','Faster processing'],['300+','Applications/month'],['₹0','Extra staff cost']],
-    challenge: 'Each loan application required 14 manual steps across 5 departments. Applicants waited 4+ days for a decision — most dropped off after 2 days.',
-    solution: 'End-to-end document intake via WhatsApp Bot → OCR parsing → KYC API verification → CIBIL API pull → automated decision scoring → loan officer review queue, populated only when manual review is genuinely needed.',
-    impact: ['4-day → 6-hour processing time','Drop-off rate reduced by 61%','Loan officer capacity doubled (same team, 2× applications reviewed)','Compliance audit trail fully automated']
+  realestate: {
+    tag: 'Demo build · test data',
+    title: 'Lead reply for real estate',
+    lead: 'Automated inbound lead qualification and appointment scheduling for property brokers.',
+    challenge: 'Inbound buyer leads across listing platforms and ad campaigns often go unanswered for hours, causing leads to drop off or turn to competing listings.',
+    solution: 'Webhook ingestion routes inquiries immediately into a conversational WhatsApp agent. The agent engages the lead, confirms budget and timeline, and offers direct calendar booking for site inspections.',
+    handoff: ['Clean workflow template and API webhooks', 'WhatsApp Business conversational logic', 'CRM sync and calendar booking integration', 'Loom video walkthrough and SOP documentation']
   },
   clinic: {
-    tag: 'Healthcare · Appointment operations',
-    title: 'Multi-specialty clinic automates appointment ops across 6 branches',
-    lead: 'Juggling 6 clinics, 40+ doctors, and a WhatsApp-based booking system meant constant missed appointments and double bookings.',
-    stats: [['72%','No-show reduction'],['3×','Booking capacity'],['6','Branches unified']],
-    challenge: 'Each branch was using a different system — some WhatsApp, some phone calls, one branch using a spreadsheet. Appointment conflicts were common, no-show rate was 34%, and follow-up reminders were done manually when anyone had time.',
-    solution: 'Unified appointment intake across all 6 branches → single scheduling engine → automated confirmation, 24h reminder, and 2h reminder via WhatsApp → post-visit feedback collection → billing trigger.',
-    impact: ['No-show rate: 34% → 9.5%','Appointment capacity utilisation: 61% → 87%','Billing cycle: 6 days → same day','Patient satisfaction score: 3.8 → 4.6/5']
+    tag: 'Demo build · test data',
+    title: 'Clinic Reel-to-booking',
+    lead: 'Direct appointment booking triggered from social media engagement and messaging.',
+    challenge: 'Social media campaigns drive prospective patient inquiries, but manual staff follow-up leads to slow responses, schedule conflicts, and missed consultation bookings.',
+    solution: 'Automated DM conversational flow triggers upon user interaction, verifies clinic branch and physician schedules in real-time, confirms appointment slots, and sends automated reminder sequences.',
+    handoff: ['Complete scheduling workflow automation', 'Direct messaging conversational templates', 'Google / Outlook calendar integration', 'Patient intake form and notification triggers']
   },
-  saas: {
-    tag: 'SaaS · Revenue operations',
-    title: 'B2B SaaS startup closes deals 40% faster with automated sales ops',
-    lead: 'A 15-person SaaS team spending 18+ hours a week on lead enrichment, follow-up emails, and CRM updates. After automation: sales reps spend 100% of their time selling.',
-    stats: [['40%','Faster close'],['18h','Saved/week'],['100%','CRM data accuracy']],
-    challenge: 'Every inbound lead required manual enrichment (LinkedIn, Apollo), CRM entry, sequence enrolment, and follow-up scheduling. Sales ops was consuming 18h/week — nearly a full FTE — leaving reps with barely 60% selling time.',
-    solution: 'Inbound lead → auto-enrichment (Apollo + Clearbit) → CRM write → Slack deal alert → sequence enrolment → meeting booked → auto-CRM update post-call → follow-up task created. Every step automated.',
-    impact: ['Sales rep selling time: 60% → 97%','Lead response time: 4h → 4 minutes','Deal close rate: +40%','CRM data accuracy: 67% → 99%']
-  },
-  realestate: {
-    tag: 'Real Estate · Lead operations',
-    title: 'Real estate agency responds to every lead within 90 seconds — automatically',
-    lead: 'With 500+ leads monthly across MagicBricks, 99acres, and Instagram, response time was averaging 4+ hours.',
-    stats: [['90s','Response time'],['2.3×','Lead conversion'],['500+','Leads/month handled']],
-    challenge: 'Leads arriving at 11pm or over weekends went cold before anyone responded. Average response time was 4h 12min — industry data shows conversion drops 80% after 5 minutes.',
-    solution: 'Unified lead capture across all portals → instant qualification (budget, timeline, location intent) via WhatsApp chatbot → hot lead alert to nearest available agent → site visit scheduled → CRM updated automatically.',
-    impact: ['Response time: 4h 12min → 90 seconds','Lead-to-site-visit conversion: 2.3× improvement','Agent manual follow-up eliminated for 78% of leads','Weekend/after-hours leads now fully captured']
-  },
-  logistics: {
-    tag: 'Logistics · Supply chain',
-    title: '3PL warehouse eliminates dispatch errors with automated pick-pack routing',
-    lead: 'A third-party logistics provider handling 1,200 daily shipments had a 3.8% error rate costing ₹4.2L/month.',
-    stats: [['0%','Error rate'],['₹50L+','Annual savings'],['1,200','Shipments/day']],
-    challenge: 'Pick-pack routing was done by 3 ops managers working off Excel sheets refreshed every 2 hours. A 3.8% error rate on 1,200 daily shipments means 45 wrong shipments every day — returns, rework, angry clients.',
-    solution: 'Real-time order ingestion → warehouse zone routing algorithm → pick-list generation per zone → courier rate API comparison → label generation → exception flagging for out-of-stock or oversized items → dispatch confirmation.',
-    impact: ['Dispatch error rate: 3.8% → 0%','Returns/rework cost: ₹4.2L/month → ₹0','Courier cost optimised: 12% saving via rate comparison','Same-day dispatch SLA: 91% → 99.4%']
-  },
-  ecom2: {
-    tag: 'E-commerce · Returns management',
-    title: 'Fashion brand reduces return processing from 11 days to same day',
-    lead: 'A fashion D2C brand with 22% return rate was taking 11 days to process refunds — destroying repeat purchase rate.',
-    stats: [['1 day','Resolution time'],['31%','Repeat purchase lift'],['22%','Return rate handled']],
-    challenge: 'Return requests were collected via a Google Form, manually reviewed once a week, then triggered to the warehouse team who had their own queue. Customers waited 11 days for a refund — and 68% never bought again.',
-    solution: 'Returns portal (WhatsApp or web) → auto-acknowledgement + pickup scheduling → warehouse inspection trigger → condition-based routing (refund / exchange / reject) → instant refund disbursement → CRM re-engagement sequence.',
-    impact: ['Return resolution: 11 days → same day','Repeat purchase rate: +31%','Customer service tickets about returns: -84%','Return abuse detection: automated flagging on repeat returners']
+  ca: {
+    tag: 'Demo build · test data',
+    title: 'CA enquiry tracker',
+    lead: 'Centralized enquiry and document intake tracker for accounting practices.',
+    challenge: 'Chartered accountants manage multiple clients with tax compliance deadlines, frequently losing track of submitted paperwork, pending declarations, and client follow-ups across scattered communication channels.',
+    solution: 'Inbound client emails and portal submissions are categorized automatically. Document parsers verify attached tax records, log current status onto an internal tracking board, and dispatch checklist reminders for missing items.',
+    handoff: ['Intake automation and document parser workflow', 'Centralized status tracking dashboard', 'Automated reminder triggers and client templates', 'Full credential and architecture documentation']
   }
 };
 
@@ -993,15 +681,12 @@ function openModal(id) {
   const c = cases[id];
   if (!c) return;
   document.getElementById('modalBody').innerHTML = `
-    <div class="modal-tag"><span class="tag">${c.tag}</span></div>
+    <div class="modal-tag"><span class="tag demo-badge">${c.tag}</span></div>
     <h3>${c.title}</h3>
     <p class="modal-lead">${c.lead}</p>
-    <div class="modal-stats">
-      ${c.stats.map(([v,l]) => `<div><div class="fstat-val">${v}</div><div class="fstat-label">${l}</div></div>`).join('')}
-    </div>
-    <div class="modal-challenge"><h4>The challenge</h4><p>${c.challenge}</p></div>
-    <div class="modal-solution"><h4>The automation</h4><p>${c.solution}</p></div>
-    <div class="modal-impact"><h4>The impact</h4><ul>${c.impact.map(i=>`<li>${i}</li>`).join('')}</ul></div>
+    <div class="modal-challenge"><h4>Operational challenge</h4><p>${c.challenge}</p></div>
+    <div class="modal-solution"><h4>Automation architecture</h4><p>${c.solution}</p></div>
+    <div class="modal-impact"><h4>What you receive at hand-off</h4><ul>${c.handoff.map(i=>`<li>${i}</li>`).join('')}</ul></div>
   `;
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1348,7 +1033,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({
     .catch(function(){
       submitBtn.disabled = false;
       btnText.textContent = 'Get My Free Automation Audit →';
-      alert('Something went wrong. Please try WhatsApp or email us at Info@beevolve.in');
+      alert('Something went wrong. Please try WhatsApp or email us at info@beevolve.in');
     });
   });
 })();
