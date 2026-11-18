@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -36,41 +36,85 @@
   @media (max-width: 640px) { .wrap { padding: 0 20px; } }
 
   /* ---- nav ---- */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  /* nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
-    background: rgba(10,9,8,0.55);
-    border-bottom: 1px solid transparent;
+    background: rgba(10,9,8,0.82);
+    border-bottom: 1px solid var(--line);
     transition: border-color 240ms ease, background 240ms ease;
   }
-  nav.scrolled { background: rgba(10,9,8,0.82); border-bottom-color: var(--line); }
+  .nav.scrolled { background: rgba(10,9,8,0.92); border-bottom-color: var(--line); }
   .nav-inner { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--serif); font-size: 22px; letter-spacing: -0.01em; }
-  .brand-svg { width: 36px; height: 36px; flex: none; filter: drop-shadow(0 0 3px rgba(245,166,35,0.35)); transition: filter 0.3s ease; }
+  .brand-svg { height: 44px; width: auto; flex: none; filter: drop-shadow(0 0 3px rgba(245,166,35,0.35)); transition: filter 0.3s ease; }
   .brand:hover .brand-svg { filter: drop-shadow(0 0 8px rgba(245,200,74,0.65)); }
   .brand-name { color: var(--cream); }
   .brand-name b { font-weight: 400; }
   .brand-name i { font-style: italic; color: var(--amber); margin-left: 1px; }
-  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; font-size: 14px; color: var(--cream-dim); }
-  .nav-links a { position: relative; padding: 4px 0; transition: color 0.2s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--cream); text-decoration: none; }
-  .nav-links a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--amber); transform: scaleX(0); transform-origin: left; transition: transform 220ms ease; }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  .nav-cta { display: inline-flex; align-items: center; background: var(--amber); color: var(--obsidian) !important; padding: 10px 20px; border-radius: 999px; font-weight: 600; font-size: 13px; letter-spacing: 0.01em; }
-  .nav-cta:hover { background: var(--amber-deep) !important; }
 
-  .burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; z-index: 200; }
-  .burger span { display: block; width: 22px; height: 2px; background: var(--cream); border-radius: 2px; transition: all 0.25s; }
-  .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .burger.open span:nth-child(2) { opacity: 0; }
-  .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--ink); border-bottom: 1px solid var(--line); z-index: 99; flex-direction: column; padding: 24px 20px; gap: 18px; }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a { color: var(--cream-dim); font-size: 16px; }
-  .mobile-menu a:hover { color: var(--cream); text-decoration: none; }
-  .mobile-menu .nav-cta { text-align: center; padding: 12px; }
-  @media (max-width: 880px) { .nav-links { display: none; } .burger { display: flex; } }
+  .nav-links { display: flex; align-items: center; gap: 28px; font-size: 14px; color: var(--cream-dim); }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a.active { color: var(--amber); }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1px; background: var(--amber);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 220ms ease;
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { transform: scaleX(1); }
+
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian) !important;
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+  .nav-cta:hover { background: var(--amber-soft) !important; transform: translateY(-1px); }
+
+  .nav-burger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 40px; height: 40px; padding: 8px; border-radius: 8px; cursor: pointer; flex: none;
+    background: none; border: none;
+  }
+  .nav-burger span {
+    display: block; height: 1.5px; background: var(--cream); border-radius: 999px;
+    transition: transform 240ms ease, opacity 180ms ease, width 240ms ease;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 72px; left: 0; right: 0; z-index: 49;
+    background: rgba(10,9,8,0.97);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 24px 28px;
+    flex-direction: column; gap: 4px;
+    transform: translateY(-8px); opacity: 0;
+    transition: transform 240ms ease, opacity 240ms ease;
+  }
+  .mobile-menu.open { display: flex; transform: translateY(0); opacity: 1; }
+  .mobile-menu a { padding: 14px 0; font-size: 18px; color: var(--cream-dim); border-bottom: 1px solid var(--line); }
+  .mobile-menu a:last-of-type { border-bottom: 0; }
+  .mobile-menu a:hover { color: var(--amber); }
+  .mobile-menu .mobile-cta {
+    margin-top: 16px; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 14px 22px; border-radius: 999px;
+    font-size: 15px; font-weight: 500; text-align: center; justify-content: center;
+  }
+
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+  }
 
   /* ---- page hero ---- */
   .page-hero {
@@ -125,36 +169,40 @@
 </head>
 <body>
 
-<nav>
-  <div class="wrap">
-    <div class="nav-inner">
-      <a href="index.html" class="brand">
-        <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
-        <span class="brand-name"><b>Bee</b><i>volve</i></span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="products.html">Services</a></li>
-        <li><a href="learn-automation.html">Learn Automation</a></li>
-        <li><a href="case-studies.html">Case Studies</a></li>
-        <li><a href="about.html">About us</a></li>
-        <li><a href="#" class="nav-cta" data-audit="1">Book a free audit</a></li>
-      </ul>
-      <button class="burger" id="burger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Beevolve">
+      <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+      <span class="brand-name"><b>Bee</b><i>volve</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="demo-builds.html">Demo Builds</a>
+      <a href="about-us.html">About us</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="javascript:void(0)" data-audit="1" class="nav-cta">
+      Book a free 30-minute audit
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
-</nav>
+</header>
 
-<div class="mobile-menu" id="mobileMenu">
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
   <a href="index.html">Home</a>
-  <a href="products.html">Services</a>
-  <a href="learn-automation.html">Learn Automation</a>
-  <a href="case-studies.html">Case Studies</a>
-  <a href="about.html">About us</a>
-  <a href="#" class="nav-cta" data-audit="1">Book a free audit</a>
-</div>
+  <a href="services.html">Services</a>
+  <a href="demo-builds.html">Demo Builds</a>
+  <a href="about-us.html">About us</a>
+  <a href="contact.html">Contact</a>
+  <a href="javascript:void(0)" data-audit="1" class="mobile-cta">
+    Book a free 30-minute audit
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</nav>
 
 <div class="page-hero">
   <div class="wrap">
@@ -254,7 +302,7 @@
       <div class="contact-block">
         <h3>Questions about these Terms?</h3>
         <p>Beevolve<br>303, Muktidham Tower, Station Road<br>Kalwa, Thane — 400605<br>Maharashtra, India</p>
-        <p style="margin-top:14px;"><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></p>
+        <p style="margin-top:14px;"><a href="mailto:info@beevolve.in">info@beevolve.in</a></p>
         <p><a href="tel:+919004861408">+91 90048 61408</a></p>
       </div>
 
@@ -273,44 +321,39 @@
         <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
         <div class="foot-social">
           <a href="https://www.facebook.com/Beevolve.in/" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          <a href="http://www.linkedin.com/in/beevolve-in-39b9b93b5" target="_blank" rel="noopener" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.linkedin.com/company/beevolveai/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
           <a href="https://www.instagram.com/beevolve.in" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
         </div>
       </div>
       <div>
         <h4>Services</h4>
         <ul>
-          <li><a href="products.html">AI agents</a></li>
-          <li><a href="products.html">CRM &amp; sales</a></li>
-          <li><a href="products.html">Documents</a></li>
-          <li><a href="products.html">Integrations</a></li>
-          <li><a href="products.html">Dashboards</a></li>
-          <li><a href="products.html">Custom builds</a></li>
+          <li><a href="services.html">AI agents</a></li>
+          <li><a href="services.html">CRM &amp; sales</a></li>
+          <li><a href="services.html">Documents</a></li>
+          <li><a href="services.html">Integrations</a></li>
+          <li><a href="services.html">Dashboards</a></li>
+          <li><a href="services.html">Custom builds</a></li>
         </ul>
       </div>
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="about.html">About</a></li>
-          <li><a href="case-studies.html">Case studies</a></li>
+          <li><a href="about-us.html">About</a></li>
+          <li><a href="demo-builds.html">Demo builds</a></li>
           <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="mailto:Info@beevolve.in?subject=Careers%20at%20Beevolve">Careers</a></li>
+          <li><a href="mailto:info@beevolve.in?subject=Careers%20at%20Beevolve">Careers</a></li>
           <li><a href="privacy-policy.html">Privacy policy</a></li>
           <li><a href="terms-of-service.html">Terms of service</a></li>
         </ul>
       </div>
-      <div>
-        <h4>Learn</h4>
-        <ul>
-          <li><a href="learn-automation.html">Automation 101</a></li>
-        </ul>
-      </div>
+
       <div>
         <h4>Contact</h4>
         <ul>
           <li><a href="tel:+919004861408">+91 90048 61408</a></li>
-          <li><a href="mailto:Info@beevolve.in">Info@beevolve.in</a></li>
-          <li><a href="javascript:void(0)" data-audit="1">Book a free audit</a></li>
+          <li><a href="mailto:info@beevolve.in">info@beevolve.in</a></li>
+          <li><a href="javascript:void(0)" data-audit="1">Book a free 30-minute audit</a></li>
           <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
         </ul>
       </div>
@@ -323,22 +366,30 @@
 </footer>
 
 <script>
-  const burger = document.getElementById('burger');
-  const menu = document.getElementById('mobileMenu');
-  burger.addEventListener('click', () => {
-    burger.classList.toggle('open');
-    menu.classList.toggle('open');
-    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-  });
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    burger.classList.remove('open');
-    menu.classList.remove('open');
-    document.body.style.overflow = '';
-  }));
-  const navEl = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    navEl.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
+  const $burger = document.getElementById('navBurger') || document.getElementById('burger');
+  const $mobileMenu = document.getElementById('mobileMenu');
+  if ($burger && $mobileMenu) {
+    $burger.addEventListener('click', () => {
+      const isOpen = $mobileMenu.classList.toggle('open');
+      $burger.classList.toggle('open', isOpen);
+      $burger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    $mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        $burger.classList.remove('open');
+        $mobileMenu.classList.remove('open');
+        $burger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  const navEl = document.getElementById('nav');
+  if (navEl) {
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  }
 </script>
 
 <!-- WhatsApp Bee Widget -->
@@ -644,7 +695,7 @@
     .catch(function(){
       submitBtn.disabled = false;
       btnText.textContent = 'Get My Free Automation Audit →';
-      alert('Something went wrong. Please try WhatsApp or email us at Info@beevolve.in');
+      alert('Something went wrong. Please try WhatsApp or email us at info@beevolve.in');
     });
   });
 })();

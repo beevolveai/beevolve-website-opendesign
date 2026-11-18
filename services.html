@@ -1,0 +1,1639 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Services — Beevolve</title>
+<meta name="description" content="Beevolve builds AI agents, CRM automation, document workflows, systems integrations, ops dashboards, and custom AI — designed, built, and handed off to your team." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --obsidian:    #0a0908;
+    --obsidian-2:  #121010;
+    --obsidian-3:  #1b1815;
+    --line:        rgba(241, 234, 217, 0.08);
+    --line-strong: rgba(241, 234, 217, 0.16);
+    --cream:       #f1ead9;
+    --cream-dim:   #cdc3ac;
+    --cream-mute:  #8a8170;
+    --amber:       #F5A623;
+    --amber-soft:  #f2bb5d;
+    --amber-deep:  #c6841a;
+
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --sans:  "DM Sans", "Inter", system-ui, sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, monospace;
+
+    --maxw: 1280px;
+    --pad:  clamp(20px, 4vw, 56px);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--obsidian);
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--amber); color: var(--obsidian); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+  .wrap {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 10px; height: 10px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    display: inline-block;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .ital { font-style: italic; color: var(--amber-soft); }
+
+  /* nav */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    background: rgba(10, 9, 8, 0.55);
+    border-bottom: 1px solid transparent;
+    transition: border-color 240ms ease, background 240ms ease;
+  }
+  .nav.scrolled { background: rgba(10, 9, 8, 0.82); border-bottom-color: var(--line); }
+  .nav-inner {
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-size: 22px; letter-spacing: -0.01em;
+  }
+  .brand-svg {
+    height: 44px; width: auto; flex: none;
+    filter: drop-shadow(0 0 3px rgba(245,166,35,0.35));
+    transition: filter 0.3s ease;
+  }
+  .brand:hover .brand-svg {
+    filter: drop-shadow(0 0 8px rgba(245,200,74,0.65));
+  }
+  .brand-name b { font-weight: 400; }
+  .brand-name i { font-style: italic; color: var(--amber); margin-left: 1px; }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 28px;
+    font-size: 14px; color: var(--cream-dim);
+  }
+  .nav-links a { position: relative; padding: 4px 0; }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a.active, .nav-links a.current { color: var(--amber); }
+  .nav-links a.active::after,
+  .nav-links a.current::after,
+  .nav-links a:hover::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 1px; background: var(--amber);
+  }
+
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+  .nav-cta:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    flex: none;
+  }
+  .nav-burger span {
+    display: block;
+    height: 1.5px;
+    background: var(--cream);
+    border-radius: 999px;
+    transition: transform 240ms ease, opacity 180ms ease, width 240ms ease;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 72px; left: 0; right: 0;
+    z-index: 49;
+    background: rgba(10,9,8,0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding: 20px var(--pad) 28px;
+    flex-direction: column;
+    gap: 4px;
+    transform: translateY(-8px);
+    opacity: 0;
+    transition: transform 240ms ease, opacity 240ms ease;
+  }
+  .mobile-menu.open { display: flex; transform: translateY(0); opacity: 1; }
+  .mobile-menu a {
+    padding: 14px 0;
+    font-size: 18px;
+    color: var(--cream-dim);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobile-menu a:last-of-type { border-bottom: 0; }
+  .mobile-menu a:hover, .mobile-menu a.active { color: var(--amber); }
+  .mobile-menu .mobile-cta {
+    margin-top: 16px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--obsidian);
+    padding: 14px 22px; border-radius: 999px;
+    font-size: 15px; font-weight: 500;
+    text-align: center; justify-content: center;
+  }
+
+  @media (max-width: 880px) {
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+  }
+
+  /* page hero */
+  /* page hero video bg */
+  .page-hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 600ms ease;
+    pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-video { opacity: 0.28; }
+  .page-hero-scrim {
+    display: none;
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+  .page-hero[data-bgvideo="true"] .page-hero-scrim {
+    display: block;
+    background:
+      linear-gradient(180deg, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.25) 35%, rgba(10,9,8,0.65) 72%, rgba(10,9,8,1) 90%),
+      linear-gradient(90deg, rgba(10,9,8,0.55), rgba(10,9,8,0.25));
+  }
+
+  .page-hero {
+    position: relative;
+    padding: 180px 0 100px;
+    overflow: hidden;
+  }
+  .page-hero::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 220px;
+    background: linear-gradient(180deg, transparent 0%, var(--obsidian) 92%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  @media (max-width: 880px) { .page-hero { padding: 120px 0 64px; } }
+  @media (max-width: 480px) { .page-hero { padding: 96px 0 48px; } }
+  .page-hero .hex-bg {
+    position: absolute; inset: 0;
+    pointer-events: none; opacity: 0.5;
+    mask-image: radial-gradient(ellipse 70% 80% at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 30%, #000 30%, transparent 80%);
+  }
+  .glow {
+    position: absolute; border-radius: 50%; filter: blur(80px);
+    pointer-events: none; opacity: 0.4;
+  }
+  .glow-1 { width: 520px; height: 520px; background: #F5A62333; left: -120px; top: 60px; }
+  .glow-2 { width: 420px; height: 420px; background: #c2570022; right: -100px; top: 120px; }
+
+  .page-hero h1 {
+    font-size: clamp(48px, 7vw, 100px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-top: 24px;
+    max-width: 14ch;
+  }
+  .page-hero p.lede {
+    margin-top: 32px;
+    max-width: 640px;
+    font-size: 19px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .page-hero p.lede + p.lede { margin-top: 18px; }
+  .page-hero .inner { position: relative; z-index: 1; }
+  @media (max-width: 480px) {
+    .page-hero h1 { font-size: clamp(36px, 9vw, 52px); }
+    .page-hero p.lede { font-size: 15px; margin-top: 16px; }
+  }
+
+  /* generic section */
+  .section {
+    padding: 110px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  @media (max-width: 1024px) { .section { padding: 80px 0; } }
+  @media (max-width: 760px)  { .section { padding: 60px 0; } }
+  @media (max-width: 480px)  { .section { padding: 48px 0; } }
+  .section h2 {
+    font-size: clamp(36px, 4.6vw, 60px);
+    line-height: 1.05;
+    max-width: 800px;
+    margin-top: 18px;
+  }
+  .section .lede {
+    margin-top: 18px;
+    max-width: 640px;
+    font-size: 17px;
+    color: var(--cream-dim);
+  }
+
+  /* suite header */
+  .suite-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-bottom: 16px;
+  }
+  .suite-tag .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  /* product cards */
+  .products-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .products-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .pcard {
+    position: relative;
+    padding: 28px 24px 28px;
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    display: flex; flex-direction: column;
+    transition: transform 280ms ease, border-color 280ms ease, background 280ms ease;
+    overflow: hidden;
+  }
+  .pcard::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amber), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 320ms ease;
+  }
+  .pcard:hover { transform: translateY(-6px); border-color: rgba(245,166,35,0.3); }
+  .pcard:hover::before { transform: scaleX(1); }
+  .pcard .icon {
+    width: 44px; height: 44px;
+    position: relative;
+    display: grid; place-items: center;
+    margin-bottom: 22px;
+  }
+  .pcard .icon::before {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(245,166,35,0.12);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .pcard .icon svg {
+    width: 22px; height: 22px;
+    color: var(--amber);
+    position: relative;
+    z-index: 1;
+  }
+  .pcard h3 {
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .pcard p {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .pcard .more {
+    margin-top: 22px;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    transition: color 200ms ease;
+  }
+  .pcard .more::after {
+    content: "→";
+    transition: transform 200ms ease;
+  }
+  .pcard:hover .more { color: var(--amber); }
+  .pcard:hover .more::after { transform: translateX(4px); }
+
+  @media (max-width: 1080px) { .products-grid, .products-grid.three { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px)  { .products-grid, .products-grid.three { grid-template-columns: 1fr; } }
+
+  /* capability blocks */
+  .cap {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 56px;
+    padding: 72px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .cap:first-of-type { border-top: 0; padding-top: 0; }
+  .cap .cap-meta {
+    position: sticky; top: 100px;
+  }
+  .cap .cap-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+  }
+  .cap h3 {
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.1;
+    margin-top: 12px;
+    letter-spacing: -0.01em;
+  }
+  .cap h3 .ital { display: block; }
+  .cap-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .cap-body h4 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+  .cap-body ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cap-body li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  .cap-body li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .cap-link {
+    margin-top: 28px;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--cream);
+    transition: border-color 200ms ease, color 200ms ease;
+  }
+  .cap-link:hover { border-color: var(--amber); color: var(--amber); }
+  @media (max-width: 980px) {
+    .cap { grid-template-columns: 1fr; gap: 32px; }
+    .cap .cap-meta { position: static; }
+    .cap-body { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* framework steps */
+  .framework {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    counter-reset: step;
+  }
+  .fstep {
+    padding: 28px 22px 26px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--obsidian-2);
+    position: relative;
+  }
+  .fstep::before {
+    counter-increment: step;
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 36px;
+    color: var(--amber);
+    display: block;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .fstep h4 {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.25;
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .fstep p {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--cream-dim);
+    line-height: 1.55;
+  }
+  @media (max-width: 880px) { .framework { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .framework { grid-template-columns: 1fr; } }
+
+  /* industrial pills */
+  .ind-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .ind {
+    padding: 28px 24px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    text-align: left;
+    background: var(--obsidian);
+    transition: border-color 240ms ease;
+  }
+  .ind:hover { border-color: rgba(245,166,35,0.3); }
+  .ind .icon {
+    width: 38px; height: 38px;
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .ind .icon::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--amber), var(--amber-deep));
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .ind .icon::after {
+    content: ""; position: absolute; inset: 2px;
+    background: var(--obsidian);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .ind h4 {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: var(--cream);
+  }
+  @media (max-width: 980px) { .ind-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .ind-grid { grid-template-columns: 1fr; } }
+
+  /* ownership block */
+  .own {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-top: 56px;
+    align-items: center;
+  }
+  .own-panel {
+    aspect-ratio: 4 / 3;
+    border-radius: 24px;
+    border: 1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse 70% 70% at 30% 30%, rgba(245,166,35,0.18), transparent 60%),
+      linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+    position: relative;
+    overflow: hidden;
+  }
+  .own-panel svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .own ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 16px; }
+  .own li {
+    padding-left: 26px;
+    position: relative;
+    font-size: 17px;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+  .own li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 10px;
+    width: 10px; height: 10px;
+    background: var(--amber);
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .own li small {
+    display: block;
+    font-size: 13px;
+    color: var(--cream-mute);
+    margin-top: 4px;
+  }
+  @media (max-width: 880px) { .own { grid-template-columns: 1fr; } .own-panel { aspect-ratio: 16/10; } }
+
+  /* faq */
+  .faq {
+    margin-top: 56px;
+    border-top: 1px solid var(--line);
+  }
+  .faq details {
+    border-bottom: 1px solid var(--line);
+    padding: 0;
+  }
+  .faq summary {
+    padding: 28px 0;
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    font-family: var(--serif);
+    font-size: clamp(20px, 2.2vw, 26px);
+    line-height: 1.3;
+    color: var(--cream);
+    transition: color 200ms ease;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { color: var(--amber); }
+  .faq summary::after {
+    content: "+";
+    color: var(--amber);
+    font-size: 28px;
+    font-family: var(--sans);
+    transition: transform 240ms ease;
+    flex: none;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .ans {
+    padding: 0 0 28px;
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.6;
+    max-width: 760px;
+  }
+
+  /* cta strip */
+  .cta-strip {
+    padding: 80px 0;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--obsidian-2), var(--obsidian));
+  }
+  @media (max-width: 760px) { .cta-strip { padding: 60px 0; } }
+  @media (max-width: 480px) {
+    .cta-strip { padding: 48px 0; }
+    .cta-strip .btn { display: flex; width: 100%; justify-content: center; }
+  }
+  .cta-strip h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.05;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .cta-strip .lede {
+    margin: 18px auto 0;
+    max-width: 540px;
+    color: var(--cream-dim);
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: transform 160ms ease, background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn-primary { background: var(--amber); color: var(--obsidian); }
+  .btn-primary:hover { background: var(--amber-soft); transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--cream); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--amber); color: var(--amber); }
+  .cta-strip .btn { margin-top: 32px; }
+
+  /* footer */
+  footer { padding: 80px 0 40px; background: var(--obsidian); }
+  .foot {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .foot h4 {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream-mute);
+    margin-bottom: 16px;
+  }
+  .foot ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .foot a { color: var(--cream-dim); font-size: 14px; }
+  .foot a:hover { color: var(--amber); }
+  .foot-brand .blurb {
+    margin-top: 20px;
+    color: var(--cream-mute);
+    font-size: 13px;
+    line-height: 1.55;
+    max-width: 280px;
+  }
+  .foot-bottom {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--cream-mute);
+  }
+  .foot-social { display: flex; gap: 14px; margin-top: 18px; }
+  .foot-social a { color: var(--cream-dim); display: flex; align-items: center; transition: color 0.2s; }
+  .foot-social a:hover { color: var(--amber); }
+  @media (max-width: 880px) {
+    .foot { grid-template-columns: 1fr 1fr; }
+    .foot-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 480px) {
+    .foot { grid-template-columns: 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    footer { padding: 56px 0 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand" aria-label="Beevolve">
+      <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+      <span class="brand-name"><b>Bee</b><i>volve</i></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="demo-builds.html">Demo Builds</a>
+      <a href="about-us.html">About us</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="javascript:void(0)" data-audit="1" class="nav-cta">
+      Book a free 30-minute audit
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6.5 2.5L10 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="services.html" class="active">Services</a>
+  <a href="demo-builds.html">Demo Builds</a>
+  <a href="about-us.html">About us</a>
+  <a href="contact.html">Contact</a>
+  <a href="javascript:void(0)" data-audit="1" class="mobile-cta">
+    Book a free 30-minute audit
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero" id="pageHero">
+  <video class="page-hero-video" id="productsBgVideo"
+    muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="page-hero-scrim" aria-hidden="true"></div>
+  <div class="hex-bg" aria-hidden="true">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <defs>
+        <pattern id="hex-p" width="60" height="52" patternUnits="userSpaceOnUse">
+          <path d="M30 0 L60 15 L60 37 L30 52 L0 37 L0 15 Z" fill="none" stroke="rgba(245,166,35,0.18)" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#hex-p)"/>
+    </svg>
+  </div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="wrap inner">
+    <span class="eyebrow">Our solutions</span>
+    <h1>Intelligent automation, <span class="ital">designed for real operations.</span></h1>
+    <p class="lede">
+      Structured to help organizations move from fragmented, manual execution toward cohesive, autonomous operational systems.
+    </p>
+    <p class="lede">
+      Rather than deploying isolated tools, the focus is on architecting automation layers that connect data, systems, and decision-making into reliable workflows capable of operating at scale.
+    </p>
+  </div>
+</section>
+
+<!-- FUTURE TALENT SUITE -->
+<section class="section">
+  <div class="wrap">
+    <span class="suite-tag"><span class="dot"></span>For students &amp; career switchers</span>
+    <h2>Future Talent <span class="ital">Suite.</span></h2>
+    <p class="lede">
+      Products built for individuals stepping into the automation economy — designed to compress the path from learner to operator.
+    </p>
+
+    <div class="products-grid">
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 4h10l4 4v12H5z" stroke="currentColor" stroke-width="1.5"/><path d="M15 4v4h4M8 12h8M8 16h6M8 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>AI Job <span class="ital">Application</span> Engine</h3>
+        <p>Analyzes job descriptions, identifies your skill gaps, and generates perfectly tailored applications in seconds. Apply smarter, close gaps faster, get more interview calls.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M6 21v-1a6 6 0 0112 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M19 5l2 2M5 5L3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <h3>AI Interview <span class="ital">Pressure</span> Lab</h3>
+        <p>Turns any JD into a real-time interview simulation with curveball questions and voice evaluation. Walk in battle-tested, not nervous.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M10 9l5 3-5 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Smart Lecture-to-<span class="ital">Exam</span> System</h3>
+        <p>Converts recorded lectures into structured study guides with key concepts, examples, and predicted exam questions. Stop watching — start preparing.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.5"/><path d="M8 10v6M8 10l4 4 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>LinkedIn <span class="ital">Branding</span> Engine</h3>
+        <p>Finds trending topics in your niche and writes high-impact posts using proven viral psychology. Build authority while others are still scrolling.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIAL EFFICIENCY SUITE -->
+<section class="section">
+  <div class="wrap">
+    <span class="suite-tag"><span class="dot"></span>For SMEs &amp; operations teams</span>
+    <h2>Industrial Efficiency <span class="ital">Suite.</span></h2>
+    <p class="lede">
+      Production-grade automations that eliminate bottlenecks across sales, content, support, reputation, and cash flow.
+    </p>
+
+    <div class="products-grid" style="grid-template-columns: repeat(5, 1fr);">
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 12l9-9 9 9-9 9z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+        </div>
+        <h3>Lead Routing <span class="ital">System</span></h3>
+        <p>Captures, enriches, and routes incoming leads instantly based on revenue potential. Never lose a high-value client again.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M17 10l4-2v8l-4-2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>AI <span class="ital">Viral Clip</span> Creator</h3>
+        <p>Transforms long meetings or demo videos into multiple high-impact, subtitle-ready reels automatically. 10 pieces of content from one video.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 11-3.5-7.1L21 6v6h-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+        </div>
+        <h3>Smart Chat <span class="ital">Receptionist</span></h3>
+        <p>Handles WhatsApp and website conversations using your company's real data, pricing, and availability. Books meetings, closes faster.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Reputation <span class="ital">Protection</span></h3>
+        <p>Monitors Google reviews, auto-replies to positives, escalates negatives with ready-to-send empathetic drafts. Protect your brand.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+
+      <article class="pcard">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 10h10M7 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="18" cy="16" r="2" stroke="currentColor" stroke-width="1.5"/></svg>
+        </div>
+        <h3>Invoice <span class="ital">Recovery</span></h3>
+        <p>Tracks unpaid invoices and sends tiered reminder emails automatically — from polite to firm. Recover cash without awkward follow-ups.</p>
+        <a href="#" class="more" data-audit="1">Book a call →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Solution framework</span>
+    <h2>From strategy to <span class="ital">autonomous execution.</span></h2>
+    <p class="lede">
+      Every solution is delivered through a disciplined framework — clarity, repeatability, and long-term value at every step.
+    </p>
+
+    <div class="framework">
+      <div class="fstep">
+        <h4>Identify automation-ready processes</h4>
+        <p>Shadow the work. Map manual execution to time and dollars. Rank by leverage and feasibility.</p>
+      </div>
+      <div class="fstep">
+        <h4>Architect workflows &amp; system logic</h4>
+        <p>Tools, integrations, hand-off points, failure modes — all on paper, all approved by you, before code.</p>
+      </div>
+      <div class="fstep">
+        <h4>Controlled implementation &amp; testing</h4>
+        <p>Build in stages. Test with real data. Daily updates. About 4 weeks to a working production system.</p>
+      </div>
+      <div class="fstep">
+        <h4>Deployment &amp; ownership transfer</h4>
+        <p>Source code, credentials, docs, training. We monitor for 30 days. Then the system is yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Core capabilities</span>
+    <h2>Five lanes of work, <span class="ital">one operating system.</span></h2>
+    <p class="lede">
+      Pick the lane that's bleeding the most hours this quarter. Most clients start with two and expand from there.
+    </p>
+
+    <div style="margin-top: 64px;">
+      <!-- 1. Consulting -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Automation architecture &amp; strategy</div>
+          <h3>AI Automation <span class="ital">Consulting.</span></h3>
+          <a href="#" class="cap-link" data-audit="1">Book a call <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>Automation opportunity identification</li>
+              <li>Workflow and system architecture design</li>
+              <li>Tool and platform selection</li>
+              <li>Risk, dependency, and scalability planning</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Typical outcomes</h4>
+            <ul>
+              <li>Clear automation roadmap, ranked by ROI</li>
+              <li>Reduced implementation risk</li>
+              <li>Faster transition from concept to deployment</li>
+              <li>Architectural alignment with business goals</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Workflow Automation -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">End-to-end process orchestration</div>
+          <h3>Workflow <span class="ital">Automation.</span></h3>
+          <a href="#" class="cap-link" data-audit="1">Book a call <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>Cross-tool and cross-system automation</li>
+              <li>Event-driven and scheduled workflows</li>
+              <li>Error handling and recovery logic</li>
+              <li>Monitoring and execution visibility</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>Operations and internal processes</li>
+              <li>Finance and reconciliation workflows</li>
+              <li>Reporting and data synchronization</li>
+              <li>Sales, support, and service operations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Custom AI -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Agentic and autonomous systems</div>
+          <h3>Custom <span class="ital">AI Solutions.</span></h3>
+          <a href="#" class="cap-link" data-audit="1">Book a call <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>AI agents for decision-making workflows</li>
+              <li>Conversational systems and chat interfaces</li>
+              <li>Robotic Process Automation (RPA)</li>
+              <li>Multi-agent architectures</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>Intelligent support and triage systems</li>
+              <li>Lead qualification and routing</li>
+              <li>Internal knowledge and policy systems</li>
+              <li>Operational decision support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Data Strategy -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Unifying fragmented systems</div>
+          <h3>Data Strategy &amp; <span class="ital">Integration.</span></h3>
+          <a href="#" class="cap-link" data-audit="1">Book a call <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>API and system integration</li>
+              <li>Data normalization and transformation</li>
+              <li>Event-based data pipelines</li>
+              <li>Secure data access and ownership design</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>ERP, CRM, and internal tools</li>
+              <li>Operational dashboards</li>
+              <li>AI and ML workflows</li>
+              <li>Reporting and analytics systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Machine Learning -->
+      <div class="cap">
+        <div class="cap-meta">
+          <div class="cap-eyebrow">Predictive &amp; decision support</div>
+          <h3>Machine <span class="ital">Learning.</span></h3>
+          <a href="#" class="cap-link" data-audit="1">Book a call <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="cap-body">
+          <div>
+            <h4>Scope</h4>
+            <ul>
+              <li>Model development and tuning</li>
+              <li>Integration into live workflows</li>
+              <li>Performance monitoring and iteration</li>
+              <li>Deployment within automation systems</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Applied across</h4>
+            <ul>
+              <li>Demand and anomaly prediction</li>
+              <li>Classification and prioritization tasks</li>
+              <li>Optimization of operational decisions</li>
+              <li>Risk scoring and fraud detection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIAL -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Industrial &amp; operational</span>
+    <h2>Beyond surface-level <span class="ital">automation.</span></h2>
+    <p class="lede">
+      The solutions extend into operational and industrial environments — where automation intersects with real-world execution.
+    </p>
+
+    <div class="ind-grid">
+      <div class="ind"><div class="icon"></div><h4>Manufacturing &amp; production systems</h4></div>
+      <div class="ind"><div class="icon"></div><h4>Logistics &amp; supply chain operations</h4></div>
+      <div class="ind"><div class="icon"></div><h4>IT–OT convergence</h4></div>
+      <div class="ind"><div class="icon"></div><h4>Predictive maintenance &amp; alerts</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- OWNERSHIP -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Ownership &amp; transparency</span>
+    <h2>Built for <span class="ital">long-term control.</span></h2>
+
+    <div class="own">
+      <div class="own-panel">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="own-hex" width="40" height="35" patternUnits="userSpaceOnUse">
+              <path d="M20 0 L40 10 L40 25 L20 35 L0 25 L0 10 Z" fill="none" stroke="rgba(245,166,35,0.3)" stroke-width="1"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="300" fill="url(#own-hex)"/>
+          <!-- Highlighted cluster -->
+          <g transform="translate(140,90)">
+            <path d="M20 0 L40 10 L40 25 L20 35 L0 25 L0 10 Z" fill="rgba(245,166,35,0.18)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M60 0 L80 10 L80 25 L60 35 L40 25 L40 10 Z" fill="rgba(245,166,35,0.32)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M100 0 L120 10 L120 25 L100 35 L80 25 L80 10 Z" fill="rgba(245,166,35,0.18)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M40 35 L60 45 L60 60 L40 70 L20 60 L20 45 Z" fill="rgba(245,166,35,0.55)" stroke="#F5A623" stroke-width="1.5"/>
+            <path d="M80 35 L100 45 L100 60 L80 70 L60 60 L60 45 Z" fill="#F5A623" stroke="#F5A623" stroke-width="1.5"/>
+          </g>
+        </svg>
+      </div>
+      <ul>
+        <li>Open, extensible automation platforms
+          <small>No proprietary lock-in. Your stack outlasts our engagement.</small>
+        </li>
+        <li>No proprietary black-box dependencies
+          <small>Every system is inspectable end to end — you see how every decision is made.</small>
+        </li>
+        <li>Full documentation &amp; system visibility
+          <small>Architecture diagrams, runbooks, video walk-throughs, monitoring dashboards.</small>
+        </li>
+        <li>Client-owned workflows &amp; infrastructure
+          <small>Source code, credentials, and infra accounts are transferred at hand-off.</small>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">FAQ</span>
+    <h2>Frequently asked <span class="ital">questions.</span></h2>
+
+    <div class="faq">
+      <details>
+        <summary>What problems are your automation solutions designed to solve?</summary>
+        <div class="ans">They solve fragmentation, manual execution, system latency, and decision delays across operations — the four failure modes that quietly tax every growing company.</div>
+      </details>
+      <details>
+        <summary>How long does it typically take to implement automation?</summary>
+        <div class="ans">Typical delivery time is about 4 weeks from audit to deployment for a focused workflow. Timelines depend on scope, but structured architecture up front significantly reduces rework and long-term delays.</div>
+      </details>
+      <details>
+        <summary>Do you replace existing systems or integrate with them?</summary>
+        <div class="ans">Most projects focus on integrating and orchestrating the systems you already pay for, not replacing them. Replacement is a last resort, not a default.</div>
+      </details>
+      <details>
+        <summary>What happens after automation is deployed?</summary>
+        <div class="ans">Clients receive full documentation, ownership transfer, and visibility — enabling long-term autonomy. We monitor the system for 30 days post-launch as a warranty, then step away.</div>
+      </details>
+      <details>
+        <summary>Is automation suitable for regulated or sensitive environments?</summary>
+        <div class="ans">Yes. Governance, access control, and auditability are built into the architecture from day one. We work with healthcare, finance, and regulated industrial clients on a regular basis.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-strip" id="contact">
+  <div class="wrap">
+    <h2>Search for the <span class="ital">right solution.</span></h2>
+    <p class="lede">Begin with a structured assessment to determine feasibility, scope, and architectural direction.</p>
+    <a href="#" class="btn btn-primary" data-audit="1">Book a call
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <a href="index.html" class="brand">
+          <div style="background:#1a1410;border:1.5px solid rgba(245,166,35,0.40);border-radius:12px;padding:5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:52px;height:52px;"><img src="assets/logo.svg" class="brand-svg" style="height:40px;width:auto;display:block;" alt="Beevolve"></div>
+          <span class="brand-name"><b>Bee</b><i>volve</i></span>
+        </a>
+        <p class="blurb">AI automation, done for you. We design, build, and hand off the system. You keep the source code, the credentials, and the time we gave back.</p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">All services</a></li>
+          <li><a href="services.html#talent">Future Talent Suite</a></li>
+          <li><a href="services.html#industry">Industrial Suite</a></li>
+          <li><a href="services.html#consulting">Consulting</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about-us.html">About</a></li>
+          <li><a href="demo-builds.html">Demo builds</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="mailto:info@beevolve.in?subject=Careers%20at%20Beevolve">Careers</a></li>
+          <li><a href="privacy-policy.html">Privacy policy</a></li>
+          <li><a href="terms-of-service.html">Terms of service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+919004861408">+91 90048 61408</a></li>
+          <li><a href="mailto:info@beevolve.in">info@beevolve.in</a></li>
+          <li><a href="javascript:void(0)" data-audit="1">Book a free 30-minute audit</a></li>
+          <li style="color:var(--cream-mute);font-size:13px;line-height:1.5;padding-top:4px;">303 Muktidham Tower<br>Station Road, Kalwa<br>Thane 400605</li>
+        </ul>
+        <div class="foot-social">
+          <a href="https://www.facebook.com/Beevolve.in/" target="_blank" rel="noopener" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.linkedin.com/company/beevolveai/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.instagram.com/beevolve.in" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Beevolve — The hive keeps running.</span>
+      <span>All systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const burger = document.getElementById('navBurger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    const isOpen = burger.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // hero background video — HLS + reveal on play
+  const HLS_SRC = 'https://stream.mux.com/QgTir2Bu4u6d01CqyKEBCks68PIm2nCM7vhwXgenS00tw.m3u8';
+  const $pHero = document.getElementById('pageHero');
+  const $pVid  = document.getElementById('productsBgVideo');
+  if ($pVid) {
+    const revealVideo = () => { $pHero.setAttribute('data-bgvideo', 'true'); };
+    $pVid.addEventListener('playing', revealVideo, { once: true });
+    $pVid.addEventListener('canplay', () => { if (!$pVid.paused) revealVideo(); }, { once: true });
+    if ($pVid.canPlayType('application/vnd.apple.mpegurl')) {
+      $pVid.src = HLS_SRC;
+      $pVid.play().catch(() => {});
+    } else {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js';
+      s.onload = () => {
+        if (Hls.isSupported()) {
+          const hls = new Hls({ autoStartLoad: true, startLevel: -1 });
+          hls.loadSource(HLS_SRC);
+          hls.attachMedia($pVid);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => $pVid.play().catch(() => {}));
+        }
+      };
+      document.head.appendChild(s);
+    }
+    if ($pVid.readyState >= 3) revealVideo();
+  }
+</script>
+
+<!-- WhatsApp Bee Widget -->
+<style>
+  #wa-bee-widget {
+    position: fixed; bottom: 28px; right: 28px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    z-index: 9999; cursor: pointer; user-select: none; text-decoration: none;
+  }
+  #wa-bee-widget .wa-tooltip {
+    background: #0a0908; color: #F5A623;
+    font-family: -apple-system, BlinkMacSystemFont, 'DM Sans', system-ui, sans-serif;
+    font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 20px;
+    white-space: nowrap; border: 1px solid rgba(245,166,35,0.3);
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none; box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  #wa-bee-widget:hover .wa-tooltip, #wa-bee-widget.peeking .wa-tooltip { opacity: 1; transform: translateY(0); }
+  #wa-bee-widget .wa-logo-svg {
+    width: 74px; height: 74px; display: block;
+    animation: bee-float 2.8s ease-in-out infinite;
+    filter: drop-shadow(0 4px 16px rgba(245,166,35,0.35)); transition: filter 0.25s;
+  }
+  #wa-bee-widget:hover .wa-logo-svg {
+    filter: drop-shadow(0 0 10px rgba(37,211,102,0.9)) drop-shadow(0 0 28px rgba(37,211,102,0.5)) drop-shadow(0 0 56px rgba(37,211,102,0.25));
+    animation: bee-float-fast 0.7s ease-in-out infinite alternate;
+  }
+  @keyframes bee-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  @keyframes bee-float-fast { 0%{transform:translateY(0) scale(1)} 100%{transform:translateY(-10px) scale(1.06)} }
+  @keyframes waNodePulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+  .wa-node{animation:waNodePulse 2s ease-in-out infinite}.wa-node:nth-child(2){animation-delay:0.4s}.wa-node:nth-child(3){animation-delay:0.8s}.wa-node:nth-child(4){animation-delay:1.2s}.wa-node:nth-child(5){animation-delay:1.6s}.wa-node:nth-child(6){animation-delay:2.0s}
+  @media(max-width:480px){#wa-bee-widget{bottom:20px;right:16px}#wa-bee-widget .wa-logo-svg{width:58px;height:58px}}
+</style>
+<a id="wa-bee-widget" href="https://wa.me/919004861408?text=Hi%20Beevolve!%20I%27d%20like%20to%20know%20more%20about%20your%20automation%20services." target="_blank" rel="noopener" aria-label="Chat with Beevolve on WhatsApp">
+  <span class="wa-tooltip">Chat with us on WhatsApp</span>
+  <svg class="wa-logo-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="32" fill="#25D366"/><path d="M32 11C20.4 11 11 20.4 11 32c0 3.7 1 7.2 2.8 10.2L11 53l11.1-2.8c3 1.6 6.4 2.5 10 2.5C43.6 52.7 53 43.3 53 31.7 53 20.4 43.6 11 32 11zm0 37.9c-3.2 0-6.3-.9-9-2.5l-.6-.4-6.6 1.7 1.7-6.5-.4-.6c-1.8-2.8-2.7-6-2.7-9.4 0-9.7 7.9-17.6 17.6-17.6 9.7 0 17.6 7.9 17.6 17.6 0 9.8-7.9 17.7-17.6 17.7zm9.7-13.2c-.5-.3-3-1.5-3.5-1.7-.5-.2-.8-.3-1.1.3-.3.5-1.2 1.5-1.5 1.9-.3.3-.5.4-1 .1-.5-.3-2.1-.8-4-2.5-1.5-1.3-2.5-2.9-2.8-3.4-.3-.5 0-.8.2-1 .2-.2.5-.5.7-.8.2-.3.3-.5.5-.8.2-.3.1-.6 0-.9-.1-.3-1.1-2.7-1.5-3.7-.4-.9-.8-.8-1.1-.8h-1c-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8 0 2.3 1.7 4.5 1.9 4.8.2.3 3.4 5.2 8.2 7.3 1.1.5 2 .8 2.7 1 1.1.4 2.1.3 2.9.2.9-.1 2.8-1.1 3.2-2.2.4-1.1.4-2 .3-2.2-.1-.2-.4-.3-.9-.6z" fill="white"/></svg>
+</a>
+<script>(function(){var w=document.getElementById('wa-bee-widget');if(!w)return;setTimeout(function(){w.classList.add('peeking');setTimeout(function(){w.classList.remove('peeking');},3200);},4000);})();</script>
+
+<script>
+(function(){
+  document.querySelectorAll('.brand-logo-canvas').forEach(function(c){
+    var img=new Image();img.src=c.dataset.src;
+    img.onload=function(){
+      var w=img.naturalWidth,h=img.naturalHeight;
+      c.width=w;c.height=h;
+      var ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+      var d=ctx.getImageData(0,0,w,h),px=d.data;
+      for(var i=0;i<px.length;i+=4){
+        var r=px[i],g=px[i+1],b=px[i+2],lum=(r+g+b)/3;
+        if(lum<60)px[i+3]=0;
+        else if(lum<100){px[i+3]=Math.round((lum-60)/40*255);}
+      }
+      ctx.putImageData(d,0,0);
+    };
+  });
+})();
+</script>
+
+<!-- Book a Free Audit Modal -->
+<style>
+.audit-backdrop{position:fixed;inset:0;background:rgba(5,4,3,0.82);backdrop-filter:blur(10px);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.24s ease}
+.audit-backdrop.open{opacity:1;pointer-events:auto}
+.audit-modal{background:#111009;border:1px solid rgba(245,166,35,0.18);border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:44px 40px 40px;position:relative;transform:translateY(30px) scale(0.97);transition:transform 0.28s cubic-bezier(0.16,1,0.3,1)}
+.audit-backdrop.open .audit-modal{transform:translateY(0) scale(1)}
+.audit-close-x{position:absolute;top:16px;right:20px;background:none;border:none;color:#8a8170;font-size:20px;cursor:pointer;padding:6px 10px;line-height:1;transition:color 0.15s}
+.audit-close-x:hover{color:#f1ead9}
+.audit-header{text-align:center;margin-bottom:32px}
+.audit-mark{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px}
+.audit-mark-name{font-family:"Instrument Serif",Georgia,serif;font-size:18px;color:#f1ead9;line-height:1}
+.audit-mark-name i{font-style:italic;color:#F5A623}
+.audit-title{font-family:"Instrument Serif",Georgia,serif;font-size:30px;font-weight:400;color:#f1ead9;line-height:1.15;margin-bottom:6px}
+.audit-title em{font-style:italic;color:#F5A623}
+.audit-sub{font-size:14px;color:#8a8170}
+.audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.audit-field{display:flex;flex-direction:column;gap:7px}
+.audit-field.full{grid-column:1/-1}
+.audit-field label{font-size:13px;font-weight:500;color:#cdc3ac;letter-spacing:0.01em}
+.audit-field .req{color:#F5A623}
+.audit-field input,.audit-field select,.audit-field textarea{background:rgba(255,255,255,0.04);border:1px solid rgba(241,234,217,0.12);border-radius:10px;padding:12px 14px;color:#f1ead9;font-size:14px;font-family:"DM Sans",system-ui,sans-serif;outline:none;transition:border-color 0.18s,background 0.18s;width:100%}
+.audit-field input::placeholder,.audit-field textarea::placeholder{color:#6a6058}
+.audit-field input:focus,.audit-field select:focus,.audit-field textarea:focus{border-color:#F5A623;background:rgba(245,166,35,0.05)}
+.audit-field input.error,.audit-field select.error,.audit-field textarea.error{border-color:#dc2626}
+.audit-field select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8170' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.audit-field select option{background:#1a1612}
+.audit-field textarea{resize:vertical;min-height:90px}
+.phone-wrap{display:flex;gap:0}
+.phone-wrap .phone-cc{width:110px;flex-shrink:0;border-radius:10px 0 0 10px;border-right:none}
+.phone-wrap .phone-cc:focus{border-right:none}
+.phone-wrap .phone-num{border-radius:0 10px 10px 0;flex:1}
+.audit-submit{width:100%;margin-top:24px;padding:15px;background:#F5A623;color:#0a0908;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:"DM Sans",system-ui,sans-serif;transition:background 0.18s,transform 0.14s;display:flex;align-items:center;justify-content:center;gap:8px}
+.audit-submit:hover{background:#f2bb5d;transform:translateY(-1px)}
+.audit-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.audit-privacy{font-size:12px;color:#6a6058;text-align:center;margin-top:12px;line-height:1.5}
+.audit-privacy a{color:#F5A623;text-underline-offset:2px}
+.audit-success{display:none;flex-direction:column;align-items:center;text-align:center;padding:20px 0;gap:20px}
+.audit-success-icon{width:72px;height:72px;background:rgba(245,166,35,0.12);border:2px solid #F5A623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;color:#F5A623}
+.audit-success h3{font-family:"Instrument Serif",Georgia,serif;font-size:28px;font-weight:400;color:#f1ead9}
+.audit-success h3 em{font-style:italic;color:#F5A623}
+.audit-success p{font-size:14px;color:#8a8170;max-width:340px;line-height:1.65}
+.audit-close-btn{margin-top:4px;padding:11px 28px;border:1px solid rgba(241,234,217,0.12);border-radius:8px;background:none;color:#cdc3ac;font-size:14px;cursor:pointer;font-family:"DM Sans",system-ui,sans-serif;transition:border-color 0.15s,color 0.15s}
+.audit-close-btn:hover{border-color:#F5A623;color:#f1ead9}
+@media(max-width:520px){.audit-modal{padding:32px 22px 28px}.audit-grid{grid-template-columns:1fr}.audit-field.full{grid-column:1}.phone-wrap{flex-direction:column}.phone-wrap .phone-cc{width:100%;border-radius:10px;border-right:1px solid rgba(241,234,217,0.12)}.phone-wrap .phone-num{border-radius:10px}}
+</style>
+
+<div id="audit-modal" class="audit-backdrop" role="dialog" aria-modal="true" aria-labelledby="audit-modal-title">
+  <div class="audit-modal">
+    <button class="audit-close-x" id="audit-x-close" aria-label="Close form">&#10005;</button>
+    <div id="audit-form-wrap">
+      <div class="audit-header">
+        <div class="audit-mark">
+          <img src="assets/logo.svg" height="32" alt="Beevolve" style="border-radius:6px;background:#1a1410;padding:3px;">
+          <span class="audit-mark-name">Bee<i>volve</i></span>
+        </div>
+        <h2 class="audit-title" id="audit-modal-title">Book Your <em>Free Audit</em></h2>
+        <p class="audit-sub">Takes less than 60 seconds</p>
+      </div>
+      <form id="audit-form" novalidate>
+        <div class="audit-grid">
+          <div class="audit-field">
+            <label for="af-name">Full Name <span class="req">*</span></label>
+            <input id="af-name" type="text" name="full_name" placeholder="Your name" autocomplete="name">
+          </div>
+          <div class="audit-field">
+            <label for="af-company">Company Name</label>
+            <input id="af-company" type="text" name="company" placeholder="Your company" autocomplete="organization">
+          </div>
+          <div class="audit-field">
+            <label for="af-email">Email <span class="req">*</span></label>
+            <input id="af-email" type="email" name="email" placeholder="your@email.com" autocomplete="email">
+          </div>
+          <div class="audit-field">
+            <label for="af-phone">Phone <span class="req">*</span></label>
+            <div class="phone-wrap">
+              <select name="phone_country" class="phone-cc" aria-label="Country code">
+                <option value="+91" selected>IN +91</option>
+                <option value="+1">US +1</option>
+                <option value="+44">UK +44</option>
+                <option value="+971">UAE +971</option>
+                <option value="+65">SG +65</option>
+                <option value="+61">AU +61</option>
+                <option value="+49">DE +49</option>
+                <option value="+33">FR +33</option>
+                <option value="+81">JP +81</option>
+                <option value="+86">CN +86</option>
+              </select>
+              <input id="af-phone" type="tel" name="phone" placeholder="98765 43210" class="phone-num" autocomplete="tel">
+            </div>
+          </div>
+          <div class="audit-field full">
+            <label for="af-service">What are you looking for?</label>
+            <select id="af-service" name="service">
+              <option value="" disabled selected>Select a service</option>
+              <option value="ai-agents">AI Agents &amp; Chatbots</option>
+              <option value="crm-automation">CRM Workflow Automation</option>
+              <option value="document-automation">Document Automation</option>
+              <option value="systems-integration">Systems Integration</option>
+              <option value="dashboards">Dashboards &amp; Reporting</option>
+              <option value="custom-build">Custom Build</option>
+              <option value="not-sure">Not sure yet — let's explore</option>
+            </select>
+          </div>
+          <div class="audit-field full">
+            <label for="af-project">Tell us about your project</label>
+            <textarea id="af-project" name="project" rows="4" placeholder="What processes do you want to automate? What's your biggest bottleneck?"></textarea>
+          </div>
+          <div class="audit-field full">
+            <label for="af-hear">How did you hear about us?</label>
+            <select id="af-hear" name="hear_about">
+              <option value="" disabled selected>Select an option</option>
+              <option value="Instagram">Instagram</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Facebook">Facebook</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Google Search">Google Search</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Friend / Word of mouth">Friend / Word of mouth</option>
+              <option value="Blog / Article">Blog / Article</option>
+              <option value="Email">Email</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="audit-submit" id="audit-submit-btn">
+          <span id="audit-btn-text">Get My Free Automation Audit →</span>
+        </button>
+        <p class="audit-privacy">By submitting you agree to our <a href="privacy-policy.html">Privacy Policy</a>. We never share your data.</p>
+      </form>
+    </div>
+    <div id="audit-success" class="audit-success">
+      <div class="audit-success-icon">✓</div>
+      <h3>You're <em>booked in!</em></h3>
+      <p>We'll reach out within 24 hours to schedule your free automation audit. Check your inbox.</p>
+      <button class="audit-close-btn" id="audit-success-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var backdrop = document.getElementById('audit-modal');
+  var form = document.getElementById('audit-form');
+  var submitBtn = document.getElementById('audit-submit-btn');
+  var btnText = document.getElementById('audit-btn-text');
+  var successEl = document.getElementById('audit-success');
+  var formWrap = document.getElementById('audit-form-wrap');
+
+  window.openAuditForm = function(e){
+    if(e){ e.preventDefault(); }
+    document.body.style.overflow = 'hidden';
+    backdrop.classList.add('open');
+    setTimeout(function(){ var f = document.getElementById('af-name'); if(f) f.focus(); }, 280);
+    return false;
+  };
+
+  window.closeAuditForm = function(){
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function(){
+      successEl.style.display = 'none';
+      formWrap.querySelector('#audit-form').style.display = '';
+      formWrap.querySelector('.audit-header').style.display = '';
+      submitBtn.disabled = false;
+      btnText.textContent = 'Get My Free Automation Audit →';
+    }, 300);
+  };
+
+  backdrop.addEventListener('click', function(e){ if(e.target === backdrop) closeAuditForm(); });
+  var _xClose = document.getElementById('audit-x-close');
+  if(_xClose) _xClose.addEventListener('click', function(){ closeAuditForm(); });
+  var _sClose = document.getElementById('audit-success-close');
+  if(_sClose) _sClose.addEventListener('click', function(){ closeAuditForm(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAuditForm(); });
+  // Wire all audit/student trigger buttons (script is at bottom so DOM is ready)
+  function wireFormButtons() {
+    document.querySelectorAll('[data-audit]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); openAuditForm(e); });
+    });
+    document.querySelectorAll('[data-student]').forEach(function(el) {
+      el.addEventListener('click', function(e) { e.preventDefault(); if(window.openStudentForm) openStudentForm(e); });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wireFormButtons);
+  } else {
+    wireFormButtons();
+  }
+
+  function validateForm(){
+    var ok = true;
+    ['af-name','af-email','af-phone'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var val = el.value.trim();
+      var valid = val.length > 0;
+      if(id === 'af-email') valid = valid && /^[^@]+@[^@]+.[^@]+$/.test(val);
+      if(id === 'af-phone') valid = valid && val.replace(/D/g,'').length >= 7;
+      el.classList.toggle('error', !valid);
+      if(!valid) ok = false;
+    });
+    return ok;
+  }
+
+  ['af-name','af-email','af-phone'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.addEventListener('input', function(){ el.classList.remove('error'); });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validateForm()) return;
+
+    submitBtn.disabled = true;
+    btnText.textContent = 'Sending…';
+
+    var data = {
+      full_name: document.getElementById('af-name').value.trim(),
+      company: document.getElementById('af-company').value.trim(),
+      email: document.getElementById('af-email').value.trim(),
+      phone_country: form.querySelector('[name="phone_country"]').value,
+      phone: document.getElementById('af-phone').value.trim(),
+      service: document.getElementById('af-service').value,
+      project: document.getElementById('af-project').value.trim(),
+      hear_about: document.getElementById('af-hear') ? document.getElementById('af-hear').value : '',
+      submitted_at: new Date().toISOString(),
+      page: window.location.href,
+      form_type: 'lead'
+    };
+
+    // Google Sheets — replace YOUR_APPS_SCRIPT_ID with your deployed Web App URL
+    var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwhBpnbrWkl82PRKF-hW3LDi6LTELZpPU3NoOEkI0bjjHDrIl62xZP4-BHkqOLgHH-F/exec';
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(data)
+    })
+    .then(function(){
+      formWrap.querySelector('.audit-header').style.display = 'none';
+      form.style.display = 'none';
+      successEl.style.display = 'flex';
+    })
+    .catch(function(){
+      submitBtn.disabled = false;
+      btnText.textContent = 'Get My Free Automation Audit →';
+      alert('Something went wrong. Please try WhatsApp or email us at info@beevolve.in');
+    });
+  });
+})();
+</script>
+<!-- End Audit Modal -->
+
+<!-- Standalone form opener - independent of IIFE -->
+<script>
+(function(){
+  document.addEventListener('click',function(e){
+    var el=e.target;
+    while(el&&el!==document){
+      if(el.getAttribute&&el.getAttribute('data-audit')==='1'){
+        e.preventDefault();e.stopPropagation();
+        var bd=document.getElementById('audit-modal');
+        if(bd){bd.classList.add('open');document.body.style.overflow='hidden';}
+        var f=document.getElementById('af-name');
+        if(f)setTimeout(function(){f.focus();},280);
+        return;
+      }
+      if(el.getAttribute&&el.getAttribute('data-student')==='1'){
+        e.preventDefault();e.stopPropagation();
+        var bd2=document.getElementById('student-modal');
+        if(bd2){bd2.classList.add('open');document.body.style.overflow='hidden';}
+        var f2=document.getElementById('sf-name');
+        if(f2)setTimeout(function(){f2.focus();},280);
+        return;
+      }
+      el=el.parentNode;
+    }
+  },true);
+})();
+</script>
+
+</body>
+</html>
+
+
+
+
